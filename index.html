@@ -3,11 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#000091">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171930" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Civique">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-192.png">
@@ -155,6 +157,39 @@ details.fiche[open] summary::after{content:"−"}
 .flipcard .fa{padding:12px 14px;border-left:3px solid var(--bleu);background:var(--sunk);border-radius:0 8px 8px 0;max-width:68ch}
 .empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:10px}
 @media (prefers-reduced-motion:no-preference){.opt{transition:border-color .12s,background .12s}}
+/* phone layout (iPhone 16: 393 x 852 pt) */
+html{-webkit-text-size-adjust:100%}
+button,a,.opt,summary{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.tabbar{display:none}
+@media (max-width:700px){
+  nav.tabs{display:none}
+  .topin{padding-block:8px}
+  .brand{font-size:1.05rem}
+  h1{font-size:1.6rem} h2{font-size:1.3rem}
+  main{padding-block:20px calc(88px + env(safe-area-inset-bottom,0px))}
+  .tabbar{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);
+    padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px));padding-left:max(4px,env(safe-area-inset-left,0px));padding-right:max(4px,env(safe-area-inset-right,0px))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:50px;font-size:.66rem;font-weight:700;color:var(--muted);text-decoration:none;border-radius:10px}
+  .tabbar a[aria-current="page"]{color:var(--bleu);background:var(--bleu-soft)}
+  .tabbar svg{width:22px;height:22px}
+  .panel{padding:16px}
+  .qcard{padding:18px} .qtext{font-size:1.18rem;margin-bottom:14px}
+  .opt{min-height:52px;padding:12px}
+  .seg button{min-height:40px;padding:8px 14px}
+  .btn{min-height:46px} .btn.small{min-height:42px}
+  .qnav{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x proximity;padding-block:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .qnav::-webkit-scrollbar{display:none}
+  .qnav button{flex:0 0 42px;min-height:42px;font-size:.85rem;scroll-snap-align:center}
+  .examhead{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hdr,49px));z-index:4;background:var(--bg);padding-block:8px;flex-wrap:nowrap;box-shadow:0 1px 0 var(--line)}
+  .examhead .eyebrow{letter-spacing:.06em}
+  .timer{font-size:1.15rem;flex:0 0 auto}
+  .heat{grid-template-columns:repeat(auto-fill,minmax(30px,1fr));gap:4px}
+  .tb{grid-template-columns:minmax(0,1fr) 72px 44px;gap:10px}
+  .attest{padding:20px} .score{font-size:2.8rem}
+  .flipcard{min-height:260px;padding:20px}
+  .gauge{font-size:2.8rem}
+  details.fiche summary{min-height:48px}
+}
 </style>
 </head>
 <body>
@@ -174,6 +209,7 @@ details.fiche[open] summary::after{content:"−"}
     </nav>
   </div>
 </header>
+<nav class="tabbar" aria-label="Sections"><a href="#accueil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span>Accueil</span></a><a href="#examen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/></svg><span>Examen</span></a><a href="#entrainement"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/><path d="M17 16l2 2 3-4"/></svg><span>Entraîner</span></a><a href="#fiches"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg><span>Fiches</span></a><a href="#entretien"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8"/></svg><span>Entretien</span></a><a href="#progres"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Progrès</span></a></nav>
 <main class="wrap" id="view"></main>
 
 <script>
@@ -1004,7 +1040,7 @@ const VIEWS = {accueil:vHome, examen:vExam, entrainement:vTrain, fiches:vFiches,
 function route(){ return (location.hash||"#accueil").slice(1) in VIEWS ? (location.hash||"#accueil").slice(1) : "accueil"; }
 function render(){
   const r=route();
-  document.querySelectorAll("nav.tabs a").forEach(a=>{ if(a.getAttribute("href")==="#"+r) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  document.querySelectorAll("nav.tabs a, nav.tabbar a").forEach(a=>{ if(a.getAttribute("href")==="#"+r) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   VIEWS[r]();
 }
 window.addEventListener("hashchange",()=>{render();window.scrollTo(0,0)});
@@ -1096,7 +1132,7 @@ function vExam(){
      <div class="panel">${examTable()}</div>
      <div class="row"><button class="btn" id="startEx">Commencer (45 min)</button></div>
      <p class="note">Les questions que vous ne maîtrisez pas encore sortent plus souvent. Une réponse fausse ou absente vaut 0, sans pénalité.</p></div>`;
-    $("#startEx").onclick=()=>{exam=buildExam();lsSet(LS_EXAM,exam);vExam()};
+    $("#startEx").onclick=()=>{exam=buildExam();lsSet(LS_EXAM,exam);window.scrollTo({top:0});vExam()};
     return;
   }
   if(exam.done){ return vResult(); }
@@ -1122,9 +1158,11 @@ function drawExam(){
     <button class="btn ghost small" id="next" ${i===39?"disabled":""}>Suivante</button></div>
     <button class="btn small" id="finish">Terminer l'examen</button></div>
    <div id="confirm"></div></div>`;
-  document.querySelectorAll(".qnav button").forEach(b=>b.onclick=()=>{exam.cur=+b.dataset.k;lsSet(LS_EXAM,exam);drawExam()});
-  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{exam.ans[i]=+b.dataset.o;lsSet(LS_EXAM,exam); if(i<39){exam.cur=i+1} drawExam()});
+  document.querySelectorAll(".qnav button").forEach(b=>b.onclick=()=>{exam.cur=+b.dataset.k;lsSet(LS_EXAM,exam);drawExam();window.scrollTo({top:0})});
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{exam.ans[i]=+b.dataset.o;lsSet(LS_EXAM,exam); if(i<39){exam.cur=i+1} drawExam(); window.scrollTo({top:0})});
   $("#prev").onclick=()=>{exam.cur--;drawExam()}; $("#next").onclick=()=>{exam.cur++;drawExam()};
+  const nav=document.querySelector(".qnav"), cb=nav&&nav.querySelector(".cur");
+  if(nav&&cb&&nav.scrollWidth>nav.clientWidth) nav.scrollLeft=cb.offsetLeft-nav.offsetLeft-(nav.clientWidth-cb.offsetWidth)/2;
   $("#finish").onclick=()=>{
     const left=40-exam.ans.filter(a=>a!==null).length;
     $("#confirm").innerHTML=`<div class="panel row" style="justify-content:space-between"><span>${left?`Il reste ${left} question${left>1?"s":""} sans réponse.`:"Toutes les questions ont une réponse."} Terminer maintenant ?</span>
@@ -1339,6 +1377,9 @@ function chart(ex){
    ${xl}</svg>`;
 }
 
+// header height for sticky elements below it
+function setHdr(){const hd=document.querySelector("header.top"); if(hd) document.documentElement.style.setProperty("--hdr",hd.offsetHeight+"px")}
+setHdr(); window.addEventListener("resize",setHdr);
 render();
 </script>
 
