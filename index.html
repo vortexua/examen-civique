@@ -122,6 +122,10 @@ p{margin:0}
 @media (max-width:480px){.attest .seal{position:static;margin-bottom:12px}}
 table.sum{width:100%;border-collapse:collapse;font-size:.93rem}
 table.sum td,table.sum th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+table.sum th,table.sum th.r{font-family:var(--font-body);font-size:.85rem;color:var(--muted);font-weight:700}
+.tablebox{overflow-x:auto;max-width:100%}
+.fbody,.panel,.attest{min-width:0}
+.chrono{table-layout:auto}
 table.sum td.r,table.sum th.r{text-align:right;font-family:var(--font-mono)}
 /* fiches */
 .fichelist{display:flex;flex-direction:column;gap:10px}
@@ -1140,9 +1144,9 @@ function vExam(){
   tick=setInterval(()=>{const el=$("#timer"); if(!el){clearInterval(tick);return} const left=remaining(); el.textContent=mmss(left); el.classList.toggle("low",left<300); if(left<=0){finishExam()}},1000);
 }
 function examTable(){
-  return `<table class="sum"><tr><th>Thème</th><th class="r">Connaissances</th><th class="r">Situations</th><th class="r">Total</th></tr>
+  return `<div class="tablebox"><table class="sum"><tr><th>Thème</th><th class="r" title="Questions de connaissances">Connais.</th><th class="r" title="Mises en situation">Situations</th><th class="r">Total</th></tr>
   ${TK.map(t=>{const c=THEMES[t].exam;return `<tr><td>${THEMES[t].name}</td><td class="r">${c.k}</td><td class="r">${c.s}</td><td class="r">${c.k+c.s}</td></tr>`}).join("")}
-  <tr><td><b>Total</b></td><td class="r"><b>28</b></td><td class="r"><b>12</b></td><td class="r"><b>40</b></td></tr></table>`;
+  <tr><td><b>Total</b></td><td class="r"><b>28</b></td><td class="r"><b>12</b></td><td class="r"><b>40</b></td></tr></table></div><p class="note">Connais. : questions de connaissances, tirées de la liste officielle. Situations : mises en situation.</p>`;
 }
 const remaining=()=>Math.max(0,45*60-Math.floor((Date.now()-exam.start)/1000));
 const mmss=s=>String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
