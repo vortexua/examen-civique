@@ -1387,6 +1387,13 @@ setHdr(); window.addEventListener("resize",setHdr);
 render();
 </script>
 
-<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}</script>
+<script>
+// ?reset clears the offline cache and reloads a fresh copy
+if(new URLSearchParams(location.search).has("reset")){
+  (async()=>{try{const rs=await navigator.serviceWorker?.getRegistrations?.()||[];await Promise.all(rs.map(r=>r.unregister()));const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.replace(location.pathname)})();
+} else if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{}));
+}
+</script>
 </body>
 </html>
