@@ -1,4 +1,4 @@
-const CACHE = "civique-v3";
+const CACHE = "civique-v4";
 const CORE = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", e => {
@@ -31,7 +31,8 @@ self.addEventListener("fetch", e => {
   if (r.mode === "navigate") {
     e.respondWith((async () => {
       try {
-        const res = await clean(await fetch(r));
+        // always revalidate with the server (GitHub Pages sets a 10-minute browser cache)
+        const res = await clean(await fetch(r.url, {cache: "no-cache", credentials: "same-origin"}));
         if (res.ok) { const cp = res.clone(); caches.open(CACHE).then(c => c.put("index.html", cp)); }
         return res;
       } catch (err) {
