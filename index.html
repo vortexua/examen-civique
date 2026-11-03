@@ -161,6 +161,16 @@ details.fiche[open] summary::after{content:"−"}
 .flipcard .fa{padding:12px 14px;border-left:3px solid var(--bleu);background:var(--sunk);border-radius:0 8px 8px 0;max-width:68ch}
 .empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:10px}
 @media (prefers-reduced-motion:no-preference){.opt{transition:border-color .12s,background .12s}}
+
+/* translation popup */
+.trpop{position:fixed;z-index:20;left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));max-width:520px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 10px 30px rgba(10,12,40,.25);display:flex;flex-direction:column;gap:10px}
+.trpop .trw{font-family:var(--font-display);font-size:1.25rem;font-weight:700}
+.trpop .trt{font-size:1.1rem}
+.trpop .trs{padding:10px 12px;background:var(--sunk);border-radius:8px;font-size:.95rem}
+.trpop .trsrc{font-family:var(--font-mono);font-size:.7rem;color:var(--muted);letter-spacing:.04em}
+::highlight(trword){background-color:var(--bleu-soft);color:var(--bleu)}
+@media (hover:none){main{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}}
+@media (max-width:700px){.trpop{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
 /* phone layout (iPhone 16: 393 x 852 pt) */
 html{-webkit-text-size-adjust:100%}
 button,a,.opt,summary{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
@@ -215,6 +225,7 @@ button,a,.opt,summary{touch-action:manipulation;-webkit-tap-highlight-color:tran
 </header>
 <nav class="tabbar" aria-label="Sections"><a href="#accueil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span>Accueil</span></a><a href="#examen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/></svg><span>Examen</span></a><a href="#entrainement"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/><path d="M17 16l2 2 3-4"/></svg><span>Entraîner</span></a><a href="#fiches"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg><span>Fiches</span></a><a href="#entretien"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8"/></svg><span>Entretien</span></a><a href="#progres"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Progrès</span></a></nav>
 <main class="wrap" id="view"></main>
+<div class="trpop" id="trpop" role="dialog" aria-live="polite" lang="uk" hidden></div>
 
 <script>
 // [num, theme, question, [correct, d1, d2, d3], explanation]
@@ -753,6 +764,52 @@ const ENT = [
 ["E30","Vos réponses","Que feriez-vous si vous étiez victime ou témoin d'une discrimination ?","Garder des preuves, en parler à la personne responsable, saisir le Défenseur des droits, porter plainte si c'est une infraction.",""]
 ];
 
+// French → Ukrainian glossary of civic-exam vocabulary (offline). Keys: lowercase singular/infinitive.
+const GLOSS = {
+"état":"держава","marseillaise":"Марсельєза (гімн Франції)","france":"Франція","français":"французький; француз; французька мова","française":"французька","paris":"Париж","monde":"світ","année":"рік","an":"рік","ans":"років","jour":"день","date":"дата","siècle":"століття",
+"personne":"особа, людина","femme":"жінка","homme":"чоловік; людина","hommes":"люди; чоловіки","fille":"дівчина; донька","garçon":"хлопець","famille":"сім'я","ami":"друг","collègue":"колега",
+"quel":"який","quelle":"яка","quels":"які","quelles":"які","qui":"хто; який","que":"що","quoi":"що","où":"де","quand":"коли","pourquoi":"чому","comment":"як","combien":"скільки","lequel":"котрий","laquelle":"котра","lesquels":"котрі",
+"peut":"може","peut-on":"чи можна","faut":"треба","doit":"повинен","doivent":"повинні","est":"є","sont":"є (мн.)","a":"має","ont":"мають","être":"бути","avoir":"мати","faire":"робити","dire":"сказати","aller":"йти",
+"selon":"згідно з","depuis":"з (часу); протягом","pendant":"під час","entre":"між","contre":"проти","sans":"без","avec":"з","pour":"для","par":"через; ким","sur":"на; про","sous":"під","dans":"в","chez":"у (когось)","après":"після","avant":"до, перед",
+"oui":"так","non":"ні","jamais":"ніколи","toujours":"завжди","seulement":"лише","aucun":"жоден","aucune":"жодна","tout":"все","tous":"всі","chaque":"кожен",
+"proposition":"варіант (відповіді); пропозиція","correcte":"правильна","correct":"правильний","vrai":"правда","faux":"неправда","possible":"можливо","nécessaire":"необхідний","principal":"головний","principe":"принцип","valeur":"цінність","valeurs":"цінності","rôle":"роль","texte":"текст","article":"стаття",
+"république":"республіка","républicain":"республіканський","devise":"девіз","liberté":"свобода","égalité":"рівність","fraternité":"братерство",
+"laïcité":"світськість (відокремлення держави від релігії)","laïque":"світський","neutralité":"нейтральність","neutre":"нейтральний","culte":"культ, віросповідання",
+"religion":"релігія","religieux":"релігійний","croyance":"вірування","croire":"вірити","conscience":"совість; свідомість","athée":"атеїст","prosélytisme":"прозелітизм (навернення до своєї віри)",
+"signe":"знак","ostensible":"помітний, демонстративний","discret":"непомітний, скромний","voile":"хустка, вуаль","foulard":"хустка",
+"symbole":"символ","drapeau":"прапор","tricolore":"триколірний","hymne":"гімн","marianne":"Маріанна (символ Республіки)","bonnet":"шапка","phrygien":"фригійський",
+"coq":"півень","fête":"свято","nationale":"національна","national":"національний","nation":"нація","patrie":"батьківщина","citoyen":"громадянин","citoyenne":"громадянка","citoyenneté":"громадянство",
+"nationalité":"громадянство (національність)","naturalisation":"натуралізація (набуття громадянства)","étranger":"іноземець; іноземний","titre":"документ, посвідка","séjour":"перебування","carte":"картка, посвідчення","résident":"резидент, мешканець",
+"constitution":"конституція","constitutionnel":"конституційний","loi":"закон","décret":"указ, декрет","arrêté":"постанова","droit":"право","devoir":"обов'язок","obligation":"обов'язок","obligatoire":"обов'язковий","interdit":"заборонений","autorisé":"дозволений",
+"pouvoir":"влада; могти","législatif":"законодавчий","exécutif":"виконавчий","judiciaire":"судовий","séparation":"розділення","souveraineté":"суверенітет","peuple":"народ","démocratie":"демократія","démocratique":"демократичний","social":"соціальний","sociale":"соціальна","indivisible":"неподільний",
+"président":"президент","premier":"перший","ministre":"міністр","gouvernement":"уряд","parlement":"парламент","assemblée":"асамблея, збори","sénat":"сенат","sénateur":"сенатор","député":"депутат","élu":"обраний; виборна особа",
+"élection":"вибори","électeur":"виборець","électoral":"виборчий","liste":"список","vote":"голосування","voter":"голосувати","scrutin":"голосування","suffrage":"голосування (виборче право)","universel":"загальний","direct":"прямий","indirect":"непрямий","mandat":"мандат, строк повноважень",
+"référendum":"референдум","procuration":"довіреність (на голосування)","bulletin":"бюлетень","isoloir":"кабінка для голосування","candidat":"кандидат","parrainage":"підтримка (підписи)","parti":"партія","politique":"політика; політичний",
+"commune":"громада, муніципалітет","municipal":"муніципальний","maire":"мер","mairie":"мерія","conseil":"рада","conseiller":"радник, член ради","département":"департамент (адмін. одиниця)","départemental":"департаментський","région":"регіон","régional":"регіональний","préfet":"префект (представник держави)","préfecture":"префектура","collectivité":"територіальна громада",
+"chef-lieu":"адміністративний центр","capitale":"столиця","outre-mer":"заморські території","métropole":"метрополія; велике місто","territoire":"територія","frontière":"кордон",
+"union":"союз","européen":"європейський","europe":"Європа","traité":"договір","commission":"комісія","banque":"банк","centrale":"центральна","siège":"осідок, штаб-квартира","membre":"член","fondateur":"засновник",
+"justice":"правосуддя","juge":"суддя","tribunal":"суд","cour":"суд; двір","assises":"суд присяжних (асизи)","juré":"присяжний","jury":"журі, присяжні","avocat":"адвокат","plainte":"скарга, заява (до поліції)","porter plainte":"подати заяву в поліцію",
+"crime":"злочин (тяжкий)","délit":"правопорушення (кримінальне)","contravention":"адміністративне порушення","infraction":"правопорушення","amende":"штраф","peine":"покарання","prison":"в'язниця","emprisonnement":"ув'язнення","sanction":"санкція, покарання","condamnation":"вирок, засудження",
+"police":"поліція","gendarmerie":"жандармерія","gendarme":"жандарм","garde à vue":"затримання під вартою","interpellation":"затримання","contrôle":"перевірка","identité":"особа; посвідчення особи","sûreté":"безпека (від свавільного арешту)","sécurité":"безпека","ordre":"порядок","public":"публічний, державний","publique":"публічна, державна",
+"discrimination":"дискримінація","racisme":"расизм","antisémitisme":"антисемітизм","haine":"ненависть","injure":"образа","diffamation":"наклеп","dignité":"гідність","défenseur":"захисник","harcèlement":"цькування, домагання","violence":"насильство","victime":"жертва, потерпілий","témoin":"свідок",
+"expression":"вираження (думок)","presse":"преса","association":"асоціація, громадська організація","syndicat":"профспілка","grève":"страйк","manifestation":"демонстрація, мітинг","manifester":"демонструвати; вийти на мітинг","circulation":"пересування","opinion":"думка",
+"impôt":"податок","impôts":"податки","fiscal":"податковий","revenu":"дохід","déclarer":"декларувати, заявляти","déclaration":"декларація, заява","contribuable":"платник податків","solidarité":"солідарність","cotisation":"внесок",
+"secours":"допомога, рятування","porter secours":"надати допомогу","assistance":"допомога","danger":"небезпека","urgence":"невідкладна ситуація","samu":"швидка медична допомога","pompier":"пожежник","pompiers":"пожежники",
+"santé":"здоров'я","assurance":"страхування","maladie":"хвороба","assurance maladie":"медичне страхування","mutuelle":"додаткове медичне страхування","remboursement":"відшкодування","rembourser":"відшкодовувати","médecin":"лікар","traitant":"лікуючий (сімейний)","hôpital":"лікарня","soin":"лікування, догляд","secret":"таємниця","vaccin":"вакцина",
+"contraception":"контрацепція","avortement":"аборт","ivg":"переривання вагітності","grossesse":"вагітність","enceinte":"вагітна",
+"travail":"робота, праця","travailler":"працювати","emploi":"робота, працевлаштування","employeur":"роботодавець","salarié":"найманий працівник","salaire":"заробітна плата","smic":"мінімальна зарплата","contrat":"договір","embauche":"наймання на роботу","licenciement":"звільнення","licencier":"звільнити","chômage":"безробіття","congé":"відпустка","paternité":"батьківство","maternité":"материнство","prud'hommes":"трудовий суд","dissimulé":"прихований (нелегальний)","déclaré":"офіційно оформлений",
+"entreprise":"підприємство","créer":"створювати","heure":"година","semaine":"тиждень","durée":"тривалість","légal":"законний","légale":"законна","illégal":"незаконний",
+"école":"школа","maternelle":"дитячий садок (школа 3–6 р.)","élémentaire":"початкова","collège":"коледж (середня школа 11–15 р.)","lycée":"ліцей (старша школа)","élève":"учень","enseignant":"вчитель","instruction":"навчання, освіта","scolarité":"навчання в школі","scolaire":"шкільний","cantine":"їдальня","baccalauréat":"бакалавреат (випускний іспит)","brevet":"атестат (після коледжу)","mixité":"спільне навчання хлопців і дівчат","handicap":"інвалідність","absence":"відсутність",
+"parent":"батько або мати","parents":"батьки","enfant":"дитина","mineur":"неповнолітній","majeur":"повнолітній","majorité":"повноліття; більшість","âge":"вік","autorité":"влада","autorité parentale":"батьківські права",
+"mariage":"шлюб","marié":"одружений","époux":"чоловік (подружжя)","épouse":"дружина","conjoint":"чоловік або дружина","divorce":"розлучення","polygamie":"багатоженство","consentement":"згода","forcé":"примусовий","famille":"сім'я","naissance":"народження","état civil":"реєстрація актів цивільного стану","décès":"смерть",
+"logement":"житло","locataire":"орендар","propriétaire":"власник","bail":"договір оренди","loyer":"орендна плата","voisin":"сусід","bruit":"шум","déchet":"відходи, сміття","déchetterie":"пункт прийому відходів","tri":"сортування","encombrant":"великогабаритне сміття","stationnement":"паркування","permis":"посвідчення (водійське)","conduire":"керувати автомобілем",
+"histoire":"історія","révolution":"революція","roi":"король","reine":"королева","empereur":"імператор","empire":"імперія","monarchie":"монархія","guerre":"війна","mondiale":"світова","armistice":"перемир'я","libération":"визволення","résistance":"Опір (рух опору)","débarquement":"висадка (десант)","occupation":"окупація","déportation":"депортація","génocide":"геноцид","shoah":"Голокост","esclavage":"рабство","abolition":"скасування","aboli":"скасований","colonie":"колонія","colonisation":"колонізація","indépendance":"незалежність","peine de mort":"смертна кара","lumières":"Просвітництво","philosophe":"філософ",
+"géographie":"географія","montagne":"гора","chaîne":"гірський хребет","fleuve":"річка (що впадає в море)","mer":"море","océan":"океан","île":"острів","port":"порт","ville":"місто","pays":"країна","continent":"континент","population":"населення","habitant":"мешканець",
+"culture":"культура","peintre":"художник","tableau":"картина","sculpteur":"скульптор","écrivain":"письменник","écrivaine":"письменниця","poète":"поет","compositeur":"композитор","chanteuse":"співачка","musée":"музей","château":"замок","monument":"пам'ятка","patrimoine":"спадщина","œuvre":"твір",
+"mise en situation":"ситуаційне завдання","situation":"ситуація","question":"питання","réponse":"відповідь","examen":"іспит","civique":"громадянський","entretien":"співбесіда","formation":"навчання, курс",
+"respecter":"поважати, дотримуватися","signaler":"повідомити (про порушення)","refuser":"відмовити","accepter":"прийняти, погодитися","exiger":"вимагати","demander":"просити, подати запит","punir":"карати","puni":"покараний","protéger":"захищати","garantir":"гарантувати","garantit":"гарантує","financer":"фінансувати","inscrire":"записати, зареєструвати","inscription":"реєстрація, запис"
+};
+
 const FICHES = {
 P: [
  ["La devise et les symboles", `<ul>
@@ -1057,6 +1114,7 @@ function vHome(){
   $("#view").innerHTML = `<div class="stack" style="gap:28px">
    <div class="stack">
     <span class="eyebrow">Examen civique · mention naturalisation</span>
+    <p class="note" lang="uk">Утримуйте палець на будь-якому слові (або клацніть правою кнопкою), щоб побачити переклад українською.</p>
     <h1>Préparez les 40 questions du jour J</h1>
     <p class="lead">Les 258 questions de connaissance de la liste officielle, ${NVAR} variantes avec d'autres bonnes réponses, ${S.length} mises en situation, ${X.length} compléments (retours de candidats, listes officielles CSP/CR), des fiches de révision, ${ENT.length} cartes pour préparer l'entretien d'assimilation et un suivi de votre progression.</p>
    </div>
@@ -1331,6 +1389,52 @@ function vEntretien(){
   const mark=v=>{state.cards[c[0]]=v;save(); if(entOnly&&v==="k"){entFlip=false;vEntretien()} else go(1)};
   $("#eok").onclick=()=>mark("k"); $("#erev").onclick=()=>mark("r");
 }
+
+/* ---------- TRANSLATION (long press → Ukrainian) ---------- */
+const TR_KEY="civique.tr.v1"; let trCache=lsGet(TR_KEY)||{};
+const trNorm=w=>w.toLowerCase().replace(/^(jusqu|lorsqu|puisqu|qu|l|d|j|n|s|c|m|t)['’]/,"").replace(/^[-'’]+|[-'’]+$/g,"");
+function glossLookup(w){const k=trNorm(w); for(const c of [k,k.replace(/s$/,""),k.replace(/x$/,""),k.replace(/es$/,""),k.replace(/e$/,""),k.replace(/aux$/,"al"),k.replace(/ées?$/,"é"),k.replace(/s$/,"").replace(/e$/,"")]) if(GLOSS[c]) return GLOSS[c]; return null}
+async function trOnline(text){
+  const key=text.toLowerCase().slice(0,300); if(trCache[key]) return {t:trCache[key],src:"збережено"};
+  const keep=t=>{trCache[key]=t; const ks=Object.keys(trCache); if(ks.length>1500) delete trCache[ks[0]]; lsSet(TR_KEY,trCache)};
+  try{ if(window.claude&&claude.use){ const s=await claude.use("sample"); if(s){ const r=await s("Traduis ce texte français en ukrainien. Réponds uniquement par la traduction, sans guillemets ni commentaire. Si c'est un seul mot, donne la traduction la plus courante dans le contexte de la vie civique en France.\n\n"+text,{modelTier:"quick"}); const t=(r&&r.text||"").trim(); if(t){keep(t);return {t,src:"Claude"}} } } }catch(e){}
+  try{ const r=await fetch("https://api.mymemory.translated.net/get?langpair=fr%7Cuk&q="+encodeURIComponent(text)); const j=await r.json(); const t=j&&j.responseData&&j.responseData.translatedText; if(t&&+j.responseStatus===200&&!/MYMEMORY WARNING/i.test(t)){keep(t);return {t,src:"MyMemory"}} }catch(e){}
+  return null;
+}
+function wordAt(x,y){
+  const el=document.elementFromPoint(x,y); if(!el||!el.closest("main")||el.closest(".trpop")) return null;
+  const host=el.closest(".qtext,.opt,.expl,.fq,.fa,p,li,td,th,summary,h1,h2,h3,.note,.tag,span,b,div")||el;
+  const walker=document.createTreeWalker(host,NodeFilter.SHOW_TEXT); let n; const re=/[\p{L}\p{M}'’-]+/gu;
+  while((n=walker.nextNode())){ re.lastIndex=0; let m; while((m=re.exec(n.data))){ const r=document.createRange(); r.setStart(n,m.index); r.setEnd(n,m.index+m[0].length);
+    for(const rc of r.getClientRects()){ if(x>=rc.left-3&&x<=rc.right+3&&y>=rc.top-3&&y<=rc.bottom+3){ const word=m[0].replace(/^[-'’]+|[-'’]+$/g,""); return word.length>1?{word,range:r,el:host}:null } } } }
+  return null;
+}
+function sentenceOf(el){ let b=el.closest(".qtext,.opt,.expl,.fq,.fa,p,li,td,summary,h1,h2,h3")||el; if(b.classList.contains("opt")) b=b.querySelector("span:last-child")||b; return (b.textContent||"").replace(/\s+/g," ").trim().slice(0,400) }
+function trClose(){ const p=$("#trpop"); p.hidden=true; try{CSS.highlights&&CSS.highlights.delete("trword")}catch(e){} }
+async function showTr(w){
+  const p=$("#trpop"); try{ if(window.CSS&&CSS.highlights&&window.Highlight) CSS.highlights.set("trword",new Highlight(w.range)) }catch(e){}
+  const sent=sentenceOf(w.el); const g=glossLookup(w.word);
+  p.innerHTML=`<div class="row" style="justify-content:space-between;align-items:baseline"><span class="trw" lang="fr">${esc(w.word)}</span><span class="trsrc" id="trsrc">${g?"СЛОВНИК":"…"}</span></div>
+   <div class="trt" id="trt">${g?esc(g):"Перекладаю…"}</div>
+   ${sent&&sent.toLowerCase()!==w.word.toLowerCase()?`<div id="trsent"></div>`:""}
+   <div class="row" style="justify-content:space-between">${sent&&sent.toLowerCase()!==w.word.toLowerCase()?`<button class="btn ghost small" id="trsbtn">Перекласти речення</button>`:"<span></span>"}<button class="btn small" id="trclose">Закрити</button></div>`;
+  p.hidden=false;
+  $("#trclose").onclick=trClose;
+  const sb=$("#trsbtn"); if(sb) sb.onclick=async()=>{ sb.disabled=true; sb.textContent="Перекладаю…"; const r=await trOnline(sent); $("#trsent").innerHTML=r?`<div class="trs">${esc(r.t)}</div>`:`<div class="trs">Немає з'єднання: переклад речення недоступний.</div>`; sb.remove() };
+  if(!g){ const r=await trOnline(w.word); if(p.hidden) return; $("#trt").textContent=r?r.t:"Немає перекладу офлайн. Підключіться до інтернету, щоб перекласти це слово."; $("#trsrc").textContent=r?r.src.toUpperCase():"ОФЛАЙН"; }
+}
+(function(){
+  let lp=null, fired=false;
+  document.addEventListener("touchstart",e=>{ if(e.touches.length!==1){if(lp)clearTimeout(lp.t);lp=null;return} const t=e.touches[0],x=t.clientX,y=t.clientY;
+    if(lp) clearTimeout(lp.t); lp={x,y,t:setTimeout(()=>{ const w=wordAt(x,y); if(w){fired=true; if(navigator.vibrate) try{navigator.vibrate(10)}catch(_){}; showTr(w)} lp=null },480)} },{passive:true});
+  document.addEventListener("touchmove",e=>{ if(!lp) return; const t=e.touches[0]; if(Math.hypot(t.clientX-lp.x,t.clientY-lp.y)>10){clearTimeout(lp.t);lp=null} },{passive:true});
+  document.addEventListener("touchend",e=>{ if(lp){clearTimeout(lp.t);lp=null} if(fired){ if(e.cancelable) e.preventDefault(); setTimeout(()=>fired=false,400) } },{passive:false});
+  document.addEventListener("click",e=>{ if(fired){e.preventDefault();e.stopPropagation()} },true);
+  document.addEventListener("contextmenu",e=>{ const w=wordAt(e.clientX,e.clientY); if(w){e.preventDefault(); showTr(w)} });
+  document.addEventListener("pointerdown",e=>{ const p=$("#trpop"); if(!p.hidden&&!p.contains(e.target)&&!lp) trClose() },true);
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape") trClose() });
+  window.addEventListener("hashchange",trClose);
+})();
 
 /* ---------- PROGRESS ---------- */
 let heatTheme="all", heatSel=null;
