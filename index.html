@@ -1983,8 +1983,10 @@ function themeBars(){
 
 /* ---------- EXAM ---------- */
 let exam = lsGet(LS_EXAM);
-function buildExam(){
-  const items=[];
+let examKind=(()=>{try{return localStorage.getItem("civique.examkind")||"off"}catch(e){return "off"}})();
+const extraShare=k=>Math.round(k/4); // élargi: about a quarter of knowledge questions from extras
+function buildExam(kind){
+  kind=kind||examKind; const items=[];
   TK.forEach(t=>{
     const cfg=THEMES[t].exam;
     const kn=Object.values(BANK).filter(q=>q.t===t&&!q.sit&&!q.extra&&!(q.vk>1));
@@ -1992,11 +1994,13 @@ function buildExam(){
     // favour questions not yet mastered
     const w=q=>({u:3,w:4,l:2,m:1})[status(q.id)];
     const gw=q=>q.group? Math.max(...variantsOf(q.group).map(w)) : w(q);
-    pick(kn,cfg.k,gw).forEach(q=>items.push(q.group? pick(variantsOf(q.group),1,w)[0].id : q.id));
+    const nx= kind==="large"? extraShare(cfg.k) : 0;
+    if(nx){ const ex=Object.values(BANK).filter(q=>q.t===t&&q.extra); pick(ex,nx,w).forEach(q=>items.push(q.id)); }
+    pick(kn,cfg.k-nx,gw).forEach(q=>items.push(q.group? pick(variantsOf(q.group),1,w)[0].id : q.id));
     pick(si,cfg.s,w).forEach(q=>items.push(q.id));
   });
   const ids=shuffle(items);
-  return {ids, order:ids.map(()=>shuffle([0,1,2,3])), ans:ids.map(()=>null), cur:0, start:Date.now(), done:false};
+  return {ids, kind, order:ids.map(()=>shuffle([0,1,2,3])), ans:ids.map(()=>null), cur:0, start:Date.now(), done:false};
 }
 let tick=null;
 function vExam(){
@@ -2005,9 +2009,13 @@ function vExam(){
     $("#view").innerHTML=`<div class="stack" style="gap:24px">
      <div class="stack"><span class="eyebrow">Examen blanc</span><h1>Conditions du jour J</h1>
      <p class="lead">40 questions tirées selon la répartition de l'arrêté du 10 octobre 2025 : 11 sur les valeurs (dont 6 mises en situation), 6 sur les institutions, 11 sur les droits et devoirs (dont 6 mises en situation), 8 sur l'histoire et la géographie, 4 sur la vie en société. Correction à la fin uniquement.</p></div>
+     <div class="panel stack"><span class="eyebrow">Type d'examen</span>
+      <div class="seg" id="ekind"><button data-ek="off" aria-pressed="${examKind==="off"}">Officiel</button><button data-ek="large" aria-pressed="${examKind==="large"}">Élargi</button></div>
+      <p class="note">${examKind==="off"?"Questions de connaissances tirées uniquement de la liste officielle des 258 questions (et de leurs variantes).":"Même répartition, mais 7 des 28 questions de connaissances viennent des compléments : livret du citoyen 2026, régions, pièges fréquents, retours de candidats et listes CSP/CR. Utile car des candidats signalent des questions hors liste."}</p></div>
      <div class="panel">${examTable()}</div>
      <div class="row"><button class="btn" id="startEx">Commencer (45 min)</button></div>
      <p class="note">Les questions que vous ne maîtrisez pas encore sortent plus souvent. Une réponse fausse ou absente vaut 0, sans pénalité.</p></div>`;
+    document.querySelectorAll("[data-ek]").forEach(b=>b.onclick=()=>{examKind=b.dataset.ek; try{localStorage.setItem("civique.examkind",examKind)}catch(e){} vExam()});
     $("#startEx").onclick=()=>{exam=buildExam();lsSet(LS_EXAM,exam);window.scrollTo({top:0});vExam()};
     return;
   }
@@ -2018,7 +2026,7 @@ function vExam(){
 function examTable(){
   return `<div class="tablebox"><table class="sum"><tr><th>Thème</th><th class="r" title="Questions de connaissances">Connais.</th><th class="r" title="Mises en situation">Situations</th><th class="r">Total</th></tr>
   ${TK.map(t=>{const c=THEMES[t].exam;return `<tr><td>${THEMES[t].name}</td><td class="r">${c.k}</td><td class="r">${c.s}</td><td class="r">${c.k+c.s}</td></tr>`}).join("")}
-  <tr><td><b>Total</b></td><td class="r"><b>28</b></td><td class="r"><b>12</b></td><td class="r"><b>40</b></td></tr></table></div><p class="note">Connais. : questions de connaissances, tirées de la liste officielle. Situations : mises en situation.</p>`;
+  <tr><td><b>Total</b></td><td class="r"><b>28</b></td><td class="r"><b>12</b></td><td class="r"><b>40</b></td></tr></table></div><p class="note">Connais. : questions de connaissances${examKind==="large"?" (dont un quart de compléments hors liste)":", tirées de la liste officielle"}. Situations : mises en situation.</p>`;
 }
 const remaining=()=>Math.max(0,45*60-Math.floor((Date.now()-exam.start)/1000));
 const mmss=s=>String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
@@ -2061,7 +2069,7 @@ function finishExam(){
   let score=0; const by={}; TK.forEach(t=>by[t]=[0,0]); let sit=[0,0];
   exam.ids.forEach((id,k)=>{const q=BANK[id], ok=exam.ans[k]===0; if(ok)score++; by[q.t][1]++; if(ok)by[q.t][0]++; if(q.sit){sit[1]++; if(ok)sit[0]++} record(id,ok)});
   exam.done=true; exam.score=score; exam.dur=Math.min(45*60,Math.floor((Date.now()-exam.start)/1000)); exam.reviewIdx=null;
-  state.exams.push({date:Date.now(),score,dur:exam.dur,by,sit});
+  state.exams.push({date:Date.now(),score,dur:exam.dur,by,sit,kind:exam.kind||"off"});
   if(state.exams.length>200) state.exams=state.exams.slice(-200);
   save(); lsSet(LS_EXAM,exam); vResult();
 }
@@ -2073,7 +2081,7 @@ function vResult(){
   $("#view").innerHTML=`<div class="stack" style="gap:24px">
    <div class="attest stack">
     <div class="seal ${ok?"ok":"ko"}">${ok?"RÉUSSI":"À<br>RETRAVAILLER"}</div>
-    <span class="eyebrow">Résultat de l'examen blanc · ${fmtDate(Date.now())}</span>
+    <span class="eyebrow">Résultat de l'examen blanc${exam.kind==="large"?" élargi":""} · ${fmtDate(Date.now())}</span>
     <div class="score num">${exam.score}<small>/40</small></div>
     <p>${ok?`Au-dessus du seuil de 32. Visez une marge de quelques points avant le jour J.`:`Il manque ${32-exam.score} bonne${32-exam.score>1?"s":""} réponse${32-exam.score>1?"s":""} pour atteindre le seuil de 32.`} Durée : ${Math.round(exam.dur/60)} min.</p>
     <table class="sum"><tr><th>Thème</th><th class="r">Score</th></tr>
@@ -2085,7 +2093,7 @@ function vResult(){
    <div class="stack">${shown.length? shown.map(r=>qCard(BANK[r.id],exam.order[r.k],exam.ans[r.k],true)).join("") : `<div class="empty">Aucune erreur. Bravo.</div>`}</div>
    <div class="row"><button class="btn" id="again">Nouvel examen blanc</button><a class="btn ghost" href="#entrainement" id="toMist" style="text-decoration:none">Revoir mes erreurs</a></div></div>`;
   document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{resultFilter=b.dataset.f;vResult()});
-  $("#again").onclick=()=>{exam=buildExam();lsSet(LS_EXAM,exam);window.scrollTo(0,0);vExam()};
+  $("#again").onclick=()=>{exam=buildExam(exam.kind);lsSet(LS_EXAM,exam);window.scrollTo(0,0);vExam()};
   $("#toMist").onclick=()=>{trainCfg.mode="mistakes"};
 }
 
