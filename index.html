@@ -90,6 +90,7 @@ p{margin:0}
 .tag.sit{background:var(--rouge-soft);color:var(--rouge)}
 .tag.ext{background:var(--warn-soft);color:var(--warn)}
 .tag.src{background:var(--bleu-soft);color:var(--bleu)}
+.tag.trap{background:var(--warn-soft);color:var(--warn)}
 .tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max-width:70ch}
 .qtext{font-family:var(--font-display);font-size:1.3rem;font-weight:500;margin-bottom:18px;text-wrap:pretty}
 .opts{display:flex;flex-direction:column;gap:10px}
@@ -204,6 +205,44 @@ button,a,.opt,summary{touch-action:manipulation;-webkit-tap-highlight-color:tran
   .gauge{font-size:2.8rem}
   details.fiche summary{min-height:48px}
 }
+
+.toolnav{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px}
+.toolnav a{font-weight:700;font-size:.92rem;padding:8px 12px;border-radius:8px;color:var(--muted);text-decoration:none}
+.toolnav a[aria-current="page"]{color:var(--bleu);background:var(--bleu-soft)}
+.modecards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.modecards a{display:flex;flex-direction:column;gap:4px;padding:14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--fg);background:var(--sunk)}
+.modecards a b{color:var(--bleu)} .modecards a span{font-size:.9rem;color:var(--muted)}
+@media (max-width:640px){.modecards{grid-template-columns:1fr}}
+.tl{display:flex;flex-direction:column;gap:20px}
+.tlper h3{margin:0 0 8px;font-size:1rem;color:var(--rouge)}
+.tlper ol{list-style:none;margin:0;padding:0 0 0 14px;border-left:3px solid var(--bleu-soft);display:flex;flex-direction:column;gap:6px}
+.tlper li{position:relative}
+.tlper li::before{content:"";position:absolute;left:-21px;top:16px;width:11px;height:11px;border-radius:50%;background:var(--bleu);border:2px solid var(--surface)}
+.tlev{font:inherit;display:grid;grid-template-columns:minmax(84px,auto) 1fr;gap:10px;align-items:baseline;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--fg);cursor:pointer}
+.tlev[aria-expanded="true"]{border-color:var(--bleu)}
+.tly{font-family:var(--font-mono);font-weight:700;color:var(--bleu);font-size:.85rem}
+.tlx{margin:6px 0 4px 12px;color:var(--muted);font-size:.95rem}
+.ordlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.ord{font:inherit;display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);cursor:pointer;min-height:52px}
+.ord.sel{border-color:var(--bleu);background:var(--bleu-soft)}
+.ord.good{border-color:var(--ok);background:var(--ok-soft)} .ord.bad{border-color:var(--rouge);background:var(--rouge-soft)}
+.ordn{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:700;border:1px solid var(--line);background:var(--surface);font-family:var(--font-mono)}
+.btn[disabled]{opacity:.45;cursor:default}
+.frmap{width:100%;height:auto;max-height:72vh;display:block;touch-action:manipulation}
+.frmap .rg{fill:var(--sunk);stroke:var(--muted);stroke-width:.9;cursor:pointer;transition:fill .12s}
+@media (hover:hover){.frmap .rg:hover{fill:var(--bleu-soft)}}
+.frmap .rg.good{fill:var(--ok)} .frmap .rg.bad{fill:var(--rouge)} .frmap .rg.target{fill:var(--bleu)}
+.frmap .rg.lv-m{fill:var(--ok-soft);stroke:var(--ok)} .frmap .rg.lv-l{fill:var(--warn-soft);stroke:var(--warn)} .frmap .rg.lv-w{fill:var(--rouge-soft);stroke:var(--rouge)}
+.frmap .rg.target.lv-m,.frmap .rg.target.lv-l,.frmap .rg.target.lv-w{fill:var(--bleu)}
+.omframe{fill:none;stroke:var(--line)}
+.omlab{font-size:11px;text-anchor:middle;fill:var(--muted);font-family:inherit}
+.maplab{font-size:12px;font-weight:700;text-anchor:middle;dominant-baseline:middle;fill:var(--fg);paint-order:stroke;stroke:var(--surface);stroke-width:3px;pointer-events:none}
+.mapq{font-size:1.15rem;margin:0}
+.okline{color:var(--ok);font-weight:600;margin:0} .badline{color:var(--rouge);font-weight:600;margin:0}
+.mars .mline{margin:0;font-size:1.05rem;font-weight:600}
+.muk{display:block;font-weight:400;font-size:.9rem;color:var(--muted)}
+.mnote{margin:2px 0 8px;padding:8px 10px;border-left:3px solid var(--rouge);background:var(--sunk);font-size:.92rem;border-radius:0 6px 6px 0}
+.blank{display:inline-block;min-width:4em;border-bottom:2px solid var(--bleu);color:transparent}
 </style>
 </head>
 <body>
@@ -311,7 +350,7 @@ const Q = [
 [78,"I","Quel est le rôle du Défenseur des droits ?",["Défendre les droits des personnes face aux administrations et lutter contre les discriminations","Défendre les accusés devant le tribunal","Voter les lois","Diriger la police"],"Autorité indépendante créée en 2011, saisissable gratuitement par toute personne."],
 [79,"I","En quelle année la citoyenneté européenne a-t-elle été créée ?",["1992","1957","1945","2004"],"Créée par le traité de Maastricht, signé en 1992."],
 [80,"I","Quel est le dernier État à avoir intégré l'Union européenne en 2013 ?",["La Croatie","La Pologne","La Grèce","Le Portugal"],"La Croatie est devenue le 28e membre le 1er juillet 2013."],
-[81,"P","Quelle est la devise de l'Union européenne ?",["Unie dans la diversité","Liberté, Égalité, Fraternité","Un pour tous, tous pour un","L'union fait la force"],"Devise adoptée en 2000."],
+[81,"P","Quelle est la devise de l'Union européenne ?",["Unie dans la diversité","Liberté, Égalité, Fraternité","Un pour tous, tous pour un","L'union fait la force"],"Devise adoptée en 2000 (le livret 2026 écrit « 2020 » : c'est une coquille)."],
 [82,"I","Qui a composé l'hymne de l'Union européenne ?",["Ludwig van Beethoven","Mozart","Rouget de Lisle","Chopin"],"L'hymne européen reprend le prélude de l'Ode à la joie, de la 9e symphonie de Beethoven."],
 [83,"I","Quand est célébrée la journée de l'Europe ?",["Le 9 mai","Le 14 juillet","Le 1er janvier","Le 11 novembre"],"En souvenir de la déclaration Schuman du 9 mai 1950."],
 [84,"I","Où est le siège de la Banque centrale européenne ?",["À Francfort","À Paris","À Bruxelles","À Luxembourg"],"La BCE, à Francfort (Allemagne), gère l'euro."],
@@ -469,7 +508,7 @@ const Q = [
 [236,"V","Travailler sans être déclaré est :",["Interdit : c'est du travail dissimulé, puni pour l'employeur comme pour le salarié","Autorisé pour les petits travaux","Recommandé pour éviter les impôts","Autorisé pour les étrangers"],"Le salarié non déclaré n'a ni protection sociale, ni droits au chômage ou à la retraite."],
 [237,"V","Qu'est-ce que le SMIC ?",["Le salaire minimum interprofessionnel de croissance, que tout employeur doit respecter","Une aide sociale","Un impôt","Une assurance chômage"],"Revalorisé au moins chaque 1er janvier."],
 [238,"V","Quelle est la première démarche à réaliser pour chercher un emploi ?",["S'inscrire à France Travail (ex-Pôle emploi)","Aller à la préfecture","S'inscrire à la CAF","Demander au maire"],"France Travail accompagne les demandeurs d'emploi et verse les allocations chômage."],
-[239,"V","Quelle est la durée légale du temps de travail par semaine ?",["35 heures","39 heures","40 heures","48 heures"],"Au-delà : heures supplémentaires majorées. La durée maximale absolue est de 48 heures par semaine."],
+[239,"V","Quelle est la durée légale du temps de travail par semaine ?",["35 heures","39 heures","40 heures","48 heures"],"Attention au piège : la durée légale est de 35 heures (au-delà, heures supplémentaires majorées), mais la durée maximale est de 48 heures par semaine (44 heures en moyenne sur 12 semaines)."],
 [240,"V","Qui peut demander un congé parental d'éducation ?",["La mère comme le père, s'il a au moins un an d'ancienneté dans l'entreprise","Uniquement la mère","Uniquement le père","Uniquement les fonctionnaires"],"Il permet d'interrompre ou réduire son activité pour élever un enfant de moins de 3 ans."],
 [241,"V","Une personne étrangère en situation régulière peut créer son entreprise :",["Oui, si son titre de séjour le permet","Non, jamais","Seulement après 20 ans de résidence","Seulement avec un associé français"],"La plupart des titres de séjour autorisent l'activité commerciale ou indépendante."],
 [242,"V","Une femme peut-elle créer son entreprise ?",["Oui, exactement comme un homme","Non","Seulement avec l'accord de son mari","Seulement si elle n'a pas d'enfants"],"Depuis 1965, une femme mariée peut exercer une profession sans l'autorisation de son mari."],
@@ -1122,6 +1161,28 @@ X66:[["Le masque obligatoire en épidémie","L'interdiction de lire un journal",
 });
 Object.assign(VAROVR,{216:["Poser des étagères"],222:["Le 112"]});
 
+// Trap pairs: near-identical questions whose answers differ. Source tag "t".
+X.push(
+["X67","H","Depuis quelle année les femmes ont-elles le droit de vote en France ?",["1944","1936","1946","1958"],"Ordonnance du 21 avril 1944. Ne pas confondre avec 1945, l'année où elles votent pour la première fois, ni avec 1936 (Front populaire : congés payés).","t"],
+["X68","H","En quelle année les femmes ont-elles voté pour la première fois en France ?",["1945","1944","1936","1946"],"Aux élections municipales du 29 avril 1945. Le droit de vote leur a été accordé en 1944.","t"],
+["X69","V","Quelle est la durée maximale du travail sur une semaine en France ?",["48 heures","35 heures","39 heures","44 heures"],"La durée légale est de 35 heures (au-delà, heures supplémentaires). La durée maximale absolue est de 48 heures, ou 44 heures en moyenne sur 12 semaines.","t"],
+["X70","V","Quelle est la durée maximale de travail par jour, en règle générale ?",["10 heures","8 heures","7 heures","12 heures"],"Avec au moins 11 heures de repos entre deux journées de travail.","t"],
+["X71","V","Combien de semaines de congés payés un salarié a-t-il au minimum par an ?",["5 semaines","4 semaines","3 semaines","6 semaines"],"Les congés payés ont été créés en 1936 (2 semaines) par le Front populaire ; 5 semaines depuis 1982.","t"],
+["X72","H","Quelle grande avancée sociale date du Front populaire, en 1936 ?",["Les congés payés","Le droit de vote des femmes","La Sécurité sociale","Le SMIC"],"Le droit de vote des femmes date de 1944, la Sécurité sociale de 1945.","t"],
+["X73","I","Combien y a-t-il de départements en France métropolitaine ?",["96","101","95","13"],"96 en métropole + 5 en outre-mer = 101 départements.","t"],
+["X74","V","Jusqu'à quel âge la formation est-elle obligatoire pour les jeunes ?",["18 ans","16 ans","21 ans","15 ans"],"L'instruction est obligatoire de 3 à 16 ans ; ensuite, une obligation de formation s'applique jusqu'à 18 ans.","t"],
+["X75","I","Avant la réforme de 2000, quelle était la durée du mandat présidentiel ?",["7 ans","5 ans","6 ans","4 ans"],"Le septennat a été remplacé par le quinquennat (5 ans) par le référendum de 2000.","t"],
+["X76","I","À quel rythme le Sénat est-il renouvelé ?",["Par moitié tous les 3 ans","Entièrement tous les 6 ans","Entièrement tous les 5 ans","Par tiers tous les 2 ans"],"Les sénateurs sont élus pour 6 ans ; la moitié des sièges est renouvelée tous les 3 ans.","t"],
+["X77","H","En quelle année l'esclavage a-t-il été aboli une première fois, avant d'être rétabli ?",["1794","1848","1789","1802"],"Aboli en 1794 par la Convention, rétabli par Napoléon en 1802, aboli définitivement en 1848.","t"],
+["X78","H","En quelle année le suffrage universel masculin a-t-il été instauré ?",["1848","1789","1944","1870"],"Sous la IIe République. Le suffrage devient vraiment universel en 1944 avec le vote des femmes.","t"],
+["X79","H","En quelle année la loi Veil autorisant l'IVG a-t-elle été adoptée ?",["1975","1967","1981","1944"],"1967 : loi Neuwirth sur la contraception ; 1981 : abolition de la peine de mort.","t"],
+["X80","H","En quelle année la peine de mort a-t-elle été abolie en France ?",["1981","1975","1958","1905"],"Loi du 9 octobre 1981, portée par Robert Badinter sous François Mitterrand.","t"],
+["X81","I","Depuis quelle année la majorité (et le droit de vote) est-elle fixée à 18 ans ?",["1974","1944","1958","1981"],"Avant 1974, la majorité était à 21 ans.","t"],
+["X82","V","Depuis quelle année une femme mariée peut-elle ouvrir un compte bancaire et travailler sans l'accord de son mari ?",["1965","1944","1975","1946"],"Loi du 13 juillet 1965 sur les régimes matrimoniaux.","t"],
+["X83","V","Depuis quelle année le mariage est-il ouvert aux couples de même sexe ?",["2013","1999","2001","2021"],"Loi du 17 mai 2013. Le PACS existe depuis 1999.","t"],
+["X84","H","Combien de pays ont fondé la construction européenne en 1951 ?",["6","12","9","27"],"France, Allemagne de l'Ouest, Italie, Belgique, Pays-Bas, Luxembourg (CECA).","t"]
+);
+
 const FICHES = {
 P: [
  ["La devise et les symboles", `<ul>
@@ -1291,7 +1352,7 @@ V: [
  <li>Contraception libre (gratuite avant 26 ans) ; IVG jusqu'à 14 semaines, liberté inscrite dans la Constitution en 2024.</li>
  <li>Urgences : 15 (SAMU), 17, 18, 112.</li></ul>`],
  ["Travail", `<ul>
- <li>Durée légale : <b>35 heures</b> par semaine. <b>SMIC</b> : salaire minimum.</li>
+ <li>Durée <b>légale</b> : <b>35 heures</b> par semaine ; durée <b>maximale</b> : <b>48 heures</b> (10 h par jour). 5 semaines de congés payés (créés en 1936). <b>SMIC</b> : salaire minimum.</li>
  <li>Chercher un emploi : s'inscrire à <b>France Travail</b>.</li>
  <li>Travail non déclaré : illégal, aucune protection.</li>
  <li>Règles : Code du travail, conventions collectives, contrat. Litiges : <b>conseil de prud'hommes</b>.</li>
@@ -1304,6 +1365,430 @@ V: [
  <li>Encombrants : déchetterie ou reprise par le vendeur, jamais sur le trottoir.</li>
  <li>Places handicapées : réservées aux titulaires de la carte (amende de 135 €).</li></ul>`]
 ]
+};
+
+// Regions: overseas capitals, reverse questions (capital → region), big cities → region. IDs "R…" never change.
+const REGIONS = [
+ ["Auvergne-Rhône-Alpes","Lyon","Grenoble, Clermont-Ferrand, Saint-Étienne, Annecy"],
+ ["Bourgogne-Franche-Comté","Dijon","Besançon, Belfort, Auxerre"],
+ ["Bretagne","Rennes","Brest, Quimper, Saint-Malo, Lorient"],
+ ["Centre-Val de Loire","Orléans","Tours, Bourges, Chartres, Blois"],
+ ["Corse","Ajaccio","Bastia"],
+ ["Grand Est","Strasbourg","Metz, Nancy, Reims, Mulhouse"],
+ ["Hauts-de-France","Lille","Amiens, Calais, Dunkerque, Roubaix"],
+ ["Île-de-France","Paris","Versailles, Boulogne-Billancourt, Saint-Denis"],
+ ["Normandie","Rouen","Caen, Le Havre, Cherbourg"],
+ ["Nouvelle-Aquitaine","Bordeaux","Limoges, Poitiers, La Rochelle, Pau"],
+ ["Occitanie","Toulouse","Montpellier, Nîmes, Perpignan"],
+ ["Pays de la Loire","Nantes","Angers, Le Mans, Saint-Nazaire"],
+ ["Provence-Alpes-Côte d'Azur","Marseille","Nice, Toulon, Avignon, Aix-en-Provence"],
+ ["Guadeloupe","Basse-Terre","Pointe-à-Pitre"],
+ ["Martinique","Fort-de-France","Le Lamentin"],
+ ["Guyane","Cayenne","Kourou, Saint-Laurent-du-Maroni"],
+ ["La Réunion","Saint-Denis","Saint-Pierre, Saint-Paul"],
+ ["Mayotte","Mamoudzou","Dzaoudzi"]
+];
+X.push(
+// overseas regional capitals
+["R1","H","Quel est le chef-lieu de la Guadeloupe ?",["Basse-Terre","Pointe-à-Pitre","Fort-de-France","Cayenne"],"Pointe-à-Pitre est la plus grande ville, mais la préfecture est à Basse-Terre.",""],
+["R2","H","Quel est le chef-lieu de la Martinique ?",["Fort-de-France","Basse-Terre","Saint-Pierre","Cayenne"],"Saint-Pierre était l'ancienne capitale, détruite par l'éruption de la montagne Pelée en 1902.",""],
+["R3","H","Quel est le chef-lieu de la Guyane ?",["Cayenne","Kourou","Saint-Laurent-du-Maroni","Fort-de-France"],"Kourou accueille le Centre spatial guyanais.",""],
+["R4","H","Quel est le chef-lieu de La Réunion ?",["Saint-Denis","Saint-Pierre","Saint-Paul","Mamoudzou"],"À ne pas confondre avec Saint-Denis en Île-de-France.",""],
+["R5","H","Quel est le chef-lieu de Mayotte ?",["Mamoudzou","Saint-Denis","Dzaoudzi","Cayenne"],"Mayotte est devenue le 101e département en 2011.",""],
+// reverse: capital → region
+["R6","H","Lyon est le chef-lieu de quelle région ?",["Auvergne-Rhône-Alpes","Bourgogne-Franche-Comté","Provence-Alpes-Côte d'Azur","Occitanie"],"",""],
+["R7","H","Dijon est le chef-lieu de quelle région ?",["Bourgogne-Franche-Comté","Grand Est","Centre-Val de Loire","Auvergne-Rhône-Alpes"],"",""],
+["R8","H","Rennes est le chef-lieu de quelle région ?",["Bretagne","Normandie","Pays de la Loire","Centre-Val de Loire"],"",""],
+["R9","H","Orléans est le chef-lieu de quelle région ?",["Centre-Val de Loire","Pays de la Loire","Île-de-France","Bourgogne-Franche-Comté"],"",""],
+["R10","H","Strasbourg est le chef-lieu de quelle région ?",["Grand Est","Hauts-de-France","Bourgogne-Franche-Comté","Normandie"],"Strasbourg accueille aussi le Parlement européen.",""],
+["R11","H","Lille est le chef-lieu de quelle région ?",["Hauts-de-France","Grand Est","Normandie","Île-de-France"],"",""],
+["R12","H","Rouen est le chef-lieu de quelle région ?",["Normandie","Hauts-de-France","Bretagne","Île-de-France"],"",""],
+["R13","H","Bordeaux est le chef-lieu de quelle région ?",["Nouvelle-Aquitaine","Occitanie","Pays de la Loire","Centre-Val de Loire"],"",""],
+["R14","H","Toulouse est le chef-lieu de quelle région ?",["Occitanie","Nouvelle-Aquitaine","Provence-Alpes-Côte d'Azur","Auvergne-Rhône-Alpes"],"",""],
+["R15","H","Nantes est le chef-lieu de quelle région ?",["Pays de la Loire","Bretagne","Nouvelle-Aquitaine","Centre-Val de Loire"],"Nantes faisait historiquement partie de la Bretagne, mais elle est aujourd'hui en Pays de la Loire.",""],
+["R16","H","Marseille est le chef-lieu de quelle région ?",["Provence-Alpes-Côte d'Azur","Occitanie","Auvergne-Rhône-Alpes","Corse"],"",""],
+["R17","H","Ajaccio est le chef-lieu de quelle collectivité ?",["La Corse","Provence-Alpes-Côte d'Azur","Occitanie","La Réunion"],"La Corse est une collectivité territoriale à statut particulier.",""],
+// big cities → region
+["R18","H","Dans quelle région se trouve Montpellier ?",["Occitanie","Provence-Alpes-Côte d'Azur","Nouvelle-Aquitaine","Auvergne-Rhône-Alpes"],"Montpellier était le chef-lieu de l'ancienne région Languedoc-Roussillon.",""],
+["R19","H","Dans quelle région se trouve Nice ?",["Provence-Alpes-Côte d'Azur","Occitanie","Auvergne-Rhône-Alpes","Corse"],"",""],
+["R20","H","Dans quelle région se trouve Grenoble ?",["Auvergne-Rhône-Alpes","Provence-Alpes-Côte d'Azur","Bourgogne-Franche-Comté","Grand Est"],"",""],
+["R21","H","Dans quelle région se trouve Clermont-Ferrand ?",["Auvergne-Rhône-Alpes","Nouvelle-Aquitaine","Occitanie","Centre-Val de Loire"],"Ancien chef-lieu de la région Auvergne.",""],
+["R22","H","Dans quelle région se trouve Brest ?",["Bretagne","Normandie","Pays de la Loire","Nouvelle-Aquitaine"],"",""],
+["R23","H","Dans quelle région se trouve Le Havre ?",["Normandie","Hauts-de-France","Bretagne","Île-de-France"],"Le Havre est l'un des plus grands ports de France.",""],
+["R24","H","Dans quelle région se trouve Caen ?",["Normandie","Bretagne","Pays de la Loire","Hauts-de-France"],"Les plages du débarquement sont près de Caen.",""],
+["R25","H","Dans quelle région se trouve Reims ?",["Grand Est","Hauts-de-France","Île-de-France","Bourgogne-Franche-Comté"],"Ville du sacre des rois de France.",""],
+["R26","H","Dans quelle région se trouvent Metz et Nancy ?",["Grand Est","Hauts-de-France","Bourgogne-Franche-Comté","Centre-Val de Loire"],"Ce sont les deux grandes villes de Lorraine.",""],
+["R27","H","Dans quelle région se trouve Amiens ?",["Hauts-de-France","Normandie","Grand Est","Île-de-France"],"Ancien chef-lieu de la région Picardie.",""],
+["R28","H","Dans quelle région se trouve Besançon ?",["Bourgogne-Franche-Comté","Grand Est","Auvergne-Rhône-Alpes","Centre-Val de Loire"],"Ancien chef-lieu de la région Franche-Comté.",""],
+["R29","H","Dans quelle région se trouve Tours ?",["Centre-Val de Loire","Pays de la Loire","Nouvelle-Aquitaine","Bretagne"],"Ville des châteaux de la Loire.",""],
+["R30","H","Dans quelle région se trouve Limoges ?",["Nouvelle-Aquitaine","Occitanie","Auvergne-Rhône-Alpes","Centre-Val de Loire"],"Ancien chef-lieu de la région Limousin.",""],
+["R31","H","Dans quelle région se trouvent Poitiers et La Rochelle ?",["Nouvelle-Aquitaine","Pays de la Loire","Centre-Val de Loire","Bretagne"],"",""],
+["R32","H","Dans quelle région se trouve Angers ?",["Pays de la Loire","Centre-Val de Loire","Bretagne","Normandie"],"",""],
+["R33","H","Dans quelle région se trouve Perpignan ?",["Occitanie","Provence-Alpes-Côte d'Azur","Nouvelle-Aquitaine","Corse"],"Près de la frontière espagnole.",""],
+["R34","H","Dans quelle région se trouvent Toulon et Avignon ?",["Provence-Alpes-Côte d'Azur","Occitanie","Auvergne-Rhône-Alpes","Corse"],"",""],
+["R35","H","Dans quelle région se trouve Versailles ?",["Île-de-France","Centre-Val de Loire","Normandie","Hauts-de-France"],"",""],
+["R36","H","Dans quelle région se trouve Saint-Étienne ?",["Auvergne-Rhône-Alpes","Bourgogne-Franche-Comté","Occitanie","Centre-Val de Loire"],"",""],
+["R37","H","Dans quelle région se trouve Pointe-à-Pitre ?",["Guadeloupe","Martinique","Guyane","La Réunion"],"",""]
+);
+// all region questions (old and new) for the "Régions" filter
+const REGION_IDS = new Set(["209","210","211","X1","X2","X3","X4","X5","X6","X7","X8","X9","X10","X41","X42","207"]);
+
+// Livret du citoyen, édition mai 2026: questions added after a full read of the livret. IDs "L…" never change.
+X.push(
+// ── Principes : laïcité, DDHC, Charte
+["L1","P","Le blasphème est-il un délit en France ?",["Non, c'est permis par la liberté d'expression","Oui, il est puni d'une amende de 135 euros","Oui, s'il vise une religion reconnue par l'État","Seulement s'il a lieu dans un lieu de culte"],"Chacun peut critiquer ou caricaturer une religion. Les limites visent la diffamation, l'injure, l'incitation à la haine, pas le blasphème.","l"],
+["L2","P","Le prosélytisme religieux (chercher à convaincre quelqu'un d'adopter sa religion) est :",["Autorisé sans pression, sauf dans les services publics","Interdit partout sur le territoire français, même dans la rue","Autorisé partout, y compris pour un agent public au guichet","Réservé aux ministres du culte déclarés en préfecture"],"On peut distribuer des tracts religieux dans la rue tant que l'ordre public n'est pas troublé, sans violence, menace ni pression.","l"],
+["L3","P","Que prévoit la loi du 11 octobre 2010 ?",["L'interdiction de dissimuler son visage dans l'espace public","L'interdiction des signes religieux dans la rue","La création de la journée nationale de la laïcité","L'ouverture du mariage aux couples de même sexe"],"Cagoule, masque, voile intégral… La loi vise à protéger l'ordre public.","l"],
+["L4","P","Dans quels territoires l'État a-t-il, pour des raisons historiques, des accords spéciaux avec certaines religions ?",["En Alsace et en Moselle","En Corse et en Bretagne","En Île-de-France","Dans les régions d'outre-mer"],"Le régime concordataire d'Alsace-Moselle est une exception à la loi de 1905.","l"],
+["L5","P","L'État peut-il payer la construction d'un nouveau lieu de culte ?",["Non, mais il peut restaurer un monument classé","Oui, si le conseil municipal en fait la demande","Oui, pour toutes les religions, à parts égales","Oui, mais seulement pour les cathédrales catholiques"],"L'État ne reconnaît, ne salarie ni ne subventionne aucun culte (loi de 1905).","l"],
+["L6","P","Une manifestation religieuse sur la voie publique (par exemple des prières de rue) :",["Peut être interdite si elle trouble l'ordre public","Est interdite en toutes circonstances","Est libre sans aucune limite ni condition","Doit être validée par un responsable religieux"],"Chacun peut montrer sa religion dans l'espace public, dans le respect de l'ordre public.","l"],
+["L7","P","Parmi ces propos, lequel est interdit par la loi ?",["Nier l'existence de la Shoah","Se moquer d'une religion","Critiquer le gouvernement","Publier une caricature d'un prophète"],"Le négationnisme (contester un crime contre l'humanité) est un délit.","l"],
+["L8","P","Quel texte le candidat à la naturalisation doit-il signer ?",["La Charte des droits et devoirs du citoyen français","La Déclaration universelle des droits de l'homme","Le préambule de la Constitution de 1946","Le règlement intérieur de la préfecture"],"Prévue par l'article 21-24 du Code civil ; elle figure en annexe du livret.","l"],
+["L9","P","Selon la Charte du citoyen, une personne devenue française peut perdre sa nationalité si :",["Elle commet des actes contraires aux intérêts de la France","Elle ne vote pas à deux élections de suite","Elle part vivre plus de cinq ans à l'étranger","Elle change de religion après sa naturalisation"],"Ou si elle s'est soustraite à ses obligations de défense (déchéance de nationalité).","l"],
+["L10","P","Selon l'article 4 de la DDHC, la liberté consiste à :",["Pouvoir faire tout ce qui ne nuit pas à autrui","Faire tout ce que l'on veut, sans aucune limite","Obéir sans discuter aux décisions du chef de l'État","Choisir soi-même les lois que l'on veut respecter"],"Les bornes de la liberté ne peuvent être fixées que par la loi.","l"],
+["L11","P","Selon l'article 9 de la DDHC, toute personne est :",["Présumée innocente jusqu'à sa condamnation","Présumée coupable jusqu'à la fin de son procès","Jugée différemment selon son origine sociale","Obligée de prouver elle-même son innocence"],"","l"],
+["L12","P","Selon l'article 16 de la DDHC, une société n'a pas de Constitution si :",["Les droits et la séparation des pouvoirs n'y sont pas garantis","Elle n'est pas gouvernée par un roi ou un empereur","Elle n'a pas choisi de religion officielle d'État","Elle ne possède pas d'armée nationale permanente"],"","l"],
+["L13","P","Quels droits naturels l'article 2 de la DDHC énumère-t-il ?",["La liberté, la propriété, la sûreté et la résistance à l'oppression","Le droit au travail, au logement et à une retraite","Le vote obligatoire, l'impôt et le service militaire","La santé gratuite, l'éducation et les congés payés"],"","l"],
+// ── Institutions, territoire, Europe, monde
+["L14","I","La pièce d'identité est-elle obligatoire pour voter ?",["Oui, sauf dans les communes de moins de 1 000 habitants","Non, la carte électorale suffit dans toutes les communes","Oui, mais uniquement pour l'élection présidentielle","Non, il suffit de donner son nom et son adresse"],"Dans les petites communes, le président du bureau de vote peut quand même demander de prouver son identité.","l"],
+["L15","I","Combien la France compte-t-elle de territoires d'outre-mer ?",["12","5","13","18"],"5 départements-régions (Guadeloupe, Martinique, Guyane, La Réunion, Mayotte) et 7 autres territoires (Nouvelle-Calédonie, Polynésie française, Saint-Martin, Saint-Barthélemy, Saint-Pierre-et-Miquelon, Wallis-et-Futuna, TAAF).","l"],
+["L16","I","Lequel de ces territoires n'est PAS un département-région d'outre-mer ?",["La Polynésie française","La Guadeloupe","La Réunion","La Martinique"],"La Polynésie est une collectivité d'outre-mer.","l"],
+["L17","I","Qu'est-ce que l'espace Schengen ?",["Une zone sans contrôle aux frontières intérieures","La zone des pays qui ont l'euro comme monnaie","L'alliance militaire des pays membres de l'OTAN","Le groupe des six pays fondateurs de l'Europe"],"","l"],
+["L18","I","Lequel de ces pays, qui n'est pas dans l'Union européenne, fait partie de l'espace Schengen ?",["La Suisse","Le Royaume-Uni","La Turquie","L'Ukraine"],"Les 4 États associés : Norvège, Islande, Suisse, Liechtenstein.","l"],
+["L19","I","En quelle année a été adoptée la Charte des droits fondamentaux de l'Union européenne ?",["2000","1957","1992","2020"],"","l"],
+["L20","I","Comment la Constitution de la Ve République a-t-elle été adoptée ?",["Par référendum, le 28 septembre 1958","Par un vote du Parlement en 1946","Par un décret du général de Gaulle","Par le Conseil constitutionnel en 1962"],"","l"],
+["L21","I","La France est membre permanent du Conseil de sécurité de l'ONU. Que lui donne ce statut ?",["Un droit de veto","La présidence permanente de l'ONU","Le droit de lever un impôt mondial","Le siège de l'ONU à Paris"],"Elle peut bloquer l'adoption d'une décision en votant contre. Le siège de l'ONU est à New York.","l"],
+["L22","I","Dans combien de pays la France a-t-elle des ambassades ou des consulats ?",["Plus de 150","Une vingtaine","Environ 50","Seulement dans l'Union européenne"],"C'est l'un des plus grands réseaux diplomatiques du monde.","l"],
+// ── Droits, devoirs, justice, défense
+["L23","D","Quelles sont les trois catégories d'infractions, de la moins grave à la plus grave ?",["Contraventions, délits, crimes","Délits, contraventions, crimes","Crimes, délits, contraventions","Amendes, délits, peines"],"","l"],
+["L24","D","Quel tribunal juge les contraventions ?",["Le tribunal de police","Le tribunal correctionnel","La cour d'assises","Le conseil de prud'hommes"],"Contraventions : excès de vitesse, tapage nocturne… Amende, pas de prison.","l"],
+["L25","D","Quel tribunal juge les délits (vol, fraude fiscale, harcèlement moral) ?",["Le tribunal correctionnel","Le tribunal de police","La cour d'assises","Le Conseil d'État"],"","l"],
+["L26","D","Jusqu'à combien d'années de prison un délit peut-il être puni ?",["10 ans","2 ans","30 ans","La perpétuité"],"Et une amende d'au moins 3 750 euros. Les crimes peuvent aller jusqu'à la perpétuité.","l"],
+["L27","D","Qui juge les crimes (meurtre, viol, terrorisme) ?",["La cour d'assises","Le tribunal de police","Le tribunal correctionnel","Le tribunal administratif"],"Ou la cour criminelle départementale pour certains crimes.","l"],
+["L28","D","Le tapage nocturne est :",["Une contravention","Un délit","Un crime","Autorisé le week-end"],"","l"],
+["L29","D","Depuis quelle année le service militaire n'est-il plus obligatoire ?",["1997","1945","1981","2005"],"Il est remplacé par la Journée défense et citoyenneté (JDC).","l"],
+["L30","D","À partir de quel âge les jeunes Français doivent-ils se faire recenser à la mairie ?",["16 ans","18 ans","14 ans","21 ans"],"Le recensement permet de participer à la JDC.","l"],
+["L31","D","À qui s'adresse le service militaire volontaire (SMV) de 8 mois, en place depuis 2026 ?",["Aux jeunes de 18 à 25 ans éloignés de l'emploi","À tous les Français de plus de 30 ans","Uniquement aux enfants de militaires","Aux seuls diplômés des grandes écoles"],"Français ou étrangers ; il apporte une formation et affirme les valeurs de la République.","l"],
+["L32","D","Sur quoi repose d'abord la défense nationale ?",["Une armée de métier et la dissuasion nucléaire","Un service militaire obligatoire pour tous","Les armées des autres pays européens","Les polices municipales des grandes villes"],"","l"],
+["L33","D","La gestation pour autrui (GPA) est-elle autorisée en France ?",["Non, c'est un délit","Oui, pour tous les couples","Oui, si elle est gratuite","Oui, avec l'accord du maire"],"La PMA est ouverte à toutes les femmes depuis 2021, mais la GPA reste interdite.","l"],
+["L34","D","Un mineur qui voyage à l'étranger sans ses parents doit avoir :",["Une autorisation de sortie du territoire","Un titre de séjour à son nom","Une carte d'électeur des parents","Un certificat de scolarité signé"],"","l"],
+["L35","D","Certaines condamnations graves peuvent entraîner :",["La privation du droit de vote pendant plusieurs années","L'interdiction définitive de travailler en France","La perte automatique de son logement social","L'interdiction de se marier ou de se pacser"],"C'est la privation des droits civiques et politiques.","l"],
+["L36","D","Quelle sanction pour un excès de vitesse de moins de 20 km/h ?",["Une amende de 68 euros et le retrait d'un point","Une peine de 3 mois de prison","L'annulation du permis pendant 5 ans","Un simple avertissement oral, sans amende"],"Au-delà de 50 km/h, c'est un délit (jusqu'à 3 mois de prison, 3 750 euros, 6 points).","l"],
+["L37","D","Conduire avec plus de 0,8 g d'alcool par litre de sang est :",["Un délit : jusqu'à 3 ans de prison","Une contravention à 35 euros","Autorisé si l'on roule lentement","Un crime jugé aux assises"],"Aussi 9 000 euros d'amende, saisie du véhicule, annulation du permis jusqu'à 5 ans.","l"],
+["L38","D","Qu'est-ce que la responsabilité civile ?",["L'obligation de réparer les dommages causés sans le vouloir","L'obligation de participer aux élections locales","Le devoir de signaler tout crime à la police","Le droit de refuser un contrôle d'identité"],"Elle couvre aussi ce que causent vos enfants mineurs, vos animaux et vos objets.","l"],
+["L39","D","Votre chien mord un passant dans la rue. Qui est responsable ?",["Vous, en tant que propriétaire","Personne, c'est un accident","La mairie de la commune","Le vétérinaire du chien"],"Votre responsabilité civile est engagée ; l'assurance indemnise la victime.","l"],
+// ── Histoire, géographie, culture
+["L40","H","Avec combien de pays la France métropolitaine partage-t-elle des frontières terrestres ?",["8","5","6","11"],"Allemagne, Andorre, Belgique, Espagne, Italie, Luxembourg, Monaco, Suisse.","l"],
+["L41","H","Quelle est la superficie de la France (métropole et outre-mer) ?",["Environ 675 000 km²","Environ 250 000 km²","Environ 1,2 million de km²","Environ 100 000 km²"],"Pour 68,6 millions d'habitants en 2025.","l"],
+["L42","H","Quel est le plus haut sommet de France et d'Europe ?",["Le mont Blanc","Le puy de Dôme","Le pic du Midi","Le mont Ventoux"],"4 810 m, dans les Alpes.","l"],
+["L43","H","Quel est le plus long fleuve de France ?",["La Loire","La Seine","Le Rhône","La Garonne"],"Connue pour ses châteaux.","l"],
+["L44","H","Quel fleuve traverse Lyon ?",["Le Rhône","La Loire","La Seine","La Garonne"],"","l"],
+["L45","H","Quel fleuve traverse Toulouse et Bordeaux ?",["La Garonne","La Loire","Le Rhône","La Seine"],"","l"],
+["L46","H","Quel fleuve forme une partie de la frontière avec l'Allemagne ?",["Le Rhin","Le Rhône","La Loire","La Seine"],"","l"],
+["L47","H","Où se trouve le Piton de la Fournaise, l'un des volcans les plus actifs du monde ?",["À La Réunion","En Martinique","En Auvergne","En Corse"],"2 600 m d'altitude, inscrit au patrimoine mondial de l'UNESCO. Les volcans actifs sont aux Antilles, à La Réunion et à Mayotte.","l"],
+["L48","H","Quelle est la plus grande forêt de France ?",["La forêt amazonienne (Guyane)","La forêt de Fontainebleau","La forêt landaise (Landes)","La forêt de Brocéliande"],"8 millions d'hectares. En métropole, la forêt couvre 32 % du territoire.","l"],
+["L49","H","Dans quel département se trouve la grotte de Lascaux ?",["La Dordogne","Le Finistère","La Haute-Savoie","La Corse-du-Sud"],"Région Nouvelle-Aquitaine ; peintures datant de 18 000 à 15 000 ans avant J.-C.","l"],
+["L50","H","Quel est le rang de la France parmi les puissances économiques mondiales (2024) ?",["7e","1re","15e","25e"],"PIB d'environ 2 830 milliards de dollars.","l"],
+["L51","H","Quel est le plus grand quartier d'affaires d'Europe ?",["Paris La Défense","La City de Londres","Euralille à Lille","La Part-Dieu à Lyon"],"","l"],
+["L52","H","Lequel de ces ports est l'un des plus grands ports de commerce français ?",["Le Havre","Saint-Tropez","Biarritz","Deauville"],"Les plus grands : Le Havre, Marseille-Fos, Dunkerque, Nantes-Saint-Nazaire.","l"],
+["L53","H","Grâce à ses outre-mer, quel est le rang de la France parmi les puissances maritimes ?",["2e, derrière les États-Unis","1re, devant les États-Unis","10e, derrière l'Espagne","20e, derrière l'Italie"],"","l"],
+["L54","H","La France est la première puissance agricole :",["De l'Union européenne","Du monde entier","D'Europe, derrière l'Allemagne","Uniquement pour le vin"],"24 % des céréales européennes et le premier cheptel bovin d'Europe.","l"],
+["L55","H","Quelle région agricole est connue pour le blé et la betterave ?",["Le Bassin parisien","La Corse","La Bretagne","La Côte d'Azur"],"La Bretagne : vaches laitières et porcs ; le Sud-Ouest : élevage et maïs.","l"],
+["L56","H","Depuis quand le Louvre est-il un musée ?",["1793","1889","1945","1682"],"Installé dans un ancien palais royal, pensé comme un musée universel.","l"],
+["L57","H","Qu'était le bâtiment du musée d'Orsay avant d'être un musée ?",["Une gare ferroviaire","Un palais des rois","Une prison d'État","Une cathédrale gothique"],"Construit pour l'Exposition universelle de 1900.","l"],
+["L58","H","Que peut-on voir surtout au musée d'Orsay ?",["Des peintures impressionnistes","La Joconde de Léonard de Vinci","Des peintures préhistoriques","Des sculptures de l'Égypte antique"],"Monet, Renoir, Cézanne, Van Gogh…","l"],
+["L59","H","Qui a sculpté « Le Penseur » ?",["Auguste Rodin","Claude Monet","Paul Cézanne","Marc Chagall"],"Aussi « L'Âge d'airain ».","l"],
+["L60","H","Quel tableau a donné son nom à l'impressionnisme ?",["« Impression, soleil levant » de Monet","« La Joconde » de Léonard de Vinci","« La Liberté guidant le peuple »","« Le Penseur » de Rodin"],"","l"],
+["L61","H","Quel peintre est considéré comme le père de la peinture moderne et le précurseur du cubisme ?",["Paul Cézanne","Auguste Renoir","Claude Monet","Eugène Delacroix"],"","l"],
+["L62","H","Qui était Suzanne Valadon ?",["Une peintre de Montmartre","Une résistante déportée","Une chanteuse populaire","Une ministre de la Santé"],"L'une des premières femmes admises à la Société nationale des beaux-arts.","l"],
+["L63","H","Qui a écrit « L'Amant » ?",["Marguerite Duras","Simone de Beauvoir","George Sand","Marguerite Yourcenar"],"Née près de Saïgon ; de son vrai nom Marguerite Donnadieu.","l"],
+["L64","H","Dans quel journal clandestin Albert Camus s'est-il engagé pendant la Résistance ?",["Combat","Le Monde","L'Express","Le Figaro"],"","l"],
+["L65","H","Quelle chanson est d'Édith Piaf ?",["La Vie en rose","Bambino","Le Métèque","Il venait d'avoir 18 ans"],"Aussi « Hymne à l'amour ». Bambino et Il venait d'avoir 18 ans : Dalida ; Le Métèque : Moustaki.","l"],
+["L66","H","Quel était le vrai nom de George Sand ?",["Aurore Dupin","Marguerite Donnadieu","Édith Gassion","Simone Bertaut"],"Elle a pris un pseudonyme masculin pour publier (« Indiana », « Lélia »).","l"],
+["L67","H","Quel monument gothique du XIVe siècle se trouve à Avignon ?",["Le Palais des Papes","Le château de Chambord","La Sainte-Chapelle","Le pont du Gard"],"Inscrit au patrimoine mondial de l'UNESCO.","l"],
+["L68","H","Combien d'États et gouvernements compte l'Organisation internationale de la Francophonie ?",["93","27","12","193"],"Le français est langue officielle dans plus de 30 pays.","l"],
+["L69","H","Quel est le rang du français parmi les langues les plus parlées au monde ?",["4e","1re","2e","10e"],"Plus de 300 millions de locuteurs sur les 5 continents.","l"],
+["L70","H","Depuis quelle année le 14 juillet est-il la fête nationale ?",["1880","1789","1790","1958"],"Il commémore la prise de la Bastille (1789) et la fête de la Fédération (1790).","l"],
+["L71","H","Depuis quelle année le 1er mai est-il un jour férié ?",["1947","1886","1789","1981"],"Il trouve ses racines dans les grèves américaines du 1er mai 1886 pour la journée de 8 heures.","l"],
+["L72","H","Quelle fleur offre-t-on traditionnellement le 1er mai ?",["Le muguet","La rose","Le coquelicot","Le bleuet"],"","l"],
+["L73","H","Quand a lieu la fête de la musique ?",["Le 21 juin","Le 14 juillet","Le 1er mai","Le 21 mars"],"Créée en 1982.","l"],
+["L74","H","En quelle année a eu lieu le premier Tour de France ?",["1903","1924","1889","1946"],"60 coureurs, 6 étapes, 2 300 km ; vainqueur : Maurice Garin, né en Italie.","l"],
+["L75","H","Contre quelle équipe la France a-t-elle gagné la finale de la Coupe du monde 1998 ?",["Le Brésil","L'Italie","La Croatie","L'Allemagne"],"Le 12 juillet 1998 ; deuxième étoile en 2018 contre la Croatie.","l"],
+["L76","H","En quelle année la France a-t-elle gagné sa deuxième Coupe du monde de football ?",["2018","2006","2022","2014"],"","l"],
+["L77","H","Avant 2024, en quelle année Paris avait-il accueilli les Jeux olympiques pour la dernière fois ?",["1924","1968","1992","1936"],"Aux JO de 2024, la France remporte 64 médailles olympiques et 74 paralympiques.","l"],
+["L78","H","Quelle région a inventé le vin effervescent fermenté en bouteille ?",["La Champagne","La Bourgogne","Le Bordelais","L'Alsace"],"À partir du XVIIe siècle. Les vins sont protégés par les AOC.","l"],
+["L79","H","Quel fromage est produit en Corse ?",["Le brocciu","Le camembert","Le maroilles","Le comté"],"Camembert : Normandie ; maroilles : Nord.","l"],
+["L80","H","Qui a unifié plusieurs royaumes francs et adopté la religion chrétienne ?",["Clovis","Charlemagne","Louis XIV","Henri IV"],"466-511 : une étape de l'unité du territoire.","l"],
+["L81","H","Quel rôle a joué Jeanne d'Arc ?",["Elle a mené les troupes françaises pendant la guerre de Cent Ans","Elle a rédigé une déclaration des droits de la femme","Elle a été la première femme élue à l'Académie française","Elle a conduit la Résistance pendant la Seconde Guerre mondiale"],"1412-1431, héroïne nationale, symbole du patriotisme.","l"],
+["L82","H","Qu'est-ce que l'édit de Nantes (1598) ?",["Un décret d'Henri IV mettant fin aux guerres de religion","Le traité qui met fin à la guerre de Cent Ans","La première loi abolissant l'esclavage dans les colonies","Le texte de Louis XIV qui crée la monarchie absolue"],"Il met fin aux guerres entre catholiques et protestants.","l"],
+["L83","H","Quelle loi de 2001 reconnaît la traite et l'esclavage comme des crimes contre l'humanité ?",["La loi Taubira","La loi Veil","La loi Badinter","La loi Ferry"],"","l"],
+["L84","H","Quel jour commémore les mémoires de la traite, de l'esclavage et de leurs abolitions ?",["Le 10 mai","Le 8 mai","Le 27 avril","Le 11 novembre"],"Le 27 avril 1848 est la date du décret d'abolition.","l"],
+["L85","H","Quel traité, signé le 28 juin 1919, met fin à la Première Guerre mondiale ?",["Le traité de Versailles","Le traité de Rome","Le traité de Maastricht","Le traité de Nantes"],"Il prévoit la Société des Nations, qui inspirera l'ONU.","l"],
+["L86","H","À partir de quelle année la France est-elle entièrement occupée par l'Allemagne ?",["1942","1939","1940","1944"],"Occupée en partie dès 1940, puis totalement à partir de 1942.","l"],
+["L87","H","Pendant quelles années a eu lieu la décolonisation de l'Indochine ?",["1946-1954","1914-1918","1954-1962","1870-1871"],"Algérie : 1954-1962.","l"],
+["L88","H","Que s'est-il passé en mai 1968 ?",["Un grand mouvement d'étudiants et de salariés, avec des grèves","Le débarquement allié sur les plages de Normandie","La signature des accords mettant fin à la guerre d'Algérie","L'adoption par référendum de la Constitution actuelle"],"Il aboutit à des avancées sociales, comme la hausse du salaire minimum.","l"],
+["L89","H","Dans quelle ville a été célébré le premier mariage entre personnes de même sexe, le 29 mai 2013 ?",["Montpellier","Paris","Lyon","Strasbourg"],"","l"],
+["L90","H","Quelle ministre de la Justice a porté la loi sur le mariage pour tous (2013) ?",["Christiane Taubira","Simone Veil","Rachida Dati","Élisabeth Guigou"],"Sous la présidence de François Hollande.","l"],
+["L91","H","Quel président de la Ve République est le seul à être mort pendant son mandat ?",["Georges Pompidou","Charles de Gaulle","François Mitterrand","Jacques Chirac"],"Mort en 1974 ; le président du Sénat a assuré l'intérim.","l"],
+// personnalités naturalisées
+["L92","H","Qui était Léon Gambetta ?",["Un des pères de la IIIe République","Un roi de France au XVIIe siècle","Un peintre impressionniste italien","Un maréchal de l'armée de Napoléon"],"Petit-fils d'un commerçant italien ; il aide la France à se relever après 1870.","l"],
+["L93","H","Quel peintre d'origine russe est l'un des fondateurs de l'art abstrait ?",["Vassily Kandinsky","Claude Monet","Auguste Renoir","Paul Cézanne"],"","l"],
+["L94","H","Qui a peint le plafond de l'Opéra Garnier, à Paris ?",["Marc Chagall","Pablo Picasso","Claude Monet","Auguste Rodin"],"Peintre d'origine russe, naturalisé français.","l"],
+["L95","H","Quel écrivain est le seul à avoir reçu deux fois le prix Goncourt ?",["Romain Gary","Albert Camus","Victor Hugo","Guillaume Apollinaire"],"En 1956 (« Les Racines du ciel ») et en 1975 sous le nom d'Émile Ajar (« La Vie devant soi »).","l"],
+["L96","H","Qui a écrit les recueils « Alcools » et « Calligrammes » ?",["Guillaume Apollinaire","Charles Baudelaire","Marguerite Yourcenar","Albert Camus"],"Né d'une mère russe et d'un père suisse.","l"],
+["L97","H","Haroun Tazieff, né à Varsovie, était :",["Un volcanologue","Un footballeur","Un chanteur","Un peintre"],"","l"],
+["L98","H","Quel prix le physicien Georges Charpak a-t-il reçu ?",["Le prix Nobel de physique","Le prix Goncourt du roman","La Palme d'or à Cannes","Le prix Nobel de la paix"],"En 1992, pour ses travaux sur la détection des particules.","l"],
+["L99","H","Quelle chanteuse d'origine égyptienne a chanté « Bambino » ?",["Dalida","Édith Piaf","Miriam Makeba","Joséphine Baker"],"","l"],
+["L100","H","Qui était Françoise Giroud ?",["Une journaliste, cofondatrice de L'Express","Une chanteuse d'origine égyptienne","Une actrice des « Enfants du paradis »","Une physicienne d'origine polonaise"],"D'origine suisse ; deux fois secrétaire d'État.","l"],
+["L101","H","Quelle chanteuse sud-africaine, devenue française, a lutté contre l'apartheid ?",["Miriam Makeba","Dalida","Joséphine Baker","Andrée Chedid"],"Première chanteuse sud-africaine à obtenir un Grammy Award.","l"],
+["L102","H","Quelle ville accueille un célèbre festival de cinéma ?",["Cannes","Avignon","Marciac","Lascaux"],"Avignon : théâtre ; Marciac : jazz.","l"],
+["L103","H","Depuis quelle année existent les Journées du patrimoine ?",["1984","1945","2000","1789"],"Créées en France, elles ont lieu aujourd'hui dans 48 pays.","l"],
+// ── Vivre en société : logement, mobilité, espace public, environnement, santé
+["L104","V","L'achat d'un logement doit obligatoirement être signé :",["Chez un notaire","À la mairie","À la préfecture","À la banque"],"","l"],
+["L105","V","Que faut-il demander à la mairie avant de construire une maison ?",["Un permis de construire","Une carte grise","Un bail de location","Un avis d'imposition"],"Les modifications extérieures sont aussi soumises à déclaration préalable.","l"],
+["L106","V","Quelle part de la population française est locataire de son logement ?",["Environ 40 %","Environ 10 %","Environ 80 %","Environ 60 %"],"Un peu moins de la moitié de ces logements sont des logements sociaux.","l"],
+["L107","V","Que signifie HLM ?",["Habitation à loyer modéré","Hôtel de location municipale","Habitat libre en métropole","Hébergement long et meublé"],"La demande se fait sur demande-logement-social.gouv.fr.","l"],
+["L108","V","À quoi sert la carte grise ?",["À prouver à qui appartient le véhicule","À conduire un poids lourd","À justifier l'assurance du véhicule","À prouver le contrôle technique"],"Pour conduire : permis valide, carte grise, assurance et contrôle technique à jour.","l"],
+["L109","V","Sans handicap, peut-on se garer sur une place réservée aux personnes handicapées ?",["Non, il faut une carte mobilité inclusion","Oui, si l'on s'arrête moins de dix minutes","Oui, la nuit et le dimanche toute la journée","Oui, si l'on allume ses feux de détresse"],"","l"],
+["L110","V","Depuis le 1er juillet 2025, où est-il aussi interdit de fumer en plein air ?",["Dans les parcs, sur les plages et aux arrêts de bus","Dans toutes les rues des centres-villes","Sur son propre balcon ou sa terrasse","Dans sa voiture, même quand on est seul"],"Aussi aux abords des écoles, bibliothèques, piscines et stades.","l"],
+["L111","V","Quelle amende risque-t-on en fumant dans un lieu interdit ?",["135 euros","35 euros","1 500 euros","9 000 euros"],"","l"],
+["L112","V","Quelle loi de 1991 encadre le tabac et la publicité pour l'alcool ?",["La loi Évin","La loi Veil","La loi Taubira","La loi Ferry"],"Votée le 10 janvier 1991.","l"],
+["L113","V","Que risque une personne en état d'ivresse sur la voie publique ?",["Une amende jusqu'à 150 euros","Aucune sanction possible","Une peine de prison à vie","La perte de sa nationalité"],"Des arrêtés municipaux peuvent aussi interdire l'alcool dans certaines rues.","l"],
+["L114","V","Que doit faire le propriétaire d'un chien dans l'espace public ?",["Ramasser ses excréments","Le promener uniquement la nuit","Le déclarer au commissariat","Lui mettre un manteau"],"Sous peine d'amende, comme pour les mégots et les déchets jetés par terre.","l"],
+["L115","V","Combien de déchets un Français produit-il environ par an ?",["500 kg","50 kg","5 tonnes","100 kg"],"","l"],
+["L116","V","Depuis 2024, quel tri est obligatoire pour les particuliers ?",["Les restes alimentaires et les déchets verts","Uniquement le verre, dans les bacs jaunes","Les vêtements usagés, en conteneur","Les journaux, à rapporter en mairie"],"Ils sont destinés au compostage.","l"],
+["L117","V","Depuis quand les sacs plastiques à usage unique non recyclables sont-ils interdits ?",["2017","1995","2005","2024"],"","l"],
+["L118","V","À quelle température maximale est-il conseillé de régler son chauffage ?",["19 °C","24 °C","16 °C","22 °C"],"Et le chauffe-eau à 55 °C.","l"],
+["L119","V","Quel secteur représente environ un tiers des émissions de CO2 en France ?",["Les transports","L'agriculture","Les déchets","Le tourisme"],"34 %, dont près de la moitié pour les voitures des particuliers.","l"],
+["L120","V","Un médecin peut-il révéler vos informations médicales à votre employeur ?",["Non, il est tenu au secret médical","Oui, si l'employeur le demande","Oui, après un an de contrat","Oui, pendant un arrêt maladie"],"","l"],
+["L121","V","Un employeur privé doit-il proposer une mutuelle à ses salariés ?",["Oui, une complémentaire santé collective","Non, c'est à chacun de s'en occuper","Seulement aux cadres de l'entreprise","Seulement dans la fonction publique"],"Sauf exceptions.","l"],
+["L122","V","Quel numéro appeler pour un secours en mer ?",["196","191","115","114"],"191 : secours aéronautique ; 115 : hébergement d'urgence ; 114 : urgences par SMS.","l"],
+["L123","V","Quel numéro appeler en cas de harcèlement scolaire ?",["3018","3919","119","3114"],"","l"],
+["L124","V","Quel est le numéro national de prévention du suicide ?",["3114","3018","115","196"],"","l"],
+["L125","V","Quel numéro signale un enfant disparu ?",["116 000","119","3919","3117"],"119 : enfance en danger ; 3919 : violences conjugales ; 3117 : sécurité dans les transports.","l"],
+["L126","V","Quel numéro permet de signaler un risque pour la sécurité dans les transports en commun ?",["3117","197","3919","115"],"Ou par SMS au 31177. 197 : alerte attentat.","l"],
+// ── Travail
+["L127","V","Qui rédige le règlement intérieur d'une entreprise ?",["L'employeur, à partir de 50 salariés","Les syndicats, dès le premier salarié","L'inspection du travail, partout","Le maire, à partir de 10 salariés"],"Il fixe les règles de santé, de sécurité et de comportement.","l"],
+["L128","V","Que signifie CDI ?",["Contrat à durée indéterminée","Contrat de droit international","Contrat de durée intérimaire","Certificat de diplôme initial"],"CDD : contrat à durée déterminée, pour un travail temporaire.","l"],
+["L129","V","Quelle structure accompagne les jeunes de moins de 25 ans dans leur recherche d'emploi ?",["La Mission locale","La CAF","La CPAM","Le conseil départemental"],"","l"],
+["L130","V","Comment s'appelle l'allocation chômage versée par France Travail ?",["L'ARE","Le RSA","L'APL","La prime d'activité"],"Allocation d'aide au retour à l'emploi, si l'on a assez travaillé et perdu son emploi involontairement.","l"],
+["L131","V","Faut-il être français pour créer une entreprise en France ?",["Non, chacun est libre de le faire","Oui, dans tous les cas","Oui, sauf pour les Européens","Oui, après dix ans de résidence"],"","l"],
+["L132","V","Un médecin ou un avocat exerce généralement :",["Une profession libérale","Une activité artisanale","Une activité commerciale","Une activité agricole"],"","l"],
+["L133","V","Un citoyen européen peut-il passer un concours de la fonction publique française ?",["Oui, sauf pour les emplois de souveraineté","Non, il faut avoir la nationalité française","Oui, pour tous les postes, y compris la défense","Oui, mais après dix ans de résidence en France"],"Les emplois de souveraineté (défense, affaires étrangères) sont réservés aux Français.","l"],
+["L134","V","Quelles sont les trois fonctions publiques ?",["D'État, territoriale et hospitalière","Nationale, européenne et mondiale","Civile, militaire et religieuse","Communale, privée et associative"],"","l"],
+// ── Famille et école
+["L135","V","Dans quel délai faut-il déclarer la naissance d'un enfant ?",["Dans les 5 jours","Dans le mois","Dans l'année","Dans les 48 heures"],"À la mairie du lieu de naissance.","l"],
+["L136","V","Que reçoivent les époux le jour de leur mariage civil ?",["Un livret de famille","Une carte d'électeur","Un passeport commun","Un titre de séjour"],"Ainsi que leur acte de mariage.","l"],
+["L137","V","Comment des époux peuvent-ils divorcer par consentement mutuel ?",["Devant un notaire","Devant le maire","Au commissariat","À la préfecture"],"Sinon, le divorce est prononcé par un juge.","l"],
+["L138","V","Quel nouveau congé existe pour les parents d'un enfant né à partir du 1er janvier 2026 ?",["Un congé de naissance d'un ou deux mois","Un congé de six mois payé par la mairie","Une semaine de vacances scolaires en plus","Aucun : seul le congé paternité existe"],"Il peut être pris à partir de juillet 2026.","l"],
+["L139","V","En quelle année la Convention internationale des droits de l'enfant a-t-elle été adoptée ?",["1989","1789","1945","2001"],"Signée par 196 États dans le cadre de l'ONU.","l"],
+["L140","V","Quelle organisation de l'ONU défend les droits des enfants ?",["L'UNICEF","L'UNESCO","L'OTAN","L'OMC"],"","l"],
+["L141","V","Les châtiments corporels (gifles, fessées) sur un enfant sont :",["Interdits par la loi","Autorisés à la maison","Autorisés jusqu'à 10 ans","Autorisés s'ils sont légers"],"L'autorité parentale s'exerce sans violences physiques ou psychologiques.","l"],
+["L142","V","Peut-on déshériter totalement ses enfants en France ?",["Non, le partage doit être équitable","Oui, par un simple testament","Oui, avec l'accord du notaire","Oui, s'ils sont tous majeurs"],"","l"],
+["L143","V","Entre quels âges l'instruction est-elle obligatoire ?",["De 3 à 16 ans","De 6 à 16 ans","De 6 à 18 ans","De 3 à 18 ans"],"Piège : elle commençait à 6 ans avant 2019. De 16 à 18 ans, c'est une obligation de formation.","t"],
+["L144","V","Qui gère les inscriptions des enfants à l'école publique ?",["La mairie","La préfecture","La CAF","Le conseil régional"],"","l"],
+["L145","V","Combien d'années dure le collège ?",["4 ans","3 ans","5 ans","2 ans"],"Puis le lycée en 3 ans : seconde, première, terminale.","l"],
+["L146","V","Comment s'appellent les trois années de lycée ?",["Seconde, première et terminale","Sixième, cinquième et quatrième","CP, CE1 et CE2","Licence, master et doctorat"],"","l"],
+["L147","V","Que peuvent faire les parents d'élèves à l'école ?",["Se présenter comme représentants des parents","Choisir les professeurs de leur enfant","Modifier les programmes scolaires","Noter les enseignants chaque année"],"Ou rejoindre une association de parents.","l"],
+["L148","V","Un enfant qui ne parle pas encore français (allophone) :",["Est accueilli à l'école comme les autres","Doit d'abord apprendre le français chez lui","Doit aller dans une école séparée","Est dispensé d'école jusqu'à 10 ans"],"Il y apprend le français et les autres matières.","l"]
+);
+
+// Correction from the livret: marriage from 16 is possible with the procureur's dispensation and the parents' consent.
+OVR.S66=[["Non : il faut 18 ans, sauf dispense rare du procureur","Oui, avec le seul accord des deux parents","Oui, dès qu'elle a obtenu son brevet","Oui, si le mariage est seulement religieux"],"Livret 2026 : dès 16 ans, le mariage n'est possible qu'avec une dispense du procureur de la République et l'accord des parents. "];
+
+// Livret fiches, appended at the end of each theme so existing fiche positions never move.
+FICHES.P.push(["Laïcité au quotidien (livret 2026)", `<ul>
+ <li><b>Blasphème :</b> pas un délit. On peut critiquer ou caricaturer une religion.</li>
+ <li><b>Limites de la liberté d'expression :</b> diffamation, injure, incitation à la haine ou à la discrimination, apologie du terrorisme, négationnisme.</li>
+ <li><b>Prosélytisme :</b> autorisé sans violence, menace ni pression ; interdit dans les services publics.</li>
+ <li><b>Loi du 11 octobre 2010 :</b> interdiction de dissimuler son visage dans l'espace public.</li>
+ <li>L'État ne finance ni la construction d'un lieu de culte ni les ministres du culte ; il peut restaurer un monument classé. Exception : <b>Alsace-Moselle</b>.</li>
+ <li>Signes religieux libres dans la rue ; une manifestation religieuse peut être encadrée ou interdite (ordre public).</li></ul>`]);
+FICHES.P.push(["DDHC 1789 : articles clés", `<ul>
+ <li><b>Art. 1</b> : les hommes naissent et demeurent libres et égaux en droits.</li>
+ <li><b>Art. 2</b> : liberté, propriété, sûreté, résistance à l'oppression.</li>
+ <li><b>Art. 3</b> : la souveraineté réside dans la Nation.</li>
+ <li><b>Art. 4</b> : la liberté, c'est faire tout ce qui ne nuit pas à autrui.</li>
+ <li><b>Art. 6</b> : la loi est l'expression de la volonté générale.</li>
+ <li><b>Art. 9</b> : présomption d'innocence. <b>Art. 10-11</b> : liberté d'opinion et d'expression.</li>
+ <li><b>Art. 13</b> : contribution commune selon les facultés (impôt). <b>Art. 16</b> : garantie des droits et séparation des pouvoirs.</li>
+ <li><b>Art. 17</b> : la propriété est un droit inviolable et sacré.</li>
+ <li>Le candidat signe la <b>Charte des droits et devoirs du citoyen français</b> (art. 21-24 du Code civil).</li></ul>`]);
+FICHES.I.push(["Outre-mer, Europe et monde (livret 2026)", `<ul>
+ <li><b>12 territoires d'outre-mer :</b> 5 départements-régions (Guadeloupe, Martinique, Guyane, La Réunion, Mayotte) + Nouvelle-Calédonie, Polynésie française, Saint-Martin, Saint-Barthélemy, Saint-Pierre-et-Miquelon, Wallis-et-Futuna, TAAF.</li>
+ <li><b>Schengen :</b> libre circulation sans contrôle aux frontières intérieures ; associés hors UE : Norvège, Islande, Suisse, Liechtenstein.</li>
+ <li>Charte des droits fondamentaux de l'UE : <b>2000</b>. Devise de l'UE « Unie dans la diversité » : 2000 (le livret écrit « 2020 », c'est une coquille).</li>
+ <li>Constitution adoptée par <b>référendum le 28 septembre 1958</b>.</li>
+ <li>ONU : membre permanent du Conseil de sécurité, <b>droit de veto</b>. Ambassades ou consulats dans plus de 150 pays. Aussi OTAN, G7, G20, OIF.</li>
+ <li>Vote : pièce d'identité obligatoire, sauf dans les communes de <b>moins de 1 000 habitants</b>.</li></ul>`]);
+FICHES.D.push(["Infractions, justice et défense (livret 2026)", `<div class="tablebox"><table class="chrono">
+ <tr><td>Contravention</td><td>Excès de vitesse, tapage nocturne. Amende, pas de prison. <b>Tribunal de police</b>.</td></tr>
+ <tr><td>Délit</td><td>Vol, fraude fiscale, harcèlement moral, homicide involontaire, GPA. Jusqu'à <b>10 ans</b> de prison, amende ≥ 3 750 €. <b>Tribunal correctionnel</b>.</td></tr>
+ <tr><td>Crime</td><td>Meurtre, viol, braquage, terrorisme. Jusqu'à la perpétuité. <b>Cour d'assises</b> ou cour criminelle.</td></tr></table></div>
+ <ul><li>Vitesse &lt; 20 km/h : 68 € et 1 point. &gt; 50 km/h : délit. Alcool &gt; 0,8 g/l : jusqu'à 3 ans de prison, 9 000 €. Sans permis : 1 an, 15 000 €.</li>
+ <li><b>Défense :</b> armée de métier et dissuasion nucléaire. Service militaire obligatoire supprimé en <b>1997</b>. Recensement à <b>16 ans</b>, puis JDC. Service militaire volontaire (8 mois, 18-25 ans) depuis 2026.</li>
+ <li>Mineur voyageant sans ses parents : <b>autorisation de sortie du territoire</b>.</li>
+ <li><b>Responsabilité civile :</b> réparer les dommages causés sans le vouloir, y compris par ses enfants mineurs ou ses animaux.</li></ul>`]);
+FICHES.H.push(["Histoire : compléments du livret", `<div class="tablebox"><table class="chrono">
+ <tr><td>466-511</td><td>Clovis unifie les royaumes francs, adopte le christianisme</td></tr>
+ <tr><td>1412-1431</td><td>Jeanne d'Arc, guerre de Cent Ans</td></tr>
+ <tr><td>1598</td><td>Édit de Nantes (Henri IV) : fin des guerres de religion</td></tr>
+ <tr><td>1793</td><td>Le Louvre devient musée</td></tr>
+ <tr><td>1880</td><td>Le 14 juillet devient fête nationale</td></tr>
+ <tr><td>1903</td><td>Premier Tour de France</td></tr>
+ <tr><td>1919</td><td>Traité de Versailles (28 juin), Société des Nations</td></tr>
+ <tr><td>1942</td><td>Occupation totale de la France</td></tr>
+ <tr><td>1946-1954</td><td>Décolonisation de l'Indochine</td></tr>
+ <tr><td>1947</td><td>Le 1er mai devient férié</td></tr>
+ <tr><td>1958</td><td>Constitution adoptée par référendum (28 septembre)</td></tr>
+ <tr><td>Mai 1968</td><td>Mouvement étudiant et social, grèves</td></tr>
+ <tr><td>1974</td><td>Mort de Georges Pompidou en fonction ; majorité à 18 ans</td></tr>
+ <tr><td>1982</td><td>Première fête de la musique (21 juin)</td></tr>
+ <tr><td>1984</td><td>Journées du patrimoine</td></tr>
+ <tr><td>1997</td><td>Fin du service militaire obligatoire</td></tr>
+ <tr><td>1998 / 2018</td><td>Coupes du monde de football</td></tr>
+ <tr><td>2001</td><td>Loi Taubira : l'esclavage est un crime contre l'humanité (commémoration le 10 mai)</td></tr>
+ <tr><td>2010</td><td>Interdiction de dissimuler son visage dans l'espace public</td></tr>
+ <tr><td>2013</td><td>Mariage pour tous (17 mai) ; premier mariage à Montpellier (29 mai)</td></tr>
+ <tr><td>2024</td><td>JO de Paris (100 ans après 1924)</td></tr></table></div>`]);
+FICHES.H.push(["Personnalités naturalisées (livret 2026)", `<ul>
+ <li><b>Léon Gambetta</b> : père de la IIIe République. <b>Marie Curie</b> : née en Pologne, 2 Nobel, Panthéon.</li>
+ <li><b>Kandinsky</b> (art abstrait), <b>Chagall</b> (plafond de l'Opéra Garnier), peintres d'origine russe.</li>
+ <li><b>Maurice Garin</b> : né en Italie, vainqueur du premier Tour de France (1903).</li>
+ <li><b>Apollinaire</b> (« Alcools », « Calligrammes »), <b>Yourcenar</b> (première femme à l'Académie française), <b>Romain Gary</b> (deux Goncourt), <b>Andrée Chedid</b> (poétesse née au Caire).</li>
+ <li><b>Joséphine Baker</b> (artiste et résistante), <b>Maria Casarès</b> (actrice), <b>Françoise Giroud</b> (L'Express).</li>
+ <li><b>Haroun Tazieff</b> (volcanologue), <b>Georges Charpak</b> (Nobel de physique 1992).</li>
+ <li><b>Miriam Makeba</b> (contre l'apartheid), <b>Dalida</b> (« Bambino »), <b>Georges Moustaki</b>.</li></ul>`]);
+FICHES.H.push(["Géographie et économie (livret 2026)", `<ul>
+ <li><b>68,6 millions</b> d'habitants, <b>675 000 km²</b>. <b>8 pays</b> frontaliers : Allemagne, Andorre, Belgique, Espagne, Italie, Luxembourg, Monaco, Suisse. 5 500 km de côtes.</li>
+ <li><b>Mont Blanc</b> 4 810 m. Fleuves : Loire (le plus long), Seine (Paris), Garonne (Toulouse, Bordeaux), Rhône (Lyon), Rhin (frontière allemande).</li>
+ <li>Volcans actifs : Antilles, La Réunion (<b>Piton de la Fournaise</b>), Mayotte. Plus grande forêt : <b>Amazonie guyanaise</b> ; forêt = 32 % de la métropole.</li>
+ <li>Lascaux : <b>Dordogne</b>. Avignon : <b>Palais des Papes</b>.</li>
+ <li><b>7e</b> puissance économique, <b>2e</b> puissance maritime (après les États-Unis), <b>1re</b> puissance agricole de l'UE. La Défense : premier quartier d'affaires d'Europe.</li>
+ <li>Ports : Le Havre, Marseille-Fos, Dunkerque, Nantes-Saint-Nazaire. Secteurs : aéronautique et spatial (Kourou), luxe, agroalimentaire, énergie, pharmacie, numérique, automobile.</li></ul>`]);
+FICHES.H.push(["Culture, fêtes et sport (livret 2026)", `<ul>
+ <li>Plus de 1 200 musées. <b>Louvre</b> (1793, la Joconde) ; <b>Orsay</b> (ancienne gare, impressionnistes).</li>
+ <li>Artistes : Rouget de Lisle, George Sand (Aurore Dupin), Baudelaire, Cézanne (père de la peinture moderne), Rodin (Le Penseur), Monet (Impression, soleil levant), Renoir, Debussy, Suzanne Valadon, Simone de Beauvoir, Camus (journal Combat), Duras (L'Amant), Piaf (La Vie en rose).</li>
+ <li>Festivals : théâtre à <b>Avignon</b>, cinéma à <b>Cannes</b>, jazz à <b>Marciac</b>. Journées du patrimoine en septembre (1984).</li>
+ <li>Français : <b>4e</b> langue du monde, 300 millions de locuteurs ; OIF : <b>93</b> États et gouvernements.</li>
+ <li>Fêtes : 14 juillet (depuis 1880), 1er mai (férié depuis 1947, muguet), fête de la musique le <b>21 juin</b> (1982).</li>
+ <li>Sport : Tour de France (1903), Coupes du monde <b>1998</b> (contre le Brésil) et <b>2018</b> (contre la Croatie), JO de Paris 1924 et 2024.</li>
+ <li>Gastronomie : repas gastronomique à l'UNESCO ; champagne et AOC ; brocciu (Corse), camembert (Normandie), maroilles (Nord).</li></ul>`]);
+FICHES.V.push(["Logement, transports, espace public (livret 2026)", `<ul>
+ <li>Achat : acte chez le <b>notaire</b>. Construire : <b>permis de construire</b> en mairie. 40 % des habitants sont locataires.</li>
+ <li>Logement social (HLM) : demande sur demande-logement-social.gouv.fr.</li>
+ <li>Conduire : permis, carte grise, assurance, contrôle technique. Places handicapées : carte mobilité inclusion.</li>
+ <li><b>Tabac</b> (loi Évin, 1991) : interdit dans les lieux fermés et, depuis le 1er juillet 2025, dans les parcs, plages, abribus, abords des écoles. Amende : <b>135 €</b>.</li>
+ <li><b>Alcool :</b> interdit aux moins de 18 ans ; ivresse publique : jusqu'à 150 €.</li>
+ <li>Interdits : déchets jetés par terre, dépôts sauvages, graffitis, nuisances sonores ; ramasser les déjections de son chien.</li>
+ <li>Environnement : 500 kg de déchets par habitant et par an ; tri des biodéchets obligatoire depuis 2024 ; sacs plastiques interdits depuis 2017 ; chauffage à 19 °C ; transports = 34 % du CO2.</li></ul>`]);
+FICHES.V.push(["Travail et famille (livret 2026)", `<ul>
+ <li>Règles du travail : Code du travail (35 h), conventions collectives, règlement intérieur (entreprises de 50 salariés et plus). Litiges : prud'hommes.</li>
+ <li>Contrats : CDI (permanent), CDD (temporaire), intérim. France Travail ; Mission locale pour les moins de 25 ans ; allocation : <b>ARE</b>.</li>
+ <li>Créer une entreprise : ouvert à tous, sans condition de nationalité. Aides : CMA, CCI.</li>
+ <li>Fonction publique : d'État, territoriale, hospitalière ; concours ; Européens admis sauf emplois de souveraineté.</li>
+ <li>Mariage civil en mairie ; livret de famille. 16 ans seulement avec dispense du procureur et accord des parents. Divorce par consentement mutuel : devant <b>notaire</b>.</li>
+ <li>Naissance déclarée dans les <b>5 jours</b>. Congé paternité 28 jours ; congé supplémentaire de naissance (1 ou 2 mois) pour les enfants nés depuis 2026.</li>
+ <li>Convention des droits de l'enfant (<b>1989</b>, UNICEF). Châtiments corporels et excision interdits. On ne peut pas déshériter totalement ses enfants.</li>
+ <li>Instruction obligatoire de <b>3 à 16 ans</b> ; inscription à la mairie ; collège 4 ans, lycée 3 ans. Majorité numérique : 15 ans.</li>
+ <li><b>Numéros :</b> 15, 17, 18, 112, 114 (SMS), 115, 119, 196 (mer), 3919, 3018, 3114, 116 000, 197 (attentat), 3117.</li></ul>`]);
+
+// Metropolitan regions outline: @svg-maps/france.regions by Victor Cazanave, CC BY-NC 4.0 (coordinates rounded).
+const FR_MAP={"viewBox":"15 -1 598 586","regions":[{"id":"ara","name":"Auvergne-Rhône-Alpes","d":"M510.5,352.2l-0.6,-2.1l-2.1,-0.2l0.2,-1.3l-2.3,-0.6l-0.2,-4.1l-0.8,-0.8l0.9,-3.1l-1.4,-0.9l-2.1,0.1l-4.5,-4.4l0.5,-6.6l5,-0.6l2.3,-1.5l0.3,-1.7l1.7,-1.4l-0.3,-1.9l-1.2,-0.9l0.6,-0.5l-3.7,-5.1l-1.9,1.2l-0.7,-0.5l1.1,-4.3l-4.2,-0.8l0.3,-3.9l2.5,-4.6l-3.9,-4.5l1.5,-1.5l0.6,-2.8l-5.7,-1.7l-6.8,-0.1l-11.1,5.8l-1.3,2.9l1.1,0.5l-0.4,1.6l1,1.6l2,-0.3l-0.6,1.8l-2.6,1.2l-4.3,4l-3.2,-0.7l-0.7,1l-1.8,-0.6l-1.5,1l1.5,-3.2l-1.2,-0.9l0.6,-1.2l6,-2.1l-0.9,-2l2.8,-4.9l-4.4,-3l0,0l-8.1,9.1l-6,0.2l-0.5,-2.9l-2.8,-0.9l-0.1,-1.2l-2,2.9l-1.2,0.1l-1.1,1.5l-2.7,0.3l-0.7,-0.6l0.4,-3l-1.2,0.5l-0.5,-1.9l-0.8,2.2l0,-1.7l-1.7,-1.9l0.7,-0.7l-3.2,-1.8l1,-0.9l-0.4,-1.1l-3.3,-0.7l-1.4,-3l-1.4,-0.6l0,0.9l-1.3,-0.3l-3.3,1.5l-3,-1.8l-1.4,0.8l-0.4,-1.1l-6.7,20.5l-2.2,-0.2l0.4,-1.9l-0.7,-0.9l0.7,-0.3l-2.3,-1.5l1.3,-1.2l-1.3,-1.6l-1.8,0.3l-0.8,2.1l-1.4,-0.2l-0.6,-1.5l-1.2,1.4l-1.4,0.2l-1.9,-1.8l-2.2,0.1l-0.7,4.9l-1.1,0.8l0.4,0.8l-1.9,0l-1.9,1.7l-1.3,-0.1l0.2,-1.7l-1.2,0.6l-0.8,-1l-1.2,1.2l-1.9,-0.2l-1.2,-1.3l-3.1,1.8l-1.7,0l-0.7,-2l-3.4,-0.7l0.8,-1.9l-0.8,-2.3l2.2,-0.9l0.1,-1.3l1.7,0.4l0.7,-0.8l-0.8,-0.1l-0.4,-4.2l1,-3.8l-1.9,-0.9l-0.1,-0.9l-3.4,0.3l-1.2,-2.6l-1.4,0.8l-2.6,-1.2l-0.2,-3.8l-1,-0.4l0.3,-1.1l-1,-1.9l-2.5,-2.9l-0.6,-2.9l-1.5,-0.4l-0.5,0.8l0.9,1.5l-2.1,0.1l0.5,2l-0.6,0.6l-0.6,-0.7l-1.8,2.3l-1.2,0l-0.2,-2.3l-1.3,-1.5l-1.7,0.1l-1.3,1.7l-1.4,-0.3l-0.5,-1.6l-1.3,-0.1l-2.9,2.5l-2.9,-3.1l-2.9,-1.4l-1.1,-2.6l0,0l-2.8,-0.6l-1.8,0.7l-3,2.9l-0.1,1.2l-2,-0.5l-1.6,1.1l-1.1,-1.8l-0.7,0.1l-0.6,1.6l-3.2,1.7l0.2,1.9l-1,-0.8l-1.5,0.8l1.1,1.2l-1.2,1.8l1.5,0.9l0.5,2.5l-3.2,2.1l-2.1,-0.8l-5.2,1l-1.6,2.8l-1,0l-0.7,3l0,0l0.3,2.3l1.9,0.6l-1.3,1.7l2.6,2l0.9,-1.3l1.4,2.9l0.4,-0.8l2.1,1l1.8,5.6l1.7,1.9l-0.7,4.1l0.9,2.3l1.3,0.7l-0.4,2.6l0.8,1.1l-2,0.9l-0.8,1.5l0.5,1.1l-2.3,1.6l-0.3,1.3l-1.3,-0.2l0,0l-0.2,0l0,0l-1.1,1.9l-1.2,-0.2l-0.6,0.8l2.3,3.9l1.7,0.6l1.6,2.3l-0.1,4l-1.5,0.1l-1,2.6l1.2,2.1l1.2,0.4l-1.3,8l1.7,1.6l-2,1.3l-3.9,-2.5l-1.6,0l0.8,1.5l-0.4,3l-1.8,0.9l-1.1,2l-0.8,-0.2l-1.2,2.5l-1.9,1.6l0.3,2.4l1.3,0.9l-2.2,1.7l-0.3,3.2l-1.2,-0.3l-1.8,1.6l1.8,3.4l-1.4,1.2l0,0l-0.3,-0.1l0,0l-1.7,0.4l0,0l0.6,2.4l1.1,0.8l-0.7,1l0.3,1.8l3.3,4.9l-1.7,5.4l1.2,0.1l0.5,3.4l1.5,1.2l0.7,-0.4l-0.4,-1.5l3.3,-1.1l1.3,-0.1l1.1,1.7l5.5,-0.6l0.6,-2.2l2.5,-1.8l-0.4,-1.9l2.1,-2.3l0.2,-3.1l5.5,-5.6l1.6,1.7L330.2,386l1.3,-1.1l2.3,0l1.2,5l1.3,-0.3l0.7,1.1l-1.1,0.7l1,1l0.1,3.7l1.9,2.1l1.5,-4l0.9,-0.1l-0.5,-0.7l0.8,-4.2l1.1,-2.2l1.1,0.2l0.2,-1.9l0,0h0.2l0,0l-0.2,-1.2l1.2,-1l2.5,2.4l1.8,-1.5l-0.5,-1.3l1.1,-0.4l-0.3,-1.1l1,-0.4l0.8,0.9l3.5,-2.8l0,0.9l1.8,1.1l0.1,2.5l2.9,5.4l0.8,-1l2.7,-0.7l0.8,0.6l0.2,-2.9l2.5,0l0.9,1.3l-0.3,1.5l3.2,-0.5l2.7,4.3l1,-0.7l0.1,1.7l1.7,0.4l-0.6,1.7l1,0.8l-0.6,1.1l1.2,1.9l0.2,3l1.1,1.5l1,-0.1l1.5,5.7l3.4,3.9l-1.2,0.8l0.7,1.6l-0.9,1.9l0.5,0.6l3.4,-1l0.5,1.4l1.5,-0.3l3.3,3.1l1.3,-1.6l0,-1.3l1.6,-1.3l2.7,-0.5l0.1,3.2l1.8,0.4l0.6,-3.2l2.2,-0.3l0.3,0.9l1.5,0.2l0.4,1.3l3.8,1.8l0,0l0.1,-3.4l5.7,1l1.3,5l2.5,-1.9l1.8,0.1l5.7,-2.8l0.7,1.4l1.3,0.4l1.8,-1.8l0,0l0.7,-0.3l0,0l-0.6,4.8l3.2,1.2l0.8,-1.2l2,1.4l2.4,-0.4l1.2,0.8l-0.1,2.6l2.2,0.2l0.8,1.9l2,0.2l1.6,-1l1.7,-1.4l-0.8,-0.8l0.4,-0.9l1.1,-0.3l1.6,1.4l-0.3,1l2,0.2l0.2,-1l-1.4,-0.6l0.1,-0.9l1.4,-0.4l0,-4.1h-1.6l-0.4,-1.9l-1.2,-0.3l0.9,-1.6l-3.4,0.2l-1.1,-1.2l-1.2,0.8l-2.6,-2.1l0.5,-0.9l-1,-2l0.8,-0.5l1.6,0.8l0.9,-1l-1.4,-0.6l-0.3,-3l6.5,1.6l0.6,-1.7l1.5,-0.1l-2.8,-2.4l2.1,-3.9l-0.2,-2.3l3.6,0.7l0.8,-1.3l1.7,0.5l1.7,-2.2l-1.3,-0.9l1.2,-3.1l2.3,0.8l2.8,-0.8l1.2,-1.2l-1.3,-1.4l2.8,-1.8l1.6,1.1l3.2,-2.8l4.7,0.7l1.8,-1.3l1.9,1.5l0.8,-0.4l0.1,-4.9l-1.5,-0.8l0,-2.6l-3,0.1l-2,-1.2l0.6,-2.8l1,-0.4l-0.6,-1.8l0.6,-1.1l0.7,-0.4l1.3,1.1l1.6,-0.9l1.3,1.2l0,1.9l3.6,1.1l1.5,-0.2l-0.3,-2.2l1.2,-1l1.3,0.6l1.5,-1.4l2.2,0.9l0,0l2,-1.8l2.6,0.1l1.1,-1.3l3.4,1.9l1.8,-0.6l0,-1.9l2.2,-0.1l2.3,-3l3.3,0.2l2.2,-2.3l-1,-4.2l2.2,-2l0.5,-2.9L510.5,352.2z"},{"id":"bfc","name":"Bourgogne-Franche-Comté","d":"M472.7,201L472.7,201l0.1,-0.6l-2.4,-1.2l0.7,-0.7l-1.1,-2.5l0,0l-0.1,-0.1l0,0l-4,1l-1.5,2.9l-1.3,0l-0.9,1.3l-0.9,-0.1l1.3,-1.9l-1.1,-0.6l-2,3.2l0,1.5l-1.5,-0.3l-0.8,3.2l-2.8,-0.4l-0.8,2.4l-2.1,0l-0.6,2.6l1.2,0.7l0.1,1.3l-1,1.5l0.3,2.3l-3.9,0.8l-1.2,-2.2l-1.7,2.1l-1.8,-0.7l-0.9,0.7l-1.8,-0.3l-2.7,5.3l-1.4,-1.3l-2.8,2.2l-0.7,-1.2l0.9,-1.6l-0.9,0.4l-2.7,-2.2l0.2,-1.7l-2.5,2.1l-1.6,-1.5l-1.1,0.2l0.3,-1.7l-1.3,0.2l0,-1.1l-2.5,1.5l-0.4,-4.7l-1.8,-0.3l3.2,-2.5l-1.6,-3.6l0,0h-0.5l0,0l-1.6,-3.4l-1.4,0.2l-0.4,1.3l-1.2,-0.8l1.4,-2l-0.8,-1.2l-2.5,-0.1l1,-1.6l-0.7,-1.1l-2.3,0.1l-1.6,-1.2l-1.2,0.6l-3.8,-0.9l-1.8,1.4l0.8,2.4l-10,0.4l-0.9,2.2l-2,-0.3l-0.9,-1.2l0.2,-1.4l-1.3,0.3l0.7,0.3l-0.4,1.3l-1.5,-1.1l0,0l-0.5,0.3l0,0l-1.9,1.8l-0.9,-1.2l-1.2,0l-0.6,1.3l-1.7,-1.1l-0.8,0.8l-3.8,0.1l0.8,-3.1l-0.8,-1.3l-0.6,1.4l-1.2,-0.3l-0.5,-1.3l1.3,0.1l0.1,-0.8l-2.1,-1.8l-1.3,-4.6l-2.1,-0.9l0.4,-2.1l-1.4,-0.5l0.3,1.1l-2.3,1l-1.5,-3.1l-2.1,0.3l1.8,-2.5l-0.9,-0.4l0.8,-2.2l-1.7,-1l0.4,-1l-1.8,-1.2l-1.7,-2.9l-1.5,-0.6l-1.6,1.1l-0.6,-2l0,0l-1.6,-0.6l-0.5,1.7l-1.2,0.2l-2.2,-0.7l-1.2,1.1L345.5,174l-1.5,1.5l-2.3,-0.6l-1.3,3.4l1.3,3.4l-1.8,2.7l-2.8,1.5l0,1.3l0,0l3.8,1.8l-0.6,1.1l0.8,-0.1l0.6,2.7l3.1,2.7l-1.1,0.6l1.1,0.8l0.1,2.1l-1.4,1.6l0,0l-0.2,0.2l0,0l-1.6,2l-1.7,0.3l0.1,2l-0.7,0.4l1.5,1.1l-0.8,1l0.5,2.9l-7.2,1.8l-0.2,2.5l1.3,-0.2l0,1l2,1.3l-0.3,0.8l1.4,1.4l-0.9,1.1l0.2,1.7l1.7,1.8l-4.8,1.4l0,0v-0.2l0,0l-0.5,0.8l3.4,6.1l-2.6,6.1l0.5,1.3l4.2,3.4l-0.1,2l2.2,6.5l-0.5,3.5l2.5,2.5l-0.6,3l0.7,1.2l-1.2,2.9l0.8,3.4l-1.6,3.4l0,0l1.1,2.6l2.9,1.4l2.9,3.1l2.9,-2.4l1.3,0.1l0.5,1.6l1.4,0.3l1.3,-1.7l1.7,-0.1l1.3,1.5l0.2,2.3l1.2,0l1.8,-2.3l0.6,0.7l0.6,-0.6l-0.5,-2l2.1,-0.1l-0.9,-1.5l0.5,-0.8l1.5,0.4l0.6,2.9l2.5,2.9l1,1.9l-0.3,1.1l1,0.4l0.2,3.8l2.6,1.2l1.4,-0.8l1.3,2.6l3.4,-0.3l0.1,0.9l1.9,0.9l-1,3.8l0.4,4.2l0.8,0.1l-0.7,0.8l-1.7,-0.4l-0.1,1.3l-2.2,0.9l0.8,2.3l-0.8,1.9l3.4,0.7l0.7,2l1.7,0l3.1,-1.8l1.2,1.3l1.9,0.2l1.2,-1.2l0.8,1l1.2,-0.6l-0.2,1.7l1.3,0.1l1.9,-1.7l1.9,0l-0.4,-0.8l1.1,-0.8l0.7,-4.9l2.2,-0.1l1.9,1.8l1.4,-0.2l1.2,-1.4l0.6,1.5l1.4,0.2l0.8,-2.1l1.8,-0.3l1.3,1.6l-1.3,1.2l2.4,1.5l-0.7,0.3l0.7,0.9l-0.4,1.9l2.2,0.2l6.7,-20.5l0.4,1.1l1.4,-0.8l3,1.8l3.3,-1.5l1.3,0.3l0.1,-0.9l1.4,0.6l1.4,3l3.3,0.7l0.4,1.1l-1,0.9l3.2,1.8l-0.7,0.7l1.7,1.9l0,1.7l0.8,-2.2l0.5,1.9l1.2,-0.5l-0.4,3l0.7,0.6l2.7,-0.3l1.1,-1.5l1.2,-0.1l2,-2.9l0.1,1.2l2.8,0.9l0.5,2.9l6,-0.2l8.1,-9.1l0,0l0.9,-1.7l-0.5,-1.1l3.5,-5l-1.9,-1.9l6.6,-6.4l7.6,-5.6l-0.9,-2.2l1.4,-4.6l-1.3,-2.4l2.7,-2.8l5.2,-1.1l4.1,-3.5l-1.1,-1l0.5,-0.9l5.7,-4.1l0.8,-1l-0.7,-0.4l4.7,-4.3l-0.5,-2.7l2.2,-0.5l0.6,-1.8l1.9,-0.6l-0.3,-1.7l-1.3,-0.6l-5.7,1.2l1.4,-3.1l1,-0.1l0.1,-1.7l2.6,-1.3l-0.8,-2.5l1.7,-0.6l2.2,1l2.4,-0.9l0,0l0.4,-1.3l-2.4,-4.2l-1.9,-0.5l-0.9,0.7l-0.6,-0.8l1.8,-4.9l-1.4,-3.7l-6.2,-2.4l-1,-2.3l-0.7,0.3l-1.5,-2.2l-5.8,-3.3l-1.6,-2.5l-1.8,0.8l-0.8,1.8l-2.7,1.1l-1.8,-3.5l-1.9,-1.2l-4.2,0.3l-3.5,1.5V201z"},{"id":"bre","name":"Bretagne","d":"M80.3,234.8l1.2,0.6l0.1,0.3l2.4,0.6l0.7,2.1l3.2,0.9l-0.6,1.7l-0.7,0.5l-3.2,-1.4l-2.1,0.5l-0.8,-0.6l0.1,-1.5l-1.1,-1.5L80.3,234.8zM81.3,143l0.8,1.3l-0.6,0.9l5.6,-2.3l-0.6,2.4l1.2,-0.2l-0.6,0.8l3.1,-0.2l0.3,1.5l-1.6,1.2l0.6,0.3l1.7,0.8l1.6,-0.6l0.9,1l-0.7,2.2l5.3,4.5l-0.2,3.4l4.5,2.5l-1.1,2l1.2,-0.5l1.6,2.8l-0.4,-2.8l2.3,0.7l-0.3,-0.9l3.3,-3.9l3.4,-1.4l-0.6,-1.4l2.1,-0.5l0.7,1.5l4.2,-3.7l0.3,1l1.2,0.2l-2.2,3l1,0.6l2.9,-2.1l-0.1,1.8l1.5,1.8l0.6,-1.5l0.7,2.2l1.1,-0.6l-0.8,-0.6l0.9,-1.4l1.1,1.1l-1.1,-2.1l1.6,-0.7l0.7,0.8l2,-0.4l-0.3,0.8l1.2,0.5l-0.4,1.2l0.7,-0.3l0.9,1.4l-0.7,0.7l1.8,1.7l-1,1.4l0.4,1.7l0.8,-1.9l0.4,0.3l0.5,-0.9l-1.1,0.1l0.4,-0.9l-1.1,-2.1l1.6,0.9l-0.6,-1.3l-1.6,-0.6l0.1,-0.9l-1.5,-1.2l0.1,-1l2.1,-1.5l-0.4,-0.6l2.3,0l-1,-0.3l1,-0.8l1.2,0.8l2.6,-1.4l0.3,2.1l-1.1,0.8l-0.3,1.8l1.1,1.4l2.7,0.7l8.5,-1.9l0,0l3.5,9.1l1.6,0.1l1.2,1.6l2.8,-0.5l1.1,-1.9l2.1,-0.7l1.1,-2.1l7.6,2.2l0,0l0,0l0,0l-0.5,5.8l1.5,5.3l-2.3,3.9l0.9,3.9l0,0l0.2,0.2l0,0l1,6.8l1.2,1.4l-0.5,2.3l0.7,1.8l-1.4,1.2l-3.1,-0.1l-0.1,0.9l-1.2,0.4l-0.9,4.1l-0.8,0.5l0.4,1.4l-1.4,1l-1,4.6l-4.8,-1.4l-1,-1.8l-3.8,-0.4l0.2,2l-6.2,2.4l-1.6,3.3l-4.6,0.7l-3.7,-0.7l-3.9,2.3l-0.8,-1.4l-1.6,1.7l-1.1,-0.2l-0.5,1.2l-1.2,-0.1l-0.7,1.1l0.7,1.2l-0.8,1.1l0.1,3.8l-2.5,0.7l-0.3,2l-1.1,-0.3l0.2,-1.1l-2.5,1.1l-0.6,-1.2l-1.6,-0.1l-0.8,3.4l-3.5,0.3l-0.9,-1.3l-1.4,1.8l0,0l-1.6,-0.1l-0.3,-2.6l2.5,-0.4l-2.8,-1.6l-4.7,1.2l-0.4,-0.9l-1.1,0.1l-1,1.5l-1.9,-0.8l-3.7,1.2l-1.4,-0.7l-1,-2.1l-1.3,-0.1l-0.3,-1.1l-1.9,-0.7l-0.2,0.7l-1,-0.8l-1.3,-0.1l-0.8,-0.7l-3.4,0.6l-0.2,3.4l2,2.8l-2.1,-0.3l-1.3,-3.4l1.1,-1l-0.6,-3.1l-5.7,-5.5l-2.2,-0.6l-0.9,0.6l-0.2,-1.5l-3.6,0.9l-3.1,-4.2l-6.3,-0.8l-2,-1.8l-1.4,0.9l-3.9,0l-2,-2.7l0.8,-1.5l-0.8,-0.1l-1.3,-0.7l-0.7,-1.9l-1.8,1.2l0.6,1.8l-2.8,0.7l-2.7,-1.8l-1.7,0.9l-1.9,3.7l-7.3,0l-0.7,-1.1l1.5,-1.2l-0.5,-3.4l-2.6,-4.6l-3.7,-2.6l-1.6,-0.4l-0.8,0.7l-2.6,-1.8l-2.7,0.2l-1.6,-0.8l1.2,-0.3l-0.3,-1.3l6.7,-0.7l0.7,-0.9l2.1,0.2l2.9,-1.3l2.2,-0.2l2.4,1.3l1.6,-2.5l-2,-4.6l-2.4,-0.1l-0.2,-0.8l-3.5,-1.3l-1.5,0.4l-0.8,2.5l-1.7,1.4l0.3,-2.5l-0.8,-1.5l1.2,-0.9l-0.7,-0.6l-2.6,0.3l-0.3,-1.6l2.4,-0.2l-0.1,-3l1.6,-0.6l-1,2.4l0.9,1.2l0.7,-0.7l0.7,0.9l2.1,-1l1.4,0.2l0.9,1.2l3.8,-1.4l1.5,0.1l0.4,1l0.5,-1.2l-3.7,-1l1.4,-1l-1.2,-0.6l0.6,-1.4l-2,1.1l-0.2,1.2l-1.8,0.1l0.8,-1.1l-2.5,1l2.4,-3.5l-1,-0.8l-0.5,0.9l-1.6,-0.2l-1.9,1.2l-3.5,1.7l-3.1,-1.1l-1.1,1.5l-2.7,0.1l-0.7,-2l1.2,-1.3l-1.4,-1.9l1.4,-3.4l-0.7,-3l1.9,-2.5l1.1,0.3l0,-1.2l3.9,-0.4l0.2,-1.7l1.8,0.4l-0.2,-1.4l1.1,-0.2l0,-0.8l1.8,1l2.4,-1.3l1.6,0.3l-1.5,-1.1l3.8,-1.4l2.1,0.8l-0.7,1.4l0.7,0.5l0.9,-1l3.3,-0.2l-1.1,-0.4l1.5,-1.8l3.6,-0.5l1.7,1.2l0.2,-1.9l1.6,-0.5l0.3,-0.9l0.3,1l1.3,-1l-0.3,1.8l0.8,0.6l-0.6,0.9l1.7,0.7l0.3,-0.7h2.8l0,-1l1,-1.6l0.3,-0.3l1.6,1.2l2.1,-0.4l2.2,1.3l1.5,-0.6l-0.6,2.3l1.5,-1.7l0.5,1l1.2,0l0.6,-0.9l-0.7,-0.4l0,-2.1l1.5,-1.3l-1.5,-0.8l0,-2.1l-0.1,-0.3l0,-0.7l0.9,-0.1l0.5,1l0.8,-0.7l-0.2,-1.3l0.8,0.2l0.7,-1.2l0.5,1.2l0.5,-1.1l0.9,1.4l1.3,-0.3l-0.5,1.4l1.8,-0.1l0.4,-1l2.9,-1.4l2.4,0.3L81.3,143z"},{"id":"cvl","name":"Centre-Val de Loire","d":"M277.5,138.5L280,141.6L279.3,142.9L280.9,143.5L280.6,144.5L281.5,144.8L280.7,145.4L280.8,149.7L282.7,150.6L280.6,153.4L282.1,154.3L281.6,155.8L283.3,156.7L284.3,159L286.3,158.9L286.1,161.3L288.1,161.5L289.3,162.8L288.8,165.3L289.9,168.2L291.3,168.2L291.7,169.4L292.7,169.8L294.3,169.9L295.2,168.8L295.2,172L297.2,172.2L296.7,173.6L297.7,174.6L296.8,176L297.2,177.8L296.4,177.9L297,179.3L299.8,179.5L302.5,178.1L304.9,178.6L304.4,177.5L305.7,177.8L306.6,175.8L308.3,176.5L308.3,178.6L309.2,177.6L310.5,177.8L310.5,177.8L310.8,177.4L310.8,177.4L311.8,176.5L313.1,178L314.9,177.6L315.7,181L317.7,181.4L319.6,183.1L319.6,186.8L319.2,187.4L318.2,186.9L316.6,189.5L319.8,189.4L321.4,188.4L327.4,189.5L329.5,188.1L328.7,186.8L329.8,187.6L331.3,186.7L331.4,189L332.2,189.1L334.1,187.5L337,187L337,187L340.9,188.9L340.3,189.9L341.1,189.9L341.7,192.6L344.8,195.3L343.8,195.9L344.9,196.7L345,198.8L343.6,200.4L343.6,200.4L343.3,200.6L343.3,200.6L341.7,202.6L340,202.9L340.2,205L339.5,205.3L341,206.4L340.2,207.4L340.7,210.3L333.5,212.1L333.3,214.6L334.6,214.4L334.6,215.4L336.6,216.8L336.3,217.6L337.7,219L336.9,220.2L337,221.9L338.7,223.7L333.9,225.1L333.9,225.1L333.9,224.8L333.9,224.8L333.4,225.6L336.8,231.7L334.2,237.8L334.7,239.1L338.9,242.5L338.8,244.5L340.9,251L340.4,254.5L342.9,257L342.3,259.9L343,261.1L341.7,264L342.5,267.4L341,270.8L341,270.8L341,270.8L341,270.8L338.2,270.3L336.4,271L333.4,273.8L333.3,275L331.3,274.5L329.7,275.5L328.6,273.7L327.9,273.8L327.3,275.4L324.1,277.2L324.2,279.1L323.3,278.3L321.8,279.1L322.9,280.2L321.7,282.1L323.2,282.9L323.7,285.4L320.4,287.5L318.4,286.7L313.1,287.6L311.6,290.4L310.5,290.4L309.8,293.4L309.8,293.4L309.8,293.4L309.8,293.4L306.3,292.9L301.8,294L297.3,292L295.3,292.8L293.4,292.1L291.5,293.1L289.1,291.2L287.7,291.6L288.2,293.1L286.9,295.2L285.1,293.5L282.7,295.3L281.9,293.3L279.3,295.1L278.5,293L273.9,297.9L271.3,294.6L269.6,294.9L269.2,296.3L267.4,295.9L265.7,296.7L265.3,295.2L264.5,296L264,295.5L264,295.5L264.8,294.5L264.8,294.5L265.4,292.6L264.2,292.8L264.2,292.8L264.2,292.8L264.2,292.8L264.3,292.6L264.3,292.6L264.3,292.6L264.3,292.6L262.2,290.3L263.2,290.4L262,287.6L260.5,286.4L257.5,286.4L257.2,284.6L255.1,284.3L252.9,282.5L252.2,280.8L253.2,279.6L252.7,277.8L253.6,276.9L253,275L249,271.2L248.2,267.5L246.4,266.9L244.4,264.3L243.9,260L241.5,259.3L240.8,258L238.7,258.1L240,261L236.1,260.9L233.3,262.7L230.3,261.5L228.6,262.6L227.2,259L228.1,258.5L227.7,255.3L226.3,255.8L226.2,254.3L225.3,254.1L224,255.1L222.6,254.8L223.5,252.8L222.7,251.4L221.9,252.3L220.7,251.9L221,250.8L218.5,251.2L218.4,249.5L217.4,248.4L217.4,248.4L217.9,246.9L217.3,246.5L218.4,245.2L218.3,241.3L221.2,237.3L220.9,236.4L222.7,235.2L221.5,234.1L224.3,227.9L224.5,226.3L223.2,225.5L224.8,222L224.8,222L224.8,221.5L224.8,221.5L225.8,221.1L231.1,223.6L231.9,223.1L230.3,220.6L231.1,219.1L232.8,220.8L233.8,220.6L234.4,219L239.9,217.4L240.8,216.1L239.9,216.4L239.5,214.6L241.2,212.5L244.3,211.6L243.9,210.6L247,207.5L246.7,203.3L247.9,202.6L248.8,204.1L249,201.4L250.4,200.9L249.1,198L250.1,195.4L248.2,194.9L248.1,192.8L250.1,192.7L250.2,191.3L248.9,191L250,190.7L250.4,188.9L253.1,188.6L248.2,185.1L248.2,185.1L249.6,183.9L247.8,181L248.6,179.2L246.5,178.6L247.1,177.2L247.8,176L253.1,174L255.6,169.8L254.2,168.8L254,167.5L254.8,167.2L254.2,166.1L255.3,164.6L253.5,163.8L254.1,163L253.6,162.3L250.5,160.9L250.3,159.2L249.1,159.1L249.7,157.7L249,155.4L249,155.4L249,155.4L249,155.4L251,154.3L251.5,152.6L253.4,153L256.2,152L256.2,152L257,152L257,152L258.1,151.8L259.3,149.9L261.4,150.6L261.7,148L265.9,149.9L266.8,149.2L267.3,150L270.5,149.7L272.1,148.5L271.7,145.1L275.8,142.8L276.2,141.2L275.2,139.5z"},{"id":"cor","name":"Corse","d":"M579.4,571.3l1.2,-2.7l0.6,0.7l2.2,-1l1.8,-2.3l-4.3,-1.5l-1.3,0.8l-0.3,-2.3l-2.8,1.1l-0.1,-1l-1.9,-0.1l3,-2l-0.8,-1.4l2.5,-0.5l0.5,-1.2l0.2,-1l-0.4,-1.8l1,-0.7l-2.3,-2.1l-1.2,1.4l-3.2,-0.1l-1.4,0.9l0.6,-2.3l-1.3,-1.7l2.3,-0.2l0.9,-0.8l-0.4,-1.6l3.6,-2.1l-1.2,-0.8l-0.8,-2.7l-1.7,0.7l-2,-1.9l-1.3,0.4l0.2,-1.3l-1,-1.1l1,-0.4l-0.2,-1.5l-0.3,-1.3l-1.4,-0.5l6.4,-1.6l-1.4,-2l-2.3,-0.2l-0.3,-0.8l1.3,-0.7l-0.5,-1l-2.6,0.9l-0.3,-2.3l1,0.3l1.7,-1l-0.1,-1.7l2.1,0.1l0.4,-1.1l-0.7,-0.4l1.3,-1.5l-1.3,-0.5l0.7,-2.1l2.2,-0.5l-0.6,-2.5l0.8,-0.9l0.1,1.3l1.1,-0.6l1.4,1l0.6,-2.7l2.7,-0.3l0.5,-1.2l2.2,-1l0.6,0.7l2.8,-0.4l1.9,-1.1l-0.1,-2l2.8,-2l4,-0.2l3.2,3.3l1.9,-3.3l-0.1,-3.3l-1.4,-2.2l1.3,-1.8l-0.8,-1.9l1.6,-1.4l-0.9,-4l3.4,-1l1.7,1.4l-0.5,1.3l1.7,8.8l-2,7.4l3.6,7.1l0,10l1.1,4.9l0,4.9l-0.4,5.1l-5.7,8.4l-0.7,8.6l0.5,4.7l-1.4,1.9l0.6,1.9l-1.8,0.7l-1.4,0.2l-1.2,1.8l0.4,1.2l1.3,-1.7l2.1,0.6l-1.1,2l-2.9,1.6l0.2,3.7l-2.3,1.2l0.2,1.4l-0.7,0.2l0.6,0.5l1.8,-1.3l-0.2,0.8l-1.6,2.6l-1.7,0.1l-0.9,-1.5l-2.6,-0.1l1.1,-2.4l-2.1,-0.4l0.4,-2l-1.7,1.3l-1.7,-1.8l-0.6,0.9l-0.9,-1l-1.7,0.2l-1.8,-1.9l-1.4,0.4l0.5,-1.6l-2.8,-0.5l0.7,-1.1L579.4,571.3z"},{"id":"ges","name":"Grand Est","d":"M555.5,136.7l-4.4,-1.4l-1.7,-1.5l-3.1,-0.8l-1.8,-1.9l-0.6,1l-1.3,-0.4l-0.9,1l-3,-2l-2.4,1.4l-0.1,-0.8l-2.4,0.8l-1.7,-0.6l-0.1,-1.2l-4.3,-1.5l-1.4,-4.5l-2.4,0.3l0.4,-1.2l-3.3,0.8l-0.1,1.8l-1.5,0l-1.3,1.8l-2,-0.9l-2,0.9l-0.6,-1l-1.1,0.6l-1.3,-1.4l-0.9,0.2l-0.2,-1.1l-0.8,0.5l0.3,1.2l-1.5,1l-0.7,-4.9l-0.9,0.2l-1.6,-1.4l-0.5,0.4l-0.9,-1.3l-1.9,0.9l-1.4,-0.9l-0.9,0.6l1,2l-1.1,1.8l-2.3,-1l-1.7,0.3l-1.1,-1.5l0.5,-2l-1.2,0.2l-0.3,-2.1l-1.2,-0.6l0.4,-1.3l-2.3,-1.4l-2,-2.9l1.4,-1.2l-2.5,-2.3l0.7,-1.1l-0.6,-0.8l-4.8,-2.8l-1.4,0.8l-1.1,-0.4l-0.1,0.7l-1.3,-0.5l-3.9,-3l-3.5,0.6l0.2,0.7l-1.4,0l-1.1,2.5l-1.8,-0.8l-0.6,1.2l-2.6,-0.3l-0.6,-2.7l-4,-0.3l-1.4,-1.4l0.1,-1.4l-0.8,0.4l-1.8,-1.7l-1.1,1.5l-4.3,-0.7l-1.3,2.7l-2.3,-1.4l-3.5,2l-1.8,-6.3l-3.4,-2.2l-1.4,1.3l-0.3,-1.2l1,-1.6l-2.6,-2.7l-1.1,0.7l-3.2,-0.5l-0.2,-1.4l-1.4,0.1l-1.4,-3.2l-3.6,-1.2l-0.5,-1.2l-3.7,0.9l-2.3,-0.5l1,-1.7l-1.1,-3l1.7,-2.7l-1.7,-2.5l-2.3,-0.6l-0.1,-0.7l2.1,-4.5l-0.9,-1.7l0.7,-0.1l0.5,-2.2l0.9,0.9l-0.2,-2l1.2,-1.1l-2.9,-2l-5.5,5.4l0,5.8l-3.9,0.6l-3,2.3l-3.2,0.8l-5.7,-2l-3.2,0.7l0,0l-0.6,2.9l1.6,0.6l-0.1,2.3l-2,5.7l1.8,1.5l-2.7,3.7l-2.4,1.3l-0.5,2.9l-3.1,-0.3l-0.7,1l2.3,3.3l-1.2,1.7l1.1,0.2l0.1,1.1l-1.6,1.1l0,2.5l1.1,1.4l-1.3,0.5l-0.1,5l-3.2,-1.1l-1.5,-1.9l-2.8,1.7l-0.2,2.3l-3,-0.7l-5.5,2.7l0.9,2.8l-0.6,0.9l1.1,1.2l-1,1.4l1.2,1l0.7,-0.6l0.7,1.9l1.4,-0.3l0,1.4l-1.8,1.1l-0.8,-0.7l-2.7,0.2l-0.9,1.9l1.5,2.7l-2.1,1.1l-0.1,1.5l2.7,-0.4l1.1,1.8l-1.5,0.6l-0.9,2.4l-1.3,0.4l0.5,1.1l-1.2,0.2l-0.1,1.6l-1.8,0.2l-1.8,3.8l0,0l0.1,2.4l-3.5,0.3l1.6,0.4l0.1,0.8l-1.4,0.4l-0.6,1.6l3.1,1.3l0.4,2.5l-1.5,2.2l0.8,0.7l-0.3,1.1l3.5,-0.7l-0.6,0.8l1.6,1l-2.4,0.7l0.5,0.9l-2,1.2l0.7,1.8l-3.1,0.9l1.3,2.3l-2.3,0.7l0.9,1.7l-0.6,1.8l1.3,0.6l-0.3,1.6l0,0l0.6,2l1.6,-1.1l1.5,0.6l1.7,2.9l1.8,1.2l-0.4,1l1.7,1l-0.8,2.3l0.9,0.4l-1.8,2.5l2.1,-0.3l1.5,3.1l2.3,-1l-0.3,-1.1l1.4,0.5l-0.4,2.1l2.1,0.9l1.3,4.6l2.1,1.8l0,0.8l-1.3,-0.1l0.5,1.3l1.2,0.3l0.6,-1.4l0.8,1.3l-0.8,3.1l3.8,-0.1l0.8,-0.8l1.7,1.1l0.6,-1.3l1.2,0l0.9,1.2l1.9,-1.8l0,0l0.5,-0.3l0,0l1.5,1.1l0.4,-1.3l-0.7,-0.3l1.3,-0.3l-0.2,1.4l0.9,1.2l2,0.3l0.9,-2.2l10,-0.4l-0.8,-2.4l1.8,-1.4l3.8,0.9l1.2,-0.6l1.6,1.2l2.3,-0.1l0.7,1.1l-1,1.6l2.5,0.1l0.8,1.2l-1.4,2l1.2,0.8l0.4,-1.3l1.4,-0.2l1.6,3.4l0,0h0.5l0,0l1.6,3.6l-3.2,2.5l1.8,0.3l0.4,4.7l2.5,-1.5l0,1.1l1.3,-0.2l-0.3,1.7l1.1,-0.2l1.6,1.5l2.5,-2.1l-0.2,1.7l2.7,2.2l0.9,-0.4l-0.9,1.6l0.7,1.2l2.8,-2.2l1.4,1.3l2.7,-5.3l1.8,0.3l0.9,-0.7l1.8,0.7l1.7,-2.1l1.2,2.2l3.9,-0.8l-0.3,-2.3l1,-1.5l-0.1,-1.3l-1.2,-0.7l0.6,-2.6l2.1,0.1l0.8,-2.4l2.8,0.5l0.8,-3.2l1.5,0.3l0,-1.5l2,-3.2l1.1,0.6l-1.3,1.9l0.9,0.1l0.9,-1.3l1.3,0l1.5,-2.9l4,-1l0,0l0.1,0.1l0,0l1.1,2.5l-0.7,0.7l2.4,1.2l-0.1,0.6l0,0v0.3l0,0l3.5,-1.5l4.2,-0.3l1.9,1.2l1.8,3.5l2.7,-1.1l0.8,-1.8l1.8,-0.8l1.6,2.5l5.8,3.3l1.5,2.2l0.7,-0.3l1,2.3l6.2,2.4l1.4,3.7l-1.8,4.9l0.6,0.8l0.9,-0.7l1.9,0.5l2.4,4.2l-0.4,1.3l0,0l2.9,0.5l-1.3,3.1l2.6,0.3l0.5,1.1l3.5,-1.2l2.4,0.6l2.9,-2.4l-1.4,-0.6l0.4,-0.9l2.4,0.8l0.9,-1l-0.6,-1.4l1,0.4l0.3,-0.8l-1.3,-0.7l3.5,-2.2l0.3,-1.8l-2.8,-3.5l-0.5,-2.2l1.5,-2.2l-0.8,-2.8l1.3,-3.8l-0.2,-2.3l2.7,-5.7l-2.2,-3.9l0.3,-5.4l3.7,-6.3l1.1,-5l2.1,-1.6l-0.5,-4.2l1.5,-6l1.6,-1.5l-0.2,-4.3l1.6,-3.6l5.2,-5.1l0.3,-2.2l1.8,-0.2l0.6,-1.6l2.5,-1l2.5,-6.4l3.3,-4.4L555.5,136.7z"},{"id":"hdf","name":"Hauts-de-France","d":"M389.3,73.7L389.2,72.8L387.3,72.4L388,70.9L386.9,69.7L387.9,67.8L390.8,66.5L389.4,64.2L389.5,62.4L386.6,62.3L387.7,60.4L387.5,57.2L390.4,54.6L389.9,53.4L388,52.3L387.4,53.2L388.2,54.3L386.9,54.3L386.1,51.3L384.4,50.9L382.2,47.7L377.2,49.8L375,48.2L370.7,48.2L369.1,51.2L367,47L367.7,44.9L367.1,41.4L364.9,38.8L360.4,39.4L361.2,37.1L359.4,36.4L358.2,38.2L355.3,39.2L351.8,37L351.2,32.4L349.6,28.3L350.7,27.1L350.5,25.5L347.6,23.9L345.9,19.7L344.3,19.4L343.3,20.8L340.3,20.7L337.7,22.2L335.8,26.1L333.3,24.1L332.1,24.5L330.9,23.8L328.2,18.3L325.9,17.6L324.6,18.2L323.1,15.8L323.5,12.6L322.7,11.2L324.4,9.3L323.4,6.5L322,5.7L320.8,0L314,2.8L312.8,2L306.7,4.1L305.2,4.5L304.4,4.5L302.3,5.6L292.8,7.8L287.5,9.5L284.1,13.4L280.7,14.3L282.1,18.8L281.3,23.4L280.5,24.5L280.1,22.9L280,23.8L280.5,34.1L283,37.7L281,36.1L279.6,45.1L282.5,47.2L279.7,47.6L278.9,52.7L279.5,54.3L281.2,54.4L282.5,57.1L284.7,57.5L285.2,58.8L284,59.7L282,58.5L281,58.9L279.8,57.5L278.3,57.6L276.7,59.7L275.4,64L272.3,66.8L272.3,66.8L273.6,67.3L275.3,66.4L275.4,68.4L286.2,78.2L287.1,82.8L289.3,86.2L287.7,86.1L287.6,87.7L286.3,88L286.3,89.7L285.2,90.5L286,91.4L287.5,90.1L287.8,90.5L285.6,93.8L286.6,95.1L285.5,96.5L286.5,97.6L285.7,97.7L285.7,97.7L285.6,97.7L286.9,99.1L286.7,100.2L287.7,100.5L286.4,102.7L287.6,103.7L288.2,102.2L289.5,102.7L288.7,104.9L288.7,104.9L288.3,105.2L288.3,105.2L286.8,106.8L286.3,108.9L287.4,109L286.6,109.8L288.2,111.5L288.7,116.3L289.8,116.4L290,117.4L289.4,119.2L288.1,117.5L286.1,118L285.9,120.1L285.9,120.1L286.3,119.5L287.4,120.5L286.3,121.6L286.8,122.4L286.8,122.4L287.2,122.4L287.2,122.4L288,123.6L290,123L290.4,123.8L291.4,123.6L291.3,124.3L293.1,123.6L293.3,124.4L297.2,123.1L298.2,123.6L301.5,121.4L302.1,122.7L303.5,122.5L303.8,123.4L304.3,122.8L305.2,124.4L307.2,123.4L307.9,124.2L307.2,125L307.8,125.2L310,124.6L311.2,122.9L313,125.4L313.7,124.6L316.4,125.5L316.2,126.3L317.2,125.8L319.1,127.3L318.5,128L320.2,128.4L321.1,126.8L322.4,129.7L324.4,127.9L326.8,130.5L328.1,129.9L328.6,130.8L330.4,130.2L330,129.5L331.7,128.6L333.5,130.3L335.5,129.4L337.2,129.8L338.4,128.9L339.1,130.2L340,128.9L342.4,129.3L342.6,127.3L345.4,128L346.5,128.5L346,129.5L347.6,131.5L346.6,133.9L350.1,136.4L350.6,138.6L352.3,137.9L353.3,140.5L354.9,139.2L355.5,142.8L358.1,143.5L358.8,144.9L359.8,144L359.8,144L361.6,140.2L363.3,140.1L363.5,138.5L364.7,138.3L364.1,137.2L365.4,136.8L366.3,134.4L367.8,133.8L366.7,132L363.9,132.4L364,130.9L366.1,129.8L364.6,127.1L365.5,125.2L368.1,125L368.9,125.7L370.7,124.7L370.8,123.3L369.3,123.5L368.7,121.6L368,122.2L366.8,121.2L367.8,119.8L366.7,118.6L367.3,117.7L366.4,114.8L371.9,112.1L375,112.9L375.2,110.6L378,108.9L379.5,110.8L382.7,111.9L382.8,106.9L384,106.4L382.9,105L382.9,102.5L384.5,101.4L384.3,100.3L383.3,100.1L384.4,98.4L382.2,95.2L382.9,94.2L386,94.5L386.4,91.6L388.9,90.2L391.6,86.5L389.7,85.1L391.7,79.4L391.8,77.1L390.2,76.5L390.8,73.6z"},{"id":"idf","name":"Île-de-France","d":"M285.9,120.1L286.3,119.5L287.4,120.5L286.3,121.6L286.8,122.4L286.8,122.4L287.2,122.4L287.2,122.4L288,123.6L290,123L290.4,123.8L291.4,123.6L291.3,124.3L293.1,123.6L293.3,124.4L297.2,123.1L298.2,123.6L301.5,121.4L302.1,122.7L303.5,122.5L303.8,123.4L304.3,122.8L305.2,124.4L307.2,123.4L307.9,124.2L307.2,125L307.8,125.2L310,124.6L311.2,122.9L313,125.4L313.7,124.6L316.4,125.5L316.2,126.3L317.2,125.8L319.1,127.3L318.5,128L320.2,128.4L321.1,126.8L322.4,129.7L324.4,127.9L326.8,130.5L328.1,129.9L328.6,130.8L330.4,130.2L330,129.5L331.7,128.6L333.5,130.3L335.5,129.4L337.2,129.8L338.4,128.9L339.1,130.2L340,128.9L342.4,129.3L342.6,127.3L345.4,128L346.5,128.5L346,129.5L347.6,131.5L346.6,133.9L350.1,136.4L350.6,138.6L352.3,137.9L353.3,140.5L354.9,139.2L355.5,142.8L358.1,143.5L358.8,144.9L359.8,144L359.8,144L359.8,144L359.8,144L359.9,146.4L356.4,146.7L358,147.1L358,147.9L356.6,148.3L356,149.9L359.1,151.1L359.4,153.6L357.9,155.8L358.7,156.5L358.4,157.6L361.8,156.9L361.2,157.7L362.9,158.8L360.4,159.5L361,160.4L358.9,161.6L359.6,163.4L356.5,164.3L357.8,166.6L355.5,167.3L356.5,169L355.9,170.7L357.2,171.3L356.9,172.9L356.9,172.9L356.9,172.9L356.9,172.9L355.2,172.3L354.8,174L353.6,174.2L351.4,173.4L350.2,174.5L345.5,174L343.9,175.5L341.6,174.8L340.3,178.2L341.6,181.7L339.8,184.3L337.1,185.8L337,187L337,187L334.1,187.5L332.2,189.1L331.4,189L331.3,186.7L329.8,187.6L328.7,186.8L329.5,188.1L327.4,189.5L321.4,188.4L319.8,189.4L316.6,189.5L318.2,186.9L319.2,187.4L319.6,186.8L319.6,183.1L317.7,181.4L315.7,181L314.9,177.6L313.1,178L311.8,176.5L310.8,177.4L310.8,177.4L310.5,177.8L310.5,177.8L309.2,177.6L308.3,178.6L308.3,176.5L306.6,175.8L305.7,177.8L304.4,177.5L304.9,178.6L302.5,178.1L299.8,179.5L297,179.3L296.4,177.9L297.2,177.8L296.8,176L297.7,174.6L296.7,173.6L297.2,172.2L295.2,172L295.2,168.8L294.3,169.9L292.7,169.8L291.7,169.4L291.3,168.2L289.9,168.2L288.8,165.3L289.3,162.8L288.1,161.5L286.1,161.3L286.3,158.9L284.3,159L283.3,156.7L281.6,155.8L282.1,154.3L280.6,153.4L282.7,150.6L280.8,149.7L280.7,145.4L281.5,144.8L280.6,144.5L280.9,143.5L279.3,142.9L280,141.6L277.5,138.5L277.5,138.5L277.5,138.5L277.5,138.5L277.1,136.8L278.2,136.1L276.2,136.2L276.5,133.8L275.3,131.3L275.9,130.7L276.9,131.5L277.8,129.3L278.3,130.3L278.3,130.3L278.5,130.3L278.5,130.3L282.5,129.3L283.9,126.4L284.6,121.4z"},{"id":"nor","name":"Normandie","d":"M288.7,104.9L288.7,104.9l0.8,-2.2l-1.3,-0.5l-0.6,1.4l-1.1,-0.9l1.3,-2.2l-1,-0.4l0.2,-1.1l-1.4,-1.3l0,0h0.2l0,0l0.8,-0.1l-1.1,-1.1l1.1,-1.4l-1,-1.3l2.2,-3.2l-0.3,-0.5l-1.6,1.4l-0.7,-0.9l1.1,-0.8l-0.1,-1.8l1.4,-0.3l0.1,-1.6l1.5,0.1l-2.1,-3.4l-0.9,-4.6l-10.8,-9.8l-0.1,-2L273.6,67.3l-1.3,-0.5l0,0l-7.6,6.1l-4.6,2.2l-2.7,1.2l-2.4,-0.7L247.2,79l-7.7,1.2l-10.4,7l-5.4,2.2l-1.8,1.7l-0.3,1.6l-0.2,1l-3.6,8.5l1.1,1.9l3.1,1.9l4.4,0.9l1,-0.8l-0.5,1.4l-2.5,0.1l-4,1.7l-5.3,4.9l-3.5,1.8l-5.6,1l-1.1,-0.5l-1.3,-0.3l-4.8,-2.6l-15,-1l-8.7,-3.1l-4.5,0.5l-1.8,1.9l0.1,1l-1.6,-1.2l-2,1.8l1.4,-4.6l-5.9,-9l0.5,-2.2l1.1,-0.2l0.7,-1.8l1.1,0.4l-1.5,-5.7l-4.3,-0.7l-4.3,0.6l-0.6,1.8l-1.9,0.9l-3.1,-0.2l-3.1,-0.6l-3.3,-0.7l-2.5,-0.8l-1.1,-1.7l-1.5,0.8l-2.3,-1.3l-0.2,3.3l3,1l1.1,1.8l0.3,3.9l-2,2.4l1.7,1.9l1.6,8.4l0.9,-0.2l3.3,3l0.9,2.5l2.5,5l0.5,-0.6l0.9,5.2l-0.7,2.1l0.4,4.1l0.9,2.4l0.9,-1.7l-0.2,5.4l0.5,0.5l-0.5,0.5l-0.9,4.8l-1.3,0.9l1.7,0.8l0.3,4.9l1.7,0.8l1.2,2.9l2,0.8l0.1,1l2.5,-1.3l-1,1l2.4,1.7l-3,-0.7l-2.7,1.3l-0.8,-0.9l0,1.1l-2.5,-0.9l0,0l3.5,9.1l1.6,0.1l1.2,1.6l2.8,-0.5l1.1,-1.9l2.1,-0.7l1.1,-2.1l7.6,2.2l0,0l2.7,1.2l1.3,-0.3l0.7,-1.4l1.9,1.3l2.6,-0.2l1.3,2.8l1.5,-0.6l0.8,1.8l1.9,-0.9l-0.7,-1.5l1.7,0.3l1.1,-1.1l0.5,2.6l2.2,-1.7l1.9,-0.1l1.7,-2.2l4.7,-0.1l1.8,1.6l1.3,-2.4l2.1,0.9l1.2,-1.8l-0.9,-0.8l0.6,-1l1.7,0l2.6,2.2l-1.2,1.1l1.1,3.4l4,0.4l0,4.8l2.1,-1.4l0.6,1l1.8,0.2l0.6,-1.9l3.6,-2l-0.5,-1l1.2,0.4l-0.1,-0.9l5.3,-1l2.3,1.3l1.1,2.1l-0.5,0.8l0.9,5.6l3.6,1.5l0.4,-0.7l0.1,1.6l1.8,2.2l3.7,0.2l0.6,0.8l-0.3,-1.4l0.9,-0.5l1.3,0.6l2.2,4.1l0.9,0.5l1.5,-0.9l0,0l1.4,-1.2l-1.7,-2.9l0.7,-1.8l-2.1,-0.7l0.6,-1.4l0.7,-1.2l5.3,-2l2.6,-4.2l-1.5,-1l-0.2,-1.3l0.8,-0.4l-0.6,-1.1l1,-1.5l-1.8,-0.8l0.6,-0.8l-0.6,-0.7l-3.1,-1.4l-0.2,-1.7l-1.3,-0.3l0.6,-1.2l-0.9,-1.9l2.3,-1.5l0.5,-1.7l1.9,0.4l2.8,-1l0,0h0.9l0,0l1.1,-0.2l1.2,-1.9l2.2,0.7l0.3,-2.7l4.2,2l0.9,-0.8l0.6,0.8l3.1,-0.2l1.7,-1.3l-0.4,-3.3l4.1,-2.4l0.5,-1.6l-1,-1.7l2.2,-1l0,0l-0.4,-1.7l1.1,-0.7l-2,0.2l0.3,-2.4l-1.3,-2.5l0.6,-0.7l1.1,0.8l0.9,-2.2l0.4,1l0,0l0.2,0l0,0l4,-1l1.4,-2.9l0.7,-5l1.2,-1.3l0,0l0.2,-2.1l2,-0.5l1.3,1.7l0.6,-1.8l-0.3,-1l-1,-0.1l-0.5,-4.7l-1.6,-1.7l0.8,-0.8l-1.1,-0.1l0.5,-2.1l1.5,-1.6L288.7,104.9z"},{"id":"naq","name":"Nouvelle-Aquitaine","d":"M162.7,319.1l1,0.4l0.1,3.3l2,2.6l0,1.5l-0.9,0.6l0.5,1.3l-1.5,1.7l-1.6,-4.8l-4.9,-4.3l-1.1,-5.6l1.8,0.5l2.3,2.7L162.7,319.1zM151.4,306.5l3,0l5.8,3.4l1.8,0.1l1.1,-1.1l-0.9,0.2l-0.8,-1.7l-3,-1.3l-2.5,0.4l-0.6,-0.7l1.1,-1l-1.9,0.1l-1.7,0.9l-0.9,-1l1.9,-0.2l-1,-1.4l-2.6,0.7l0.2,0.8L151.4,306.5zM309.8,293.4l0.3,2.3l1.9,0.6l-1.3,1.7l2.6,2l0.9,-1.3l1.4,2.9l0.4,-0.8l2.1,1l1.8,5.6l1.7,1.9l-0.7,4.1l0.9,2.3l1.3,0.7l-0.4,2.6l0.8,1.1l-2,0.9l-0.8,1.5l0.5,1.1l-2.3,1.6l-0.3,1.3l-1.3,-0.2l0,0l-0.2,0l0,0l-1.1,1.9l-1.2,-0.2l-0.6,0.8l2.3,3.9l1.7,0.6l1.6,2.3l-0.1,4l-1.5,0.1l-1,2.6l1.2,2.1l1.2,0.4l-1.3,8l1.7,1.6l-2,1.3l-3.9,-2.5l-1.6,0l0.8,1.5l-0.4,3l-1.8,0.9l-1.1,2l-0.8,-0.2l-1.2,2.5l-1.9,1.6l0.3,2.4l1.3,0.9l-2.2,1.7l-0.3,3.2l-1.2,-0.3l-1.8,1.6l1.8,3.4l-1.4,1.2l0,0l-0.3,-0.1l0,0l-1.7,0.4l0,0l-3.1,0.1l-1.6,1.3l-0.3,-1.2l-1.3,-0.3l-4.4,3.2l-2.1,-0.8l0,-1.1l-1.8,-0.7l-1,-2l-2.1,-1.7l-2.3,-0.5l-1.2,0.7l-0.4,-1l-5.2,2.5l0,0l0.2,0.7l0,0l1.2,4.5l-1.2,0.4l1.2,1.9l-3.2,2.1l0.2,1.9l-2.8,0.9l0,1.2l1,0.7l-0.3,1.4l-0.7,-0.2l-0.5,1.6l-0.7,-0.4l-1.9,2.3l-3.1,0.8l0.2,1.8l-2.5,2.6l0.4,1.2l-2.5,0.7l-1.2,1.4l-1.4,-0.4l1.5,2.2l0,3.5l1.6,1l0.2,3.5l-4.5,0.2l-0.4,1l-0.9,-2.2l-1,0.2l-1.1,4.1l1,0.8l0.9,-0.4l1.4,1.6l-0.9,0.4l-0.9,4.4l-2.2,0.4l0.3,0.8l1.1,-0.2l0.4,2.1l-1.3,0.7l-3,-1l0.4,1.9l-1.7,0.2l-0.7,2.6l-3.2,2.1l-2.9,-3.2l-1.5,1.5l-3.9,-0.1l-0.8,1.6l-2.6,1.3l-2.8,-0.2l-0.6,1.1l-3,-1.1l0.1,-0.7l-1.6,0.4l-1.5,2.4l-1.2,-1.7l-3,2.3l0.9,2.6l-0.7,1.2l-3.3,-1.9l1.2,-1.4l-1.8,-1.7l-0.4,1.3l-2,0.8l-0.1,1.1l-1.3,-0.9l-1.4,0.9l-0.8,-0.7l-2.5,2.4l2.2,1.7l-0.9,0.6l0.6,2.7l-1.4,0.1l0.3,3.3l1,0.8l-2.3,1.7l0.3,3l-0.9,0.1l0,0.9l-0.8,-0.4l0.1,1.4l1.3,0.1l0.4,1.9l2.6,-0.8l0.7,0.9l2.7,-0.1l0.1,2.2l1.1,-0.3l1.1,2l-0.4,1.2l1.3,1.1l-2,0.5l-0.2,1.6l0.8,0.9l-0.7,0.5l1,0l1.7,-2l-0.1,4.2l1.4,1.5l-0.8,1.2l-1.5,-0.2l-0.8,1.6l1.2,1.8l-1.3,3l-1,-0.2l0.2,2.6l-1.6,0.6l-0.5,-0.8l-1.2,2.9l-2,0.8l-0.2,2.7l0.8,0.9l-3.4,0.8l0.1,1.3l-1.2,0.5l0.3,4l-1.9,0.9l0.6,3.8l0,0l-3.4,2.8l-2,0.2l-2.6,-1.8l-1.9,2.8l-5.2,-6l-2.2,-0.7l0.1,-2.8l-1,-1.3l-2.3,1l-4,-0.7l-1.6,0.6l-7.1,-4l-1.2,0.9l-0.9,-1.5l-2.7,-1.1l-1.4,0.7l-1.9,-1.4l1.6,-2.8l-3,1.4l-0.4,3.7l-3.6,-1l-1.4,-2.4l2.4,-2.2l1.3,-3.5l-0.3,-3.9l-6.1,-2l-1.1,0.3l-0.6,2.2l-1.3,-0.1l-0.7,-3.1l-1.9,-0.5l-2.5,1.1l-0.3,-1.9l-2.1,-1.2l0.7,-0.8l-0.8,-0.5l4.6,-1.4l0.4,0.5l2.8,-2.6l6.4,-12.2l6.2,-32.3l1.7,-19.2l2.6,-6.7l1.8,-0.2l0.4,1.2l4.3,-0.3l1.3,0.7l-0.6,-2.5l-2.1,-1l1.5,0l-5.5,-4.6l-0.3,1.8l-2.4,3l-0.6,4.5l-0.6,-1l4.1,-38.9l0.2,-10.5l2.6,-4.8l1.4,-1l0.9,2.2l-0.6,0.3l-0.6,1.1l5.6,4.2l5.3,5.5l4.8,15.2l3.4,4.3l1,-0.1l-3.5,-6.4l-2,-11.9l-2.8,-7.8l-5.5,-5.2l-2.3,-0.7l-2.2,-3.7l-3.1,-1l-4.4,-3.3l-0.8,0.2l0.8,1.2l-0.6,0l-0.6,-1.2l-0.1,-5.5l4.3,-1l-1.9,-3l2.6,-0.3l1.7,-2.9l-0.1,-1.7l0,-0.7l-0.2,-1.8l-0.5,-0.8l1.8,-0.6l-2,-5.5l-1.7,-0.7l0.6,-1.2l-1.9,-0.6l1,-1.2l-2.4,0.7l-1.3,-1.1l1.4,-1.3l0.2,-1.6l3.7,-2.9l-1,-2.5l0.8,-0.9l0,0l1.7,0l0.9,-2l3.3,-0.1l1.9,-1.2l-1.3,2.9l1.2,0.7l1.9,-1l1.5,0.6l0.8,-1.5l0,0l0.2,0.3l0,0l1.2,-0.3l-0.1,1l3.3,1.4l1,-1.4l2.1,0.5l0.4,-1.3l1.4,-0.4l0.2,-0.9l1.7,0l0.8,-1.5l-2.8,-1.7l-0.6,1.3l-0.9,-0.4l0.2,-2.1l1.2,-1.4l-1.6,-3.9l1.8,-0.7l-1,-2.6l0.5,-2.8l-1.8,-0.9l0.9,-1.6l-1.8,-1.4l1,-0.8l-2.6,-3.3l0.1,-2.2l0,0l0,-0.2l0,0l0.8,-0.8l-1.1,-0.7l0,0h-0.3l0,0l-1.6,-1.1l0,0h-0.2l0,0l-2.3,-2.7l1,-2.2l-2.1,-0.8l0.5,-0.7l-1.3,0l0.6,-1l-0.6,0.3l-0.8,-1.1l1.8,0.3l0.4,-1.2l1.4,0.2l0.9,-1.1l3,1.3l1.5,-0.2l0.4,-0.9l3,0.4l2.3,-2.2l-0.5,-1.9l2.6,-1.2l1.5,0.1l-0.9,1.7l1,-0.9l2.1,0.1l0.5,-1.5l2.3,0.3l3.1,-1.1l2.5,0.7l0.8,-0.9l1.7,0.3l-1.5,2l2.1,1l1.1,-0.6l0.7,-2.2l2.1,0.9l-0.2,-1.7l1.4,-2.8l1.1,-0.9l1.5,0.7l0,0l1,1.1l0,1.6l2.5,-0.4l-0.2,1.1l1.1,0.4l0.8,-0.9l0.8,1.4l-0.9,2l1.4,0.3l1.3,-1.1l0.9,0.2l0,1.5l1.4,-0.5l0.4,3.2l-0.9,0.5l1.3,3.6l1.7,-1.1l3,1.2l2.8,-1.8l3.8,0.1l-1.3,-3l2.1,-0.1l0.7,1.3l2.4,0.7l0.5,4.3l2,2.6l1.8,0.6l0.8,3.7l4.1,3.8l0.6,2l-1,0.9l0.5,1.8l-1,1.3l0.8,1.7l2.2,1.8l2.1,0.3l0.2,1.9l3,0l2.1,1.8l0.3,3.5l1.5,0.5l-0.2,0.8l1.2,-0.3l-0.6,1.9l0,0l-0.8,1l0,0l0.5,0.5l0.8,-0.8l0.4,1.5l1.7,-0.7l1.9,0.4l0.4,-1.4l1.7,-0.3l2.5,3.2l4.6,-4.8l0.8,2l2.7,-1.7l0.8,2l2.4,-1.8l1.8,1.7l1.3,-2.1l-0.5,-1.5l1.5,-0.4l2.3,1.9l1.9,-1l2,0.6l1.9,-0.7l4.6,2l4.5,-1.1L309.8,293.4z"},{"id":"occ","name":"Occitanie","d":"M408.1,420l1,3.2l1.4,0.1l0.6,1.6l-0.7,4.6l0.6,1.5l2.7,0.9l2.4,4.4l-1.3,0.1l0,1.4l-7.2,5.5l1.1,1.3l-1,0.8l0.4,2.8l-1.6,3.2l0.6,2.3l-3.6,-1.2l-2.3,0.6l-2.5,4.2l1.9,0.7l-0.4,1.3l-5.3,3.1l-0.4,0.4l-3.4,1.7l-0.4,2.2l0,0l-4,-1.5l-0.7,-1.3l0.8,-1.3l-1.3,-1.2l-5.5,0.4l-2.1,0.9l0.5,0.4l-3.4,2l-3.2,3.4l-2,0.7l-0.2,1l-3.4,1l-3.8,3.5l-1.9,3.1l-3.3,-1.3l-3.2,1l-0.4,0.3l-6.7,5.4l-2.4,3.6l-3.5,9.5l0.9,1.3l-1.3,12.1l0.6,0.1l-0.5,5.1l0.7,3.9l3.9,1.4l-0.8,0.6l0.3,1.3l1.1,0.3l0.9,2.1l-3.8,0.8l-2.2,-2.8l-2.7,0.5l-0.8,-0.9l-1.2,1.4l-2,-0.6l-3,2.7l-2.7,-0.3l-2.5,1.1l-0.9,1l0.8,2.6l-4,-1l-1.5,1.4l-2.5,-0.4l-2,-3l-7.3,-2.5l-2.3,1.3l-1.9,-0.4l-2.9,3.4l-2.9,0.8l-2.2,-1.9l-1.2,-4l-2.2,0.2l-2.4,-2.1l-3.9,-0.4l0.4,-3.4l2.3,-1.5l-2.9,-0.5l0.4,-1.5l-5.7,-0.5l-2,-1.6l-2.4,0.1l-1,2.6l-1.3,0.2l-2,-4.7l-1.6,-0.9l0.2,-0.9l-4.3,0.2l-0.9,-0.7l-2.5,1.1l-3.7,-4.5l-4,0.1l-1,-1.1l-1.4,0.9l-2.9,-2.1l-6.1,-2l-2,1.3l0.5,1.9l-1.1,1.2l0.9,0.4l-1,1.2l1.5,1.6l-0.1,2l-3.3,-0.8l-7.3,0.8l-2.6,-1.9l-2.7,2.8l-1.4,-2.4l-3.5,-1.2l-4.8,2.2l-1.9,-0.2l-0.7,0.9l-2.3,-0.4l-0.5,-1.4l-1.8,-0.5l-2,-4.1l-1.1,0.6l-5.2,-3.5l0,0l-0.6,-3.8l1.9,-0.9l-0.3,-4l1.2,-0.5l-0.1,-1.3l3.4,-0.8l-0.8,-0.9l0.2,-2.7l2,-0.8l1.2,-2.9l0.5,0.8l1.6,-0.6l-0.2,-2.6l1,0.2l1.3,-3l-1.2,-1.8l0.8,-1.6l1.5,0.2l0.8,-1.2l-1.4,-1.5l0.1,-4.2l-1.7,2l-1,0l0.7,-0.5l-0.8,-0.9l0.2,-1.6l2,-0.5l-1.3,-1.1l0.4,-1.2l-1.1,-2l-1.1,0.3l-0.1,-2.2l-2.7,0.1l-0.7,-0.9l-2.6,0.8l-0.4,-1.9l-1.3,-0.1l-0.1,-1.4l0.8,0.4l0,-0.9l0.9,-0.1l-0.3,-3l2.3,-1.7l-1,-0.7l-0.3,-3.3l1.4,-0.1l-0.6,-2.7l0.9,-0.6l-2.2,-1.7l2.5,-2.4l0.8,0.7l1.4,-0.9l1.3,0.9l0.1,-1.1l2,-0.8l0.4,-1.3l1.8,1.7l-1.2,1.4l3.3,1.9l0.7,-1.2l-0.9,-2.6l3,-2.3l1.2,1.7l1.5,-2.4l1.6,-0.4l-0.1,0.7l3,1.1l0.6,-1.1l2.8,0.2l2.6,-1.3l0.8,-1.6l3.9,0.1l1.5,-1.5l2.9,3.2l3.2,-2.1l0.7,-2.6l1.7,-0.2l-0.4,-1.9l3,1l1.3,-0.7l-0.4,-2.1l-1.1,0.2l-0.3,-0.8l2.2,-0.4l0.9,-4.4l0.9,-0.4l-1.4,-1.6l-0.9,0.4l-1,-0.8l1.1,-4.1l1,-0.2l0.9,2.2l0.4,-1l4.5,-0.2l-0.2,-3.5l-1.6,-1l0,-3.5l-1.5,-2.2l1.4,0.4l1.2,-1.4l2.5,-0.7l-0.4,-1.2l2.5,-2.6l-0.2,-1.8l3.1,-0.8l1.9,-2.3l0.7,0.4l0.5,-1.6l0.7,0.2l0.3,-1.4l-1,-0.7l0,-1.2l2.8,-0.9l-0.2,-1.9l3.2,-2.1l-1.2,-1.9l1.2,-0.4l-1.2,-4.5l0,0l-0.2,-0.7l0,0l5.2,-2.5l0.4,1l1.2,-0.7l2.3,0.5l2.2,1.7l1,2l1.8,0.7l0,1.1l2.1,0.8l4.4,-3.2l1.3,0.3l0.3,1.2l1.6,-1.3l3.1,-0.1l0,0l0.6,2.4l1.1,0.8l-0.7,1l0.3,1.8l3.3,4.9l-1.7,5.4l1.2,0.1l0.5,3.4l1.5,1.2l0.7,-0.4l-0.4,-1.5l3.3,-1.1l1.3,-0.1l1.1,1.7l5.5,-0.6l0.6,-2.2l2.5,-1.8l-0.4,-1.9l2.1,-2.3l0.2,-3.1l5.5,-5.6l1.6,1.7L330.2,386l1.3,-1.1l2.3,0l1.2,5l1.3,-0.3l0.7,1.1l-1.1,0.7l1,1l0.1,3.7l1.9,2.1l1.5,-4l0.9,-0.1l-0.5,-0.7l0.8,-4.2l1.1,-2.2l1.1,0.2l0.2,-1.9l0,0h0.2l0,0l-0.2,-1.2l1.2,-1l2.5,2.4l1.8,-1.5l-0.5,-1.3l1.1,-0.4l-0.3,-1.1l1,-0.4l0.8,0.9l3.5,-2.8l0,0.9l1.8,1.1l0.1,2.5l2.9,5.4l0.8,-1l2.7,-0.7l0.8,0.6l0.2,-2.9l2.5,0l0.9,1.3l-0.3,1.5l3.2,-0.5l2.7,4.3l1,-0.7l0.1,1.7l1.7,0.4l-0.6,1.7l1,0.8l-0.6,1.1l1.2,1.9l0.2,3l1.1,1.5l1,-0.1l1.5,5.7l3.4,3.9l-1.2,0.8l0.7,1.6l-0.9,1.9l0.5,0.6l3.4,-1l0.5,1.4l1.5,-0.3l3.3,3.1l1.3,-1.6l0,-1.3l1.6,-1.3l2.7,-0.5l0.1,3.2l1.8,0.4l0.6,-3.2l2.2,-0.3l0.3,0.9l1.5,0.2l0.4,1.3L408.1,420z"},{"id":"pdl","name":"Pays de la Loire","d":"M121.4,256.7l1.6,1.1l-0.6,2.1l3.1,1.6l0.3,3.3l-2.4,-3.8l-2.2,-0.1l-1.6,-1.9l0.4,-1.2l-0.7,-0.8L121.4,256.7zM170.7,165.6l2.7,1.2l1.3,-0.3l0.7,-1.4l1.9,1.3l2.6,-0.2l1.3,2.8l1.5,-0.6l0.8,1.8l1.9,-0.9l-0.7,-1.5l1.7,0.3l1.1,-1.1l0.5,2.6l2.2,-1.7l1.9,-0.1l1.7,-2.2l4.7,-0.1l1.8,1.6l1.3,-2.4l2.1,0.9l1.2,-1.8l-0.9,-0.8l0.6,-1l1.7,0l2.6,2.2l-1.2,1.1l1.1,3.4l4,0.4l0,4.8l2.1,-1.4l0.6,1l1.8,0.2l0.6,-1.9l3.6,-2l-0.5,-1l1.2,0.4l-0.1,-0.9l5.3,-1l2.3,1.3l1.1,2.1l-0.5,0.8l0.9,5.6l3.6,1.5l0.4,-0.7l0.1,1.6l1.8,2.2l3.7,0.2l0.6,0.8l-0.3,-1.4l0.9,-0.5l1.3,0.6l2.2,4.1l0.9,0.5l1.5,-0.9l0,0l4.9,3.4l-2.7,0.3l-0.4,1.8l-1.2,0.3l1.3,0.3l-0.1,1.4l-2,0.1l0.1,2.1l1.9,0.5l-1,2.7l1.3,2.8l-1.4,0.5l-0.2,2.7l-0.9,-1.5l-1.2,0.7l0.3,4.2l-3.2,3l0.4,1l-3.1,0.9l-1.7,2.1l0.4,1.8l1,-0.3l-0.9,1.3l-5.5,1.7l-0.6,1.6l-1,0.2l-1.7,-1.7l-0.8,1.5l1.6,2.5l-0.8,0.5l-5.3,-2.6l-1,0.4l0,0l0.1,0.5l0,0l-1.7,3.5l1.3,0.7l-0.2,1.7l-2.9,6.2l1.2,1.1l-1.8,1.2l0.3,0.9l-2.9,4l0.1,3.9l-1.1,1.3l0.6,0.4l-0.6,1.5l0,0l-1.5,-0.7l-1.1,0.9l-1.4,2.8l0.2,1.7l-2.1,-0.9l-0.7,2.2l-1.1,0.6l-2.1,-1l1.5,-2l-1.7,-0.3l-0.8,0.9l-2.5,-0.7l-3.1,1.1l-2.3,-0.3l-0.5,1.5l-2.1,-0.1l-1,0.9l0.9,-1.7l-1.5,-0.1l-2.6,1.2l0.5,1.9l-2.3,2.2l-3,-0.4l-0.4,0.9l-1.5,0.2l-3,-1.3l-0.9,1.1l-1.4,-0.2l-0.4,1.2l-1.8,-0.3l0.8,1.1l0.6,-0.3l-0.6,1l1.3,0l-0.5,0.7l2.1,0.8l-1,2.2l2.3,2.7l0,0h0.2l0,0l1.6,1.1l0,0h0.3l0,0l1.1,0.7l-0.8,0.8l0,0l0,0.2l0,0l-0.1,2.2l2.6,3.3l-1,0.8l1.8,1.4l-0.9,1.6l1.8,0.9l-0.5,2.8l1,2.6l-1.8,0.7l1.6,3.9l-1.2,1.4l-0.2,2.1l0.9,0.4l0.6,-1.3l2.8,1.7l-0.8,1.5l-1.7,0l-0.2,0.9l-1.4,0.4l-0.4,1.3l-2.1,-0.5l-1,1.4l-3.3,-1.4l0.1,-1l-1.2,0.3l0,0l-0.2,-0.3l0,0l-0.8,1.5l-1.5,-0.6l-1.9,1l-1.2,-0.7l1.3,-2.9l-1.9,1.2l-3.3,0.1l-0.9,2l-1.7,0l0,0l-3.6,0.1l-0.2,2.7l-4.6,-3.8l-1.1,-0.5l-5.2,0l-1.9,-3.7l-5.6,-1l-5.4,-4.4l-1.5,-0.1L138,282l-3.8,-5.3l-0.8,0.2l-2.1,-3.2l-5.3,-4.5l-0.4,-4.1l1.7,-0.2l-0.4,-1l3.6,-3.6l-0.5,-0.5l0.7,-1.9l2.1,-1.2l-1.1,-2l-2,-2l-2.2,-0.7l-0.4,0l-5.5,-1.6l1.3,-1.7l1.5,0.2l0.5,-0.7l-0.2,-5.8l-1.7,-0.4l-3.6,2.3l-3.2,-2.8l-1.7,0.1l-0.6,1.1l-4.7,-1.9l1.5,-1.1l0.1,-1.8l-2.2,-2.2l4.2,-3l0,-1.5l0,0l1.4,-1.8l0.9,1.3l3.5,-0.3l0.8,-3.4l1.6,0.1l0.6,1.2l2.5,-1.1l-0.2,1.1l1.1,0.3l0.3,-2l2.5,-0.7l-0.1,-3.8l0.8,-1.1l-0.7,-1.2l0.7,-1.1l1.2,0.1l0.5,-1.2l1.2,0.2l1.6,-1.7l0.8,1.4l3.9,-2.3l3.7,0.7l4.6,-0.7l1.6,-3.3l6.2,-2.4l-0.2,-2l3.8,0.4l1,1.8l4.8,1.4l1,-4.6l1.4,-1l-0.4,-1.4l0.8,-0.5l0.9,-4.1l1.2,-0.4l0.1,-0.9l3.1,0.1l1.4,-1.2l-0.7,-1.8l0.5,-2.3l-1.2,-1.4l-1,-6.8l0,0l-0.2,-0.2l0,0l-0.9,-3.9l2.3,-3.9l-1.5,-5.3L170.7,165.6z"},{"id":"pac","name":"Provence-Alpes-Côte d'Azur","d":"M436.9,480.5l1.4,-2.4l-1.2,-1.4l1.2,-0.8l-0.4,-1l-0.4,0.8l-0.2,-1.5l0.1,-0.6l-1.8,-1.6l-3.3,1.9l-7.4,0.2l-1.3,-1l0,-1.5l-2,-3.2l-2.1,-0.4l-0.6,0.1l-1,0.6l-0.2,0.5l-2,-1.1l1.4,1.6l-1.1,-0.3l-0.4,0.5l1.2,0.5l0,0.1l-0.7,0.7l1.8,1.1l1.6,-1.4l-2.3,2.9l-1,0.1l-2.6,-1.2l-8,-0.7l-1,-1.2l1.6,-1.3l-0.2,-1l-2.4,-1.7l-12.6,-0.5l0,0l0.4,-2.2l3.4,-1.7l0.4,-0.4l5.3,-3.1l0.4,-1.3l-1.9,-0.7l2.5,-4.2l2.3,-0.6l3.6,1.2l-0.6,-2.3l1.6,-3.2l-0.4,-2.8l1,-0.8l-1.1,-1.3l7.2,-5.5l0,-1.4l1.3,-0.1l-2.4,-4.4l-2.7,-0.9l-0.6,-1.5l0.7,-4.6l-0.6,-1.6l-1.4,-0.1l-1,-3.2l0,0l0.1,-3.4l5.7,1l1.3,5l2.5,-1.9l1.8,0.1l5.7,-2.8l0.7,1.4l1.3,0.4l1.8,-1.8l0,0l0.7,-0.3l0,0l-0.6,4.8l3.2,1.2l0.8,-1.2l2,1.4l2.4,-0.4l1.2,0.8l-0.1,2.6l2.2,0.2l0.8,1.9l2,0.2l1.6,-1l1.7,-1.4l-0.8,-0.8l0.4,-0.9l1.1,-0.3l1.6,1.4l-0.3,1l2,0.2l0.2,-1l-1.6,-0.5l0.4,-1l1.4,-0.4l0,-4.1h-1.6l-0.4,-1.9l-1.2,-0.3l0.9,-1.6l-3.4,0.2l-1.1,-1.2l-1.2,0.8l-2.6,-2.1l0.5,-0.9l-1,-2l0.8,-0.5l1.6,0.8l0.9,-1l-1.4,-0.6l-0.3,-3l6.5,1.6l0.6,-1.7l1.5,-0.1l-2.8,-2.4l2.1,-3.9l-0.2,-2.3l3.6,0.7l0.8,-1.3l1.7,0.5l1.7,-2.2l-1.3,-0.9l1.2,-3.1l2.3,0.8l2.8,-0.8l1.2,-1.2l-1.3,-1.4l2.8,-1.8l1.6,1.1l3.2,-2.8l4.7,0.7l1.8,-1.3l1.9,1.5l0.8,-0.4l0.1,-4.9l-1.5,-0.8l0,-2.6l-3,0.1l-2,-1.2l0.6,-2.8l1,-0.4l-0.6,-1.8l0.6,-1.1l0.7,-0.4l1.3,1.1l1.6,-0.9l1.3,1.2l0,1.9l3.6,1.1l1.5,-0.2l-0.3,-2.2l1.2,-1l1.3,0.6l1.5,-1.4l2.2,0.9l0,0l1.8,5.3l2.9,0.3l-0.3,1.4l1.1,1.8l-0.9,1.3l0.3,2l4.7,3.2l1.9,0.4l1.1,-1.1l3.6,2.3l-0.9,2l3.2,6.2l-3.4,-0.5l-1.3,0.8l-0.6,1.4l0.8,1.9l-0.8,0.1l-0.7,2.6l-2.2,1.1l-0.9,1.5l0.9,2.8l2.9,2.9l-2.3,0.5l-0.2,3.4l1.5,0.7l1.4,3.2l1.6,0.9l0.5,2.6l7.5,2l3.8,3.5l2.6,-0.3l0.6,1.8l1.5,-0.6l1.3,0.7l0.3,-1l1.3,0.3l4.2,-1.8l2.4,0.4l0.8,-1.6l2,0.1l-0.7,2.5l2,2.7l-0.4,2.4l-1.8,0.8l-0.4,3.1l-3.5,1.9l-0.4,2.6l-2.5,1.3l1.4,5.2l-1.6,0.8l-0.2,1.1l-1,-0.7l-1,0.5l-1.3,1.8l-2.8,0.4l0.5,1.5l-0.7,0.6l-0.7,-1.7l-0.5,1.2l-0.8,-0.7l-1.8,0.5l-1.4,2.2l-0.3,-0.7l-1.8,0.5l-1.5,3.8l1,2l-1,0.6l-0.9,-1.7l-2.5,2l-0.9,-0.9l-2.2,0.5l-1.1,1.6l0.8,1l-2.7,3.9l-1.2,-0.3l-0.3,1.3l-2.7,0.2l-1.8,-0.8l-1.2,4.3l-1.5,0.4l-0.4,1.6l-4,2.3l3.7,0.4l0.6,-0.8l0.8,0.7l-1.3,1.3l0.7,2.5l-1.6,0.7l0.2,1.1l-1.1,0.5l-0.9,-1.4l-1.6,-0.3l-2.7,2.2l-4.6,0.4l-0.9,1.2l0.1,2.1l-3.7,-2l-3.6,0.3l-1.5,2.8l0.1,1.7l0.8,0.2l-0.7,0.4l-2.5,-0.1l-0.1,-0.6l1.5,-0.2l-0.2,-2l-4.3,0.1l-0.8,-1.6l-3.1,0.2l-0.2,-1.3l-1.4,0.3l-0.3,0.9l1.2,0.1l1,0.8l0.6,1.1l-2.3,-0.6l-1.3,1.8l-1.3,-0.2l-1.5,-1.1l0.6,-2.6l-1.7,0l0.2,-1.3l-3.2,-0.3l-0.4,-2.1l-2.7,-0.4l-0.7,1.5l-2.8,-3.1l-1.5,1L436.9,480.5z"}]};
+
+// Study modes data: timeline events (y = sort key, d = date shown), Marseillaise (1792, public domain).
+const TIMELINE = [
+ ["Préhistoire et Antiquité", [
+  [-16000,"Vers 18 000 – 15 000 av. J.-C.","Peintures de la grotte de Lascaux","En Dordogne (Nouvelle-Aquitaine), le site préhistorique le plus célèbre de France."],
+  [-52,"52 av. J.-C.","Défaite de Vercingétorix à Alésia","La Gaule passe sous domination romaine ; la vigne est introduite dans de nombreuses régions."]]],
+ ["Moyen Âge", [
+  [496,"Vers 500","Clovis, roi des Francs, adopte le christianisme","Clovis (466-511) unifie plusieurs royaumes francs : une étape de l'unité du territoire."],
+  [800,"800","Charlemagne couronné empereur","Il étend son empire sur une grande partie de l'Europe de l'Ouest."],
+  [1429,"1429","Jeanne d'Arc délivre Orléans","Pendant la guerre de Cent Ans contre l'Angleterre ; elle devient une héroïne nationale."]]],
+ ["Ancien Régime", [
+  [1598,"1598","Édit de Nantes","Henri IV met fin aux guerres de religion entre catholiques et protestants."],
+  [1682,"1682","Louis XIV installe la cour à Versailles","Monarchie absolue : le roi concentre tous les pouvoirs. Molière écrit sous son règne."]]],
+ ["Révolution et Empire", [
+  [1789.5,"14 juillet 1789","Prise de la Bastille","Début de la Révolution française ; le 14 juillet devient fête nationale en 1880."],
+  [1789.6,"26 août 1789","Déclaration des droits de l'homme et du citoyen","« Les hommes naissent et demeurent libres et égaux en droits. »"],
+  [1792,"1792","Proclamation de la Ire République ; la Marseillaise","Rouget de Lisle compose le chant en avril à Strasbourg."],
+  [1793,"1793","Exécution de Louis XVI ; le Louvre devient musée","Le roi est guillotiné le 21 janvier 1793."],
+  [1794,"1794","Première abolition de l'esclavage","Abolition rétablie par Napoléon en 1802, puis définitive en 1848."],
+  [1804,"1804","Napoléon Ier empereur ; Code civil","Le Code civil fixe le droit des personnes, de la famille et de la propriété."]]],
+ ["XIXe siècle", [
+  [1848,"1848","Abolition définitive de l'esclavage ; suffrage universel masculin","Décret du 27 avril 1848 porté par Victor Schœlcher ; IIe République."],
+  [1870,"1870","Proclamation de la IIIe République","Après la défaite contre la Prusse ; Léon Gambetta en est l'un des pères."],
+  [1880,"1880","Le 14 juillet devient fête nationale",""],
+  [1881,"1881-1882","Lois Jules Ferry","L'école primaire devient gratuite, laïque et obligatoire."],
+  [1889,"1889","Construction de la tour Eiffel","Pour l'Exposition universelle, centenaire de la Révolution."]]],
+ ["XXe siècle", [
+  [1901,"1901","Loi sur la liberté d'association",""],
+  [1903,"1903","Premier Tour de France","Remporté par Maurice Garin, né en Italie."],
+  [1905,"1905","Loi de séparation des Églises et de l'État","Fondement de la laïcité (9 décembre)."],
+  [1914,"1914-1918","Première Guerre mondiale","Armistice le 11 novembre 1918 ; traité de Versailles le 28 juin 1919."],
+  [1936,"1936","Front populaire : congés payés","Deux semaines de congés payés et semaine de 40 heures."],
+  [1940,"18 juin 1940","Appel du général de Gaulle","Depuis Londres, il appelle à poursuivre le combat ; début de la France libre."],
+  [1944.3,"21 avril 1944","Droit de vote des femmes","Ordonnance du gouvernement provisoire ; premier vote en avril 1945."],
+  [1944.5,"6 juin 1944","Débarquement en Normandie","Paris est libéré le 25 août 1944."],
+  [1945,"1945","Victoire (8 mai) ; Sécurité sociale ; création de l'ONU",""],
+  [1946,"1946","IVe République","Le préambule de la Constitution de 1946 affirme des droits sociaux."],
+  [1957,"1957","Traité de Rome","Création de la Communauté économique européenne (après la CECA en 1951)."],
+  [1958,"1958","Ve République","Constitution adoptée par référendum le 28 septembre, promulguée le 4 octobre."],
+  [1962,"1962","Indépendance de l'Algérie ; Président élu au suffrage universel direct",""],
+  [1968,"Mai 1968","Mouvement étudiant et grèves","Avancées sociales, dont la hausse du salaire minimum."],
+  [1974,"1974","Majorité et droit de vote à 18 ans","Mort de Georges Pompidou, seul président mort en fonction."],
+  [1975,"1975","Loi Veil sur l'IVG","Portée par Simone Veil, ministre de la Santé."],
+  [1981,"1981","Abolition de la peine de mort","Loi du 9 octobre 1981, portée par Robert Badinter."],
+  [1992,"1992","Traité de Maastricht","Création de l'Union européenne et de la citoyenneté européenne."],
+  [1997,"1997","Fin du service militaire obligatoire","Remplacé par la Journée défense et citoyenneté (JDC)."],
+  [1998,"1998","Première Coupe du monde de football","Victoire contre le Brésil le 12 juillet 1998."],
+  [1999,"1999","Création du PACS",""]]],
+ ["Depuis 2000", [
+  [2001,"2001","Loi Taubira","La traite et l'esclavage sont reconnus comme crimes contre l'humanité (commémoration le 10 mai)."],
+  [2002,"2002","L'euro remplace le franc",""],
+  [2011,"2011","Mayotte devient le 101e département",""],
+  [2013,"2013","Mariage pour tous","Loi du 17 mai 2013 ; premier mariage à Montpellier le 29 mai."],
+  [2016,"2016","Passage à 13 régions métropolitaines","Depuis le 1er janvier 2016."],
+  [2019,"2019","Instruction obligatoire dès 3 ans",""],
+  [2021,"2021","PMA pour toutes les femmes ; congé paternité de 28 jours",""],
+  [2024,"2024","Jeux olympiques de Paris ; IVG inscrite dans la Constitution","Cent ans après les JO de 1924."]]]
+];
+
+// [French line, Ukrainian translation, blank word, 3 wrong words]; explanations apply to groups of lines.
+const MARS = {
+ verse:[
+  ["Allons enfants de la Patrie,","Вперед, сини Вітчизни,","Patrie",["France","Nation","liberté"]],
+  ["Le jour de gloire est arrivé !","День слави настав!","gloire",["victoire","bonheur","combat"]],
+  ["Contre nous de la tyrannie","Проти нас тиранії","tyrannie",["monarchie","barbarie","noblesse"]],
+  ["L'étendard sanglant est levé,","Кривавий стяг піднято,","sanglant",["tricolore","brillant","glorieux"]],
+  ["Entendez-vous dans les campagnes","Чи чуєте ви в полях","campagnes",["montagnes","villages","plaines"]],
+  ["Mugir ces féroces soldats ?","Рев цих лютих солдатів?","Mugir",["Crier","Marcher","Chanter"]],
+  ["Ils viennent jusque dans vos bras","Вони приходять аж у ваші обійми","bras",["villes","champs","maisons"]],
+  ["Égorger vos fils, vos compagnes !","Різати ваших синів і ваших дружин!","compagnes",["compagnons","enfants","frères"]]
+ ],
+ chorus:[
+  ["Aux armes, citoyens,","До зброї, громадяни,","armes",["larmes","urnes","ordres"]],
+  ["Formez vos bataillons,","Шикуйте свої батальйони,","bataillons",["régiments","escadrons","cortèges"]],
+  ["Marchons, marchons !","Вперед, вперед!","Marchons",["Chantons","Luttons","Allons"]],
+  ["Qu'un sang impur","Хай нечиста кров","impur",["ennemi","versé","glacé"]],
+  ["Abreuve nos sillons !","Напоїть наші борозни!","sillons",["champs","drapeaux","chemins"]]
+ ],
+ notes:[
+  [[0,1],"Les « enfants de la Patrie » sont tous les citoyens, appelés à se lever : le moment de la victoire et de l'honneur est venu."],
+  [[2,3],"En 1792, les rois d'Europe (la « tyrannie ») font la guerre à la France révolutionnaire. L'étendard est le drapeau de guerre de leurs armées."],
+  [[4,5],"On entend les soldats ennemis avancer dans les campagnes. « Mugir » : crier comme un taureau, de façon menaçante."],
+  [[6,7],"Ils viennent tuer les familles jusque chez elles. « Égorger » : tuer en coupant la gorge ; « compagnes » : épouses."],
+  [[8,10],"Le refrain appelle les citoyens à prendre les armes, à s'organiser en troupes (bataillons) et à avancer ensemble."],
+  [[11,12],"« Sillons » : lignes creusées dans un champ labouré. Selon la lecture la plus courante, le « sang impur » est celui des envahisseurs, qui arrose la terre de France défendue."]
+ ],
+ facts:[
+  "Composée en avril 1792 à Strasbourg par <b>Claude Joseph Rouget de Lisle</b>, officier du génie, sous le titre « Chant de guerre pour l'armée du Rhin ».",
+  "Elle prend le nom de <b>Marseillaise</b> parce que les volontaires (fédérés) de Marseille la chantent en arrivant à Paris à l'été 1792.",
+  "Hymne national le 14 juillet 1795, interdite sous l'Empire et la Restauration, de nouveau hymne national depuis <b>1879</b>.",
+  "L'article 2 de la Constitution de 1958 dispose : « L'hymne national est la Marseillaise. »",
+  "L'outrage public à l'hymne national ou au drapeau est un délit, puni d'une amende pouvant aller jusqu'à 7 500 euros.",
+  "À l'examen, on vous demande en général de compléter un vers du premier couplet ou du refrain, ou de citer l'auteur."
+ ]
 };
 
 </script>
@@ -1333,12 +1818,17 @@ Object.entries(VAR).forEach(([n,alts])=>{
   alts.forEach((alt,k)=>{const id=n+"v"+(k+2); BANK[id]=Object.assign({},b,{id,a:[alt,...b.a.slice(1)],vk:k+2,e:baseE+note(k+1)});});
 });
 const NVAR=Object.values(BANK).filter(q=>q.vk>1).length;
+// regions: fill missing explanations, mark region questions, add the review table
+const REG_BY={}; REGIONS.forEach(([r,c,o])=>{REG_BY[r]=[r,c,o]; REG_BY["La "+r]=[r,c,o]; REG_BY[c]=[r,c,o]});
+Object.values(BANK).forEach(q=>{ if(/^R\d+$/.test(q.id)) REGION_IDS.add(q.id);
+  if(REGION_IDS.has(q.id)&&!q.e){ const m=REG_BY[q.a[0]]; q.e=m?`${m[0]} : chef-lieu ${m[1]}${m[2]?" ; autres grandes villes : "+m[2]:""}.`:""; } });
+FICHES.H.push(["Les 18 régions et leurs chefs-lieux", `<div class="tablebox"><table class="chrono">${REGIONS.map(([r,c,o])=>`<tr><td>${c}</td><td><b>${r}</b><br><span class="note">${o}</span></td></tr>`).join("")}</table></div><p class="note">13 régions en métropole (depuis 2016) et 5 en outre-mer. Pièges fréquents : Nantes est en Pays de la Loire, pas en Bretagne ; Rouen (et non Caen) est le chef-lieu de la Normandie ; Pointe-à-Pitre n'est pas le chef-lieu de la Guadeloupe.</p>`]);
 const variantsOf=n=>Object.values(BANK).filter(q=>q.group===n);
 const OFFICIAL_IDS = Q.map(x=>String(x[0]));
 
 /* ---------- state & persistence ---------- */
 const LS_KEY="civique.progress.v1", LS_EXAM="civique.exam.v1";
-let state = {stats:{}, exams:[], read:{}, cards:{}, updated:0};
+let state = {stats:{}, exams:[], read:{}, cards:{}, games:{}, updated:0};
 function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function lsDel(k){try{localStorage.removeItem(k)}catch(e){}}
@@ -1407,16 +1897,17 @@ function pick(arr,n,weightFn){ // weighted sample without replacement
   return out;
 }
 const label = q=> q.sit ? "Mise en situation" : q.extra ? "Complément hors liste" : "Q "+String(q.num).padStart(3,"0")+" / 258"+(q.nvar?` · variante ${q.vk}/${q.nvar}`:"");
-const SRC={c:"Signalé par un candidat",p:"Exemple d'un site de préparation",o:"Liste officielle CSP/CR"};
+const SRC={c:"Signalé par un candidat",p:"Exemple d'un site de préparation",o:"Liste officielle CSP/CR",t:"Piège fréquent",l:"Livret du citoyen 2026"};
 const fmtDate = t=> new Date(t).toLocaleDateString("fr-FR",{day:"numeric",month:"short"});
 const L="ABCD";
 
 /* ---------- routing ---------- */
-const VIEWS = {accueil:vHome, examen:vExam, entrainement:vTrain, fiches:vFiches, entretien:vEntretien, progres:vProgress};
+const VIEWS = {accueil:vHome, examen:vExam, entrainement:vTrain, fiches:vFiches, entretien:vEntretien, progres:vProgress, frise:vFrise, carte:vCarte, marseillaise:vMars};
 function route(){ return (location.hash||"#accueil").slice(1) in VIEWS ? (location.hash||"#accueil").slice(1) : "accueil"; }
 function render(){
   const r=route();
-  document.querySelectorAll("nav.tabs a, nav.tabbar a").forEach(a=>{ if(a.getAttribute("href")==="#"+r) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  const nr=["frise","carte","marseillaise"].includes(r)?"fiches":r;
+  document.querySelectorAll("nav.tabs a, nav.tabbar a").forEach(a=>{ if(a.getAttribute("href")==="#"+nr) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   VIEWS[r]();
 }
 window.addEventListener("hashchange",()=>{render();window.scrollTo(0,0)});
@@ -1453,6 +1944,14 @@ function vHome(){
        : `<p class="note">Aucun examen passé pour l'instant.</p>`}
       ${weakest && seen? `<p>Thème à travailler en priorité : <b>${THEMES[weakest.t].name}</b>.</p>
       <div class="row"><a class="btn ghost small" href="#entrainement" data-theme="${weakest.t}" id="goWeak" style="text-decoration:none">S'entraîner sur ce thème</a></div>`:""}
+    </div>
+   </div>
+   <div class="panel stack">
+    <h3>Trois façons de réviser autrement</h3>
+    <div class="modecards">
+     <a href="#frise"><b>Frise chronologique</b><span>De Clovis à 2024, et un jeu pour remettre les dates dans l'ordre.</span></a>
+     <a href="#carte"><b>Carte des régions</b><span>Touchez la région ou la ville demandée sur la carte.</span></a>
+     <a href="#marseillaise"><b>La Marseillaise</b><span>Couplet et refrain expliqués, mot manquant, vers suivant.</span></a>
     </div>
    </div>
    <div class="panel stack">
@@ -1549,7 +2048,7 @@ function drawExam(){
 }
 // a = original index chosen (0 = correct). reveal: show correct/incorrect
 function qCard(q, ord, chosen, reveal){
-  return `<div class="qcard"><div class="qmeta"><span class="row" style="gap:6px"><span class="tag ${q.sit?"sit":q.extra?"ext":""}">${label(q)}</span>${q.src?`<span class="tag src">${SRC[q.src]}</span>`:""}</span><span class="tag">${THEMES[q.t].short}</span></div>
+  return `<div class="qcard"><div class="qmeta"><span class="row" style="gap:6px"><span class="tag ${q.sit?"sit":q.extra?"ext":""}">${label(q)}</span>${q.src?`<span class="tag ${q.src==="t"?"trap":"src"}">${SRC[q.src]}</span>`:""}</span><span class="tag">${THEMES[q.t].short}</span></div>
    <p class="qtext">${esc(q.q)}</p>
    <div class="opts">${ord.map((o,k)=>{let c="";
      if(reveal){ if(o===0)c="good"; else if(o===chosen)c="bad"; }
@@ -1594,7 +2093,7 @@ function vResult(){
 let trainCfg={themes:new Set(TK), mode:"smart", n:20, kind:"all"};
 let train=null;
 function pool(){
-  return Object.values(BANK).filter(q=>trainCfg.themes.has(q.t) && (trainCfg.kind==="all" || (trainCfg.kind==="sit"&&q.sit) || (trainCfg.kind==="know"&&!q.sit&&!q.extra) || (trainCfg.kind==="extra"&&q.extra) || (trainCfg.kind==="reported"&&(q.src==="c"||q.src==="p")) || (trainCfg.kind==="variants"&&!!q.nvar) || (trainCfg.kind==="official2"&&q.src==="o"))).filter(q=>{
+  return Object.values(BANK).filter(q=>trainCfg.themes.has(q.t) && (trainCfg.kind==="all" || (trainCfg.kind==="sit"&&q.sit) || (trainCfg.kind==="know"&&!q.sit&&!q.extra) || (trainCfg.kind==="extra"&&q.extra) || (trainCfg.kind==="reported"&&(q.src==="c"||q.src==="p")) || (trainCfg.kind==="variants"&&!!q.nvar) || (trainCfg.kind==="official2"&&q.src==="o") || (trainCfg.kind==="traps"&&q.src==="t") || (trainCfg.kind==="regions"&&REGION_IDS.has(q.id)) || (trainCfg.kind==="livret"&&/^L\d/.test(q.id)))).filter(q=>{
     const st=status(q.id);
     if(trainCfg.mode==="mistakes") return st==="w";
     if(trainCfg.mode==="new") return st==="u";
@@ -1615,7 +2114,7 @@ function vTrain(){
     <h3>Questions</h3>
     ${seg("mode",[["smart","Priorité aux points faibles"],["notm","Non maîtrisées"],["new","Jamais vues"],["mistakes","Mes erreurs"],["all","Toutes, au hasard"]])}
     <h3>Type</h3>
-    ${seg("kind",[["all","Toutes"],["know","Liste officielle"],["sit","Mises en situation"],["extra","Compléments"],["reported","Issues des retours"],["official2","Listes CSP/CR"],["variants","Avec variantes"]])}
+    ${seg("kind",[["all","Toutes"],["know","Liste officielle"],["sit","Mises en situation"],["extra","Compléments"],["reported","Issues des retours"],["official2","Listes CSP/CR"],["traps","Pièges"],["regions","Régions"],["livret","Livret 2026"],["variants","Avec variantes"]])}
     <h3>Nombre</h3>
     ${seg("n",[[10,"10"],[20,"20"],[50,"50"],[999,"Toutes"]])}
     <div class="row" style="justify-content:space-between"><span class="note">${p.length} question${p.length>1?"s":""} disponible${p.length>1?"s":""} avec ces réglages</span>
@@ -1657,7 +2156,7 @@ function trainDone(){
 let ficheTheme="P";
 function vFiches(){
   const list=FICHES[ficheTheme];
-  $("#view").innerHTML=`<div class="stack" style="gap:24px">
+  $("#view").innerHTML=`<div class="stack" style="gap:24px">${toolNav("fiches")}
    <div class="stack"><span class="eyebrow">Fiches de révision</span><h1>L'essentiel par thème</h1>
    <p class="lead">Les faits à connaître pour répondre aux questions de la liste officielle, classés selon les cinq thèmes du programme. Cochez une fiche une fois apprise.</p></div>
    <div class="seg">${TK.map(t=>`<button data-t="${t}" aria-pressed="${t===ficheTheme}">${THEMES[t].short}</button>`).join("")}</div>
@@ -1665,7 +2164,7 @@ function vFiches(){
    <div class="fichelist">${list.map(([title,html],k)=>{const key=ficheTheme+k, rd=state.read[key];return `<details class="fiche" ${k===0?"open":""}><summary><span>${esc(title)}</span>${rd?'<span class="done-chip">apprise</span>':""}</summary>
     <div class="fbody stack">${html}<div class="row"><button class="btn ghost small" data-read="${key}">${rd?"Marquer à revoir":"Marquer comme apprise"}</button>
     <button class="btn small" data-practice="${ficheTheme}">S'entraîner sur ce thème</button></div></div></details>`}).join("")}</div></div>`;
-  document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{ficheTheme=b.dataset.t;vFiches()});
+  document.querySelectorAll(".seg button[data-t]").forEach(b=>b.onclick=()=>{ficheTheme=b.dataset.t;vFiches()});
   document.querySelectorAll("[data-read]").forEach(b=>b.onclick=()=>{const k=b.dataset.read; if(state.read[k])delete state.read[k]; else state.read[k]=Date.now(); save(); const open=[...document.querySelectorAll("details.fiche")].map(d=>d.open); vFiches(); document.querySelectorAll("details.fiche").forEach((d,i)=>d.open=open[i])});
   document.querySelectorAll("[data-practice]").forEach(b=>b.onclick=()=>{trainCfg.themes=new Set([b.dataset.practice]); trainCfg.mode="smart"; train=null; location.hash="#entrainement"});
 }
@@ -1703,6 +2202,163 @@ function vEntretien(){
   $("#emix").onclick=()=>{ENT.sort(()=>Math.random()-.5);entIdx=0;entFlip=false;vEntretien()};
   const mark=v=>{state.cards[c[0]]=v;save(); if(entOnly&&v==="k"){entFlip=false;vEntretien()} else go(1)};
   $("#eok").onclick=()=>mark("k"); $("#erev").onclick=()=>mark("r");
+}
+
+/* ---------- STUDY MODES: frise, carte, Marseillaise ---------- */
+function G(){ const g=state.games||(state.games={}); g.frise=g.frise||{plays:0,perfect:0,best:0}; g.carte=g.carte||{}; g.mars=g.mars||{plays:0,blank:0,next:0}; return g; }
+function toolNav(cur){ return `<nav class="toolnav" aria-label="Outils de révision">${[["fiches","Fiches"],["frise","Frise"],["carte","Carte"],["marseillaise","Marseillaise"]].map(([h,l])=>`<a href="#${h}" ${h===cur?'aria-current="page"':""}>${l}</a>`).join("")}</nav>`; }
+
+/* --- Frise chronologique --- */
+const TL_ALL = TIMELINE.flatMap(([per,evs])=>evs.map(e=>({y:e[0],d:e[1],t:e[2],x:e[3],per})));
+let friseTab="frise", friseOpen=null, fq=null;
+function vFrise(){
+  const g=G();
+  const head=`<div class="stack" style="gap:24px">${toolNav("frise")}
+   <div class="stack"><span class="eyebrow">Frise chronologique</span><h1>De Clovis à aujourd'hui</h1>
+   <p class="lead">Les dates sont un point faible fréquent à l'examen. Touchez un événement pour le détail, puis entraînez-vous à remettre les événements dans l'ordre.</p></div>
+   <div class="seg" id="ftabs"><button data-ft="frise" aria-pressed="${friseTab==="frise"}">Explorer la frise</button><button data-ft="ordre" aria-pressed="${friseTab==="ordre"}">Remettre dans l'ordre</button></div>`;
+  if(friseTab==="frise"){
+    $("#view").innerHTML=head+`<div class="tl">${TIMELINE.map(([per,evs])=>`<section class="tlper"><h3>${per}</h3><ol>${evs.map(e=>{const k=e[1]+e[2], op=friseOpen===k;return `<li><button class="tlev" data-k="${esc(k)}" aria-expanded="${op}"><span class="tly">${esc(e[1])}</span><span class="tlt">${esc(e[2])}</span></button>${op&&e[3]?`<p class="tlx">${esc(e[3])}</p>`:""}</li>`}).join("")}</ol></section>`).join("")}</div></div>`;
+    document.querySelectorAll(".tlev").forEach(b=>b.onclick=()=>{friseOpen=friseOpen===b.dataset.k?null:b.dataset.k;const y=window.scrollY;vFrise();window.scrollTo(0,y)});
+  } else {
+    if(!fq) newFq("mix");
+    const done=fq.pick.length===fq.items.length;
+    $("#view").innerHTML=head+`<div class="panel stack">
+     <div class="seg" id="flevel">${[["mix","Toutes les époques"],["xx","XXe et XXIe siècles"]].map(([v,l])=>`<button data-lv="${v}" aria-pressed="${fq.level===v}">${l}</button>`).join("")}</div>
+     <p>${fq.checked?`<b>${fq.score}/${fq.items.length}</b> à la bonne place.`:`Touchez les événements <b>du plus ancien au plus récent</b>. Touchez à nouveau pour annuler.`}</p>
+     <ol class="ordlist">${(fq.checked?fq.sorted:fq.items).map((e,i)=>{
+        const pos=fq.pick.indexOf(i);
+        if(fq.checked){const ok=fq.pick[i]===fq.items.indexOf(e);return `<li class="ord ${ok?"good":"bad"}"><span class="ordn">${i+1}</span><span><b class="tly">${esc(e.d)}</b> ${esc(e.t)}${ok?"":` <span class="note">(vous l'aviez placé en ${fq.pick.indexOf(fq.items.indexOf(e))+1}e)</span>`}</span></li>`}
+        return `<li><button class="ord ${pos>=0?"sel":""}" data-i="${i}"><span class="ordn">${pos>=0?pos+1:""}</span><span>${esc(e.t)}</span></button></li>`}).join("")}</ol>
+     <div class="row">${fq.checked?`<button class="btn" id="fnew">Nouvelle série</button>`:`<button class="btn" id="fchk" ${done?"":"disabled"}>Vérifier</button><button class="btn ghost" id="freset">Effacer</button>`}</div>
+     <p class="note">Séries jouées : ${g.frise.plays} · sans faute : ${g.frise.perfect}</p></div></div>`;
+    document.querySelectorAll(".ord[data-i]").forEach(b=>b.onclick=()=>{const i=+b.dataset.i,p=fq.pick.indexOf(i); if(p>=0) fq.pick.splice(p,1); else fq.pick.push(i); vFrise()});
+    const c=$("#fchk"); if(c) c.onclick=()=>{ // pick[k] = index in items placed at position k
+      fq.sorted=[...fq.items].sort((x,y)=>x.y-y.y); fq.score=fq.sorted.filter((e,k)=>fq.items[fq.pick[k]]===e).length; fq.checked=true;
+      g.frise.plays++; if(fq.score===fq.items.length) g.frise.perfect++; g.frise.best=Math.max(g.frise.best,fq.score); save(); vFrise()};
+    const r=$("#freset"); if(r) r.onclick=()=>{fq.pick=[];vFrise()};
+    const n=$("#fnew"); if(n) n.onclick=()=>{newFq(fq.level);vFrise()};
+    document.querySelectorAll("[data-lv]").forEach(b=>b.onclick=()=>{newFq(b.dataset.lv);vFrise()});
+  }
+  document.querySelectorAll("[data-ft]").forEach(b=>b.onclick=()=>{friseTab=b.dataset.ft;vFrise()});
+}
+function newFq(level){
+  const pool=level==="xx"?TL_ALL.filter(e=>e.y>=1900):TL_ALL, gap=level==="xx"?3:40;
+  let items=[];
+  for(let tries=0;tries<200&&items.length<5;tries++){ items=[]; for(const e of shuffle(pool)){ if(items.every(x=>Math.abs(x.y-e.y)>=gap)) items.push(e); if(items.length===5) break; } }
+  fq={level,items,pick:[],checked:false};
+}
+
+/* --- Carte des régions --- */
+const OM_SHAPES = {
+ "Guadeloupe":"M22 30C12 40 14 63 26 68C36 70 41 55 39 41C37 31 29 27 22 30ZM43 38C49 28 63 20 76 24C83 30 75 40 63 42C55 44 47 44 43 38Z",
+ "Martinique":"M32 14C42 11 49 19 53 27C63 29 73 39 71 51C69 61 73 69 63 71C51 73 41 65 37 55C31 47 23 39 25 29C26 21 27 16 32 14Z",
+ "Guyane":"M24 12L70 14C78 25 80 40 72 55C65 66 50 74 40 72C35 60 30 40 22 30Z",
+ "La Réunion":"M28 22C45 12 72 18 76 38C80 56 62 70 44 66C26 62 18 46 20 34C21 28 24 24 28 22Z",
+ "Mayotte":"M45 12C52 14 50 25 54 33C58 43 52 55 56 65C52 71 44 69 42 61C40 51 44 43 40 35C36 27 38 16 45 12Z"
+};
+const OM_ORDER=["Guadeloupe","Martinique","Guyane","La Réunion","Mayotte"];
+const REG = Object.fromEntries(REGIONS.map(([r,c,o])=>[r,{name:r,cap:c,cities:o.split(", ")}]));
+let carteTab="jeu", mq=null, carteSel=null;
+function mapSvg(cls){
+  const [x,y,w,h]=FR_MAP.viewBox.split(" ").map(Number), oy=y+h+8, bw=(w-4*8)/5;
+  const metro=FR_MAP.regions.map(r=>`<path class="rg ${cls(r.name)}" data-r="${esc(r.name)}" d="${r.d}"><title>${carteTab==="explore"?esc(r.name):""}</title></path>`).join("");
+  const om=OM_ORDER.map((n,i)=>{const bx=x+i*(bw+8);return `<g transform="translate(${bx},${oy})"><rect class="omframe" width="${bw}" height="96" rx="8"/><g transform="translate(${(bw-100)/2},6)"><path class="rg ${cls(n)}" data-r="${esc(n)}" d="${OM_SHAPES[n]}"/></g><text class="omlab" x="${bw/2}" y="90">${carteTab==="explore"||mq&&mq.answered?esc(n):(i<2?"Antilles":i===2?"Amérique du Sud":"Océan Indien")}</text></g>`}).join("");
+  return `<svg class="frmap" viewBox="${x} ${y} ${w} ${h+112}" role="img" aria-label="Carte des 18 régions françaises">${metro}${om}<g id="maplabels"></g></svg>`;
+}
+function newMq(){
+  const names=Object.keys(REG), qs=[];
+  // weight toward regions answered wrong before
+  const g=G(), weight=n=>{const s=g.carte[n]; return s? 1+Math.max(0,s.w-s.c)*2 : 2};
+  const bag=names.flatMap(n=>Array(weight(n)).fill(n));
+  while(qs.length<10){
+    const n=bag[Math.floor(Math.random()*bag.length)], R=REG[n];
+    const kind=Math.random(); let q;
+    if(kind<0.4) q={r:n,text:`Touchez : <b>${esc(n)}</b>`};
+    else if(kind<0.7) q={r:n,text:`Où se trouve <b>${esc(R.cap)}</b>, chef-lieu de région ?`};
+    else {const c=R.cities[Math.floor(Math.random()*R.cities.length)]; q={r:n,text:`Dans quelle région se trouve <b>${esc(c)}</b> ?`};}
+    if(!qs.some(x=>x.text===q.text)) qs.push(q);
+  }
+  mq={qs,i:0,score:0,answered:null};
+}
+function vCarte(){
+  const g=G();
+  const head=`<div class="stack" style="gap:24px">${toolNav("carte")}
+   <div class="stack"><span class="eyebrow">Carte des régions</span><h1>Les 18 régions sur la carte</h1>
+   <p class="lead">13 régions en métropole et 5 en outre-mer. Situer une région sur la carte se retient mieux qu'une liste.</p></div>
+   <div class="seg"><button data-ct="jeu" aria-pressed="${carteTab==="jeu"}">Quiz de la carte</button><button data-ct="explore" aria-pressed="${carteTab==="explore"}">Explorer</button></div>`;
+  if(carteTab==="explore"){
+    const lvl=n=>{const s=g.carte[n]; if(!s) return ""; return s.c>s.w&&s.c>=2?"m":s.w>=s.c?"w":"l"};
+    const sel=carteSel&&REG[carteSel];
+    $("#view").innerHTML=head+`<div class="panel stack">${mapSvg(n=>(n===carteSel?"target ":"")+"lv-"+lvl(n))}
+     <div class="stack" id="rinfo">${sel?`<h3>${esc(sel.name)}</h3><p>Chef-lieu : <b>${esc(sel.cap)}</b></p><p class="note">Autres villes : ${esc(sel.cities.join(", "))}</p>${g.carte[sel.name]?`<p class="note">Quiz : ${g.carte[sel.name].c} bonnes réponses, ${g.carte[sel.name].w} erreurs</p>`:""}`:`<p class="note">Touchez une région pour voir son chef-lieu et ses grandes villes.</p>`}</div>
+     <div class="legend"><span><i style="background:var(--ok)"></i>bien connue au quiz</span><span><i style="background:var(--warn)"></i>en cours</span><span><i style="background:var(--rouge)"></i>à revoir</span></div></div></div>`;
+    labelMap();
+    document.querySelectorAll(".frmap .rg").forEach(p=>p.onclick=()=>{carteSel=p.dataset.r;vCarte()});
+  } else {
+    if(!mq) newMq();
+    if(mq.i>=mq.qs.length){
+      $("#view").innerHTML=head+`<div class="panel stack"><span class="eyebrow">Bilan</span><div class="score num">${mq.score}<small>/${mq.qs.length}</small></div>
+       <div class="row"><button class="btn" id="mnew">Nouvelle série</button><button class="btn ghost" id="mexp">Revoir sur la carte</button></div></div></div>`;
+      $("#mnew").onclick=()=>{newMq();vCarte()}; $("#mexp").onclick=()=>{carteTab="explore";vCarte()};
+    } else {
+      const q=mq.qs[mq.i], a=mq.answered;
+      const cls=n=> a? (n===q.r?"good":n===a&&a!==q.r?"bad":"") : "";
+      $("#view").innerHTML=head+`<div class="panel stack"><div class="row" style="justify-content:space-between"><span class="eyebrow">Question ${mq.i+1} / ${mq.qs.length}</span><span class="note num">${mq.score} bonne${mq.score>1?"s":""}</span></div>
+       <p class="mapq">${q.text}</p>${mapSvg(cls)}
+       <div class="stack" aria-live="polite">${a?`<p class="${a===q.r?"okline":"badline"}">${a===q.r?"Bonne réponse":"Raté : vous avez touché "+esc(a)}. <b>${esc(q.r)}</b>, chef-lieu ${esc(REG[q.r].cap)}.</p><div class="row"><button class="btn" id="mnext">${mq.i+1<mq.qs.length?"Question suivante":"Voir le bilan"}</button></div>`:""}</div></div></div>`;
+      if(a) labelMap(q.r);
+      if(!a) document.querySelectorAll(".frmap .rg").forEach(p=>p.onclick=()=>{const r=p.dataset.r; mq.answered=r; const s=g.carte[q.r]||(g.carte[q.r]={c:0,w:0}); if(r===q.r){s.c++;mq.score++}else s.w++; save(); vCarte()});
+      const nx=$("#mnext"); if(nx) nx.onclick=()=>{mq.i++;mq.answered=null;vCarte()};
+    }
+  }
+  document.querySelectorAll("[data-ct]").forEach(b=>b.onclick=()=>{carteTab=b.dataset.ct; vCarte()});
+}
+function labelMap(only){
+  const g=$("#maplabels"); if(!g||!g.ownerSVGElement) return;
+  let out="";
+  document.querySelectorAll(".frmap path.rg").forEach(p=>{ const n=p.dataset.r; if(OM_ORDER.includes(n)) return; if(only&&n!==only) return; if(!only&&carteTab!=="explore") return;
+    let b; try{b=p.getBBox()}catch(e){return} out+=`<text class="maplab" x="${b.x+b.width/2-(n==="Corse"?14:0)}" y="${b.y+b.height/2}">${esc(REG[n].cap)}</text>`; });
+  g.innerHTML=out;
+}
+
+/* --- La Marseillaise --- */
+let marsTab="lire", mz=null;
+const MARS_LINES=[...MARS.verse.map(l=>({l,part:"c"})),...MARS.chorus.map(l=>({l,part:"r"}))];
+function vMars(){
+  const g=G();
+  const head=`<div class="stack" style="gap:24px">${toolNav("marseillaise")}
+   <div class="stack"><span class="eyebrow">Hymne national</span><h1>La Marseillaise</h1>
+   <p class="lead">Le premier couplet et le refrain, ce qu'ils veulent dire, puis deux exercices pour les retenir. Texte de 1792.</p></div>
+   <div class="seg"><button data-mt="lire" aria-pressed="${marsTab==="lire"}">Lire et comprendre</button><button data-mt="mot" aria-pressed="${marsTab==="mot"}">Mot manquant</button><button data-mt="vers" aria-pressed="${marsTab==="vers"}">Vers suivant</button></div>`;
+  if(marsTab==="lire"){
+    const block=(lines,off)=>lines.map((l,k)=>{const i=off+k, note=MARS.notes.find(n=>n[0][1]===i);return `<p class="mline">${esc(l[0])}${i===3?' <span class="note">(bis)</span>':""}<span class="muk" lang="uk">${esc(l[1])}</span></p>${note?`<p class="mnote">${esc(note[1])}</p>`:""}`}).join("");
+    $("#view").innerHTML=head+`<div class="grid2 mars"><div class="panel stack"><h3>Premier couplet</h3>${block(MARS.verse,0)}</div>
+     <div class="panel stack"><h3>Refrain</h3>${block(MARS.chorus,MARS.verse.length)}</div></div>
+     <div class="panel stack"><h3>À savoir</h3><ul>${MARS.facts.map(f=>`<li>${f}</li>`).join("")}</ul></div></div>`;
+  } else {
+    if(!mz||mz.kind!==marsTab) newMz(marsTab);
+    if(mz.i>=mz.qs.length){
+      $("#view").innerHTML=head+`<div class="panel stack"><span class="eyebrow">Bilan</span><div class="score num">${mz.score}<small>/${mz.qs.length}</small></div>
+       <p class="note">Meilleur score : ${g.mars[marsTab==="mot"?"blank":"next"]}/${mz.qs.length}</p><div class="row"><button class="btn" id="znew">Recommencer</button><button class="btn ghost" data-mt="lire">Relire le texte</button></div></div></div>`;
+      $("#znew").onclick=()=>{newMz(marsTab);vMars()};
+    } else {
+      const q=mz.qs[mz.i], a=mz.ans;
+      $("#view").innerHTML=head+`<div class="panel stack"><div class="row" style="justify-content:space-between"><span class="eyebrow">${mz.i+1} / ${mz.qs.length}</span><span class="note num">${mz.score} bonne${mz.score>1?"s":""}</span></div>
+       <p class="mapq">${q.prompt}</p><div class="opts">${q.opts.map((o,k)=>`<button class="opt ${a!==null?(o===q.good?"good":k===a?"bad":""):""}" data-o="${k}" ${a!==null?"disabled":""}><span class="lt">${L[k]}</span><span>${esc(o)}</span></button>`).join("")}</div>
+       ${a!==null?`<p class="note">${q.after}</p><div class="row"><button class="btn" id="znext">${mz.i+1<mz.qs.length?"Suivant":"Voir le bilan"}</button></div>`:""}</div></div>`;
+      document.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>{mz.ans=+b.dataset.o; if(q.opts[mz.ans]===q.good) mz.score++; vMars()});
+      const nx=$("#znext"); if(nx) nx.onclick=()=>{mz.i++;mz.ans=null; if(mz.i>=mz.qs.length){const key=marsTab==="mot"?"blank":"next"; g.mars.plays++; g.mars[key]=Math.max(g.mars[key]||0,mz.score); save();} vMars()};
+    }
+  }
+  document.querySelectorAll("[data-mt]").forEach(b=>b.onclick=()=>{marsTab=b.dataset.mt; mz=null; vMars()});
+}
+function newMz(kind){
+  let qs;
+  if(kind==="mot") qs=MARS_LINES.map(({l})=>{const [line,,w,wr]=l; return {prompt:esc(line).replace(esc(w),'<span class="blank">______</span>'), good:w, opts:shuffle([w,...wr]), after:`« ${esc(line)} »`}});
+  else qs=MARS_LINES.slice(0,-1).map(({l},i)=>{const nxt=MARS_LINES[i+1].l[0]; const others=shuffle(MARS_LINES.map(x=>x.l[0]).filter(x=>x!==nxt&&x!==l[0])).slice(0,3);
+    return {prompt:`Quel vers vient après : <b>« ${esc(l[0])} »</b> ?`, good:nxt, opts:shuffle([nxt,...others]), after:i===MARS.verse.length-1?"Après le couplet vient le refrain.":""}});
+  mz={kind,qs,i:0,score:0,ans:null};
 }
 
 /* ---------- TRANSLATION (long press → Ukrainian) ---------- */
@@ -1751,6 +2407,21 @@ async function showTr(w){
   window.addEventListener("hashchange",trClose);
 })();
 
+/* ---------- BACKUP / RESTORE ---------- */
+function mergeGames(a,b){ a=JSON.parse(JSON.stringify(a||{})); b=b||{};
+  ["frise","mars"].forEach(k=>{ if(!b[k]) return; a[k]=a[k]||{}; Object.entries(b[k]).forEach(([f,v])=>{ a[k][f]=Math.max(a[k][f]||0,v||0) }) });
+  if(b.carte){ a.carte=a.carte||{}; Object.entries(b.carte).forEach(([r,s])=>{ const c=a.carte[r]; if(!c||(s.c+s.w)>(c.c+c.w)) a.carte[r]=s }) }
+  return a; }
+function importProgress(txt){
+  let inc; try{ txt=(txt||"").trim(); if(txt.startsWith("CIVIQUE1:")) txt=decodeURIComponent(escape(atob(txt.slice(9)))); inc=JSON.parse(txt) }catch(e){ return "Code illisible : vérifiez qu'il est complet (il commence par CIVIQUE1:)." }
+  if(!inc||typeof inc!=="object"||!inc.stats) return "Ce code n'est pas une sauvegarde de cette application.";
+  const out={stats:Object.assign({},state.stats),exams:[...(state.exams||[])],read:Object.assign({},state.read||{},inc.read||{}),cards:Object.assign({},state.cards||{},inc.cards||{}),games:mergeGames(state.games,inc.games),updated:0};
+  let n=0; Object.entries(inc.stats).forEach(([id,s])=>{ const cur=out.stats[id]; if(!cur||((s.c+s.w)>(cur.c+cur.w))||((s.c+s.w)===(cur.c+cur.w)&&s.t>cur.t)){out.stats[id]=s;n++} });
+  const seen=new Set(out.exams.map(e=>e.date)); (inc.exams||[]).forEach(e=>{ if(!seen.has(e.date)){out.exams.push(e);seen.add(e.date)} });
+  out.exams.sort((a,b)=>a.date-b.date); state=out; save();
+  return `Progression restaurée : ${Object.keys(state.stats).length} questions, ${state.exams.length} examens (${n} questions mises à jour).`;
+}
+
 /* ---------- PROGRESS ---------- */
 let heatTheme="all", heatSel=null;
 function vProgress(){
@@ -1772,10 +2443,31 @@ function vProgress(){
     <p class="note">Touchez une case pour revoir la question.</p>
     <div id="hsel">${sel? qCard(sel,[0,1,2,3],0,true):""}</div>
    </div>
+   <div class="panel stack"><h3>Sauvegarder ou restaurer ma progression</h3>
+    <p class="note">Avant de remplacer l'application (nouveau fichier, autre téléphone, autre navigateur), sauvegardez votre progression, puis restaurez-la dans la nouvelle version. La restauration fusionne : rien n'est effacé.</p>
+    <div class="row"><button class="btn small" id="bkExport">Sauvegarder</button><button class="btn ghost small" id="bkImportShow">Restaurer</button></div>
+    <div id="bkBox"></div></div>
    <div class="row"><span class="syncline">${syncMsg}</span><button class="btn ghost small" id="reset">Réinitialiser ma progression</button></div>
    <div id="rconf"></div></div>`;
   document.querySelectorAll("[data-h]").forEach(b=>b.onclick=()=>{heatTheme=b.dataset.h;heatSel=null;vProgress()});
   document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{heatSel=b.dataset.q; $("#hsel").innerHTML=qCard(BANK[heatSel],[0,1,2,3],0,true); $("#hsel").scrollIntoView({block:"nearest",behavior:"smooth"})});
+  $("#bkExport").onclick=()=>{
+    const code="CIVIQUE1:"+btoa(unescape(encodeURIComponent(JSON.stringify(state))));
+    const inArtifact=typeof window.claude!=="undefined";
+    $("#bkBox").innerHTML=`<div class="stack"><p class="note">${Object.keys(state.stats).length} questions travaillées, ${state.exams.length} examens. Copiez ce code et gardez-le (Notes, e-mail…), ou téléchargez le fichier.</p>
+     <textarea id="bkCode" readonly rows="4" style="width:100%;font:12px var(--font-mono);background:var(--sunk);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px">${code}</textarea>
+     <div class="row"><button class="btn small" id="bkCopy">Copier le code</button>${inArtifact?"":`<button class="btn ghost small" id="bkFile">Télécharger le fichier</button>`}<span class="note" id="bkMsg"></span></div></div>`;
+    $("#bkCopy").onclick=async()=>{ try{ await navigator.clipboard.writeText(code); $("#bkMsg").textContent="Code copié." }catch(e){ const t=$("#bkCode"); t.focus(); t.select(); $("#bkMsg").textContent="Sélectionné : copiez-le avec le menu." } };
+    const f=$("#bkFile"); if(f) f.onclick=()=>{ const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([code],{type:"text/plain"})); a.download="progression-examen-civique-"+new Date().toISOString().slice(0,10)+".txt"; document.body.appendChild(a); a.click(); a.remove(); };
+  };
+  $("#bkImportShow").onclick=()=>{
+    $("#bkBox").innerHTML=`<div class="stack"><p class="note">Collez le code de sauvegarde ou choisissez le fichier.</p>
+     <textarea id="bkIn" rows="4" placeholder="CIVIQUE1:…" style="width:100%;font:12px var(--font-mono);background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px"></textarea>
+     <input type="file" id="bkFileIn" accept=".txt,.json,text/plain">
+     <div class="row"><button class="btn small" id="bkDo">Restaurer</button><span class="note" id="bkMsg"></span></div></div>`;
+    $("#bkFileIn").onchange=e=>{ const fl=e.target.files[0]; if(!fl) return; fl.text().then(t=>{$("#bkIn").value=t.trim()}) };
+    $("#bkDo").onclick=()=>{ const r=importProgress($("#bkIn").value); $("#bkMsg").textContent=r; if(/^Progression restaurée/.test(r)) setTimeout(vProgress,1200) };
+  };
   $("#reset").onclick=()=>{$("#rconf").innerHTML=`<div class="panel row" style="justify-content:space-between"><span>Effacer toutes les réponses et tous les examens ?</span><div class="row"><button class="btn ghost small" id="rno">Annuler</button><button class="btn small" id="ryes" style="background:var(--rouge);border-color:var(--rouge)">Tout effacer</button></div></div>`;
     $("#rno").onclick=()=>$("#rconf").innerHTML=""; $("#ryes").onclick=()=>{state={stats:{},exams:[],read:{},cards:{},updated:0};exam=null;lsDel(LS_EXAM);save();vProgress()};};
 }
