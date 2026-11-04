@@ -2007,21 +2007,27 @@ function vExam(){
   clearInterval(tick);
   if(!exam){
     $("#view").innerHTML=`<div class="stack" style="gap:24px">
-     <div class="stack"><span class="eyebrow">Examen blanc</span><h1>Conditions du jour J</h1>
-     <p class="lead">40 questions tirées selon la répartition de l'arrêté du 10 octobre 2025 : 11 sur les valeurs (dont 6 mises en situation), 6 sur les institutions, 11 sur les droits et devoirs (dont 6 mises en situation), 8 sur l'histoire et la géographie, 4 sur la vie en société. Correction à la fin uniquement.</p></div>
-     <div class="panel stack"><span class="eyebrow">Type d'examen</span>
-      <div class="seg" id="ekind"><button data-ek="off" aria-pressed="${examKind==="off"}">Officiel</button><button data-ek="large" aria-pressed="${examKind==="large"}">Élargi</button></div>
-      <p class="note">${examKind==="off"?"Questions de connaissances tirées uniquement de la liste officielle des 258 questions (et de leurs variantes).":"Même répartition, mais 7 des 28 questions de connaissances viennent des compléments : livret du citoyen 2026, régions, pièges fréquents, retours de candidats et listes CSP/CR. Utile car des candidats signalent des questions hors liste."}</p></div>
+     <div class="stack"><span class="eyebrow">Examen blanc</span><h1>Conditions du jour J</h1></div>
+     ${examStarter("Commencer (45 min)")}
+     <div class="stack"><p class="lead">40 questions tirées selon la répartition de l'arrêté du 10 octobre 2025 : 11 sur les valeurs (dont 6 mises en situation), 6 sur les institutions, 11 sur les droits et devoirs (dont 6 mises en situation), 8 sur l'histoire et la géographie, 4 sur la vie en société. Correction à la fin uniquement.</p></div>
      <div class="panel">${examTable()}</div>
-     <div class="row"><button class="btn" id="startEx">Commencer (45 min)</button></div>
      <p class="note">Les questions que vous ne maîtrisez pas encore sortent plus souvent. Une réponse fausse ou absente vaut 0, sans pénalité.</p></div>`;
-    document.querySelectorAll("[data-ek]").forEach(b=>b.onclick=()=>{examKind=b.dataset.ek; try{localStorage.setItem("civique.examkind",examKind)}catch(e){} vExam()});
-    $("#startEx").onclick=()=>{exam=buildExam();lsSet(LS_EXAM,exam);window.scrollTo({top:0});vExam()};
+    bindStarter(vExam);
     return;
   }
   if(exam.done){ return vResult(); }
   drawExam();
   tick=setInterval(()=>{const el=$("#timer"); if(!el){clearInterval(tick);return} const left=remaining(); el.textContent=mmss(left); el.classList.toggle("low",left<300); if(left<=0){finishExam()}},1000);
+}
+function examStarter(label){
+  return `<div class="panel stack starter"><div class="row" style="justify-content:space-between;align-items:center;gap:12px">
+    <div class="seg"><button data-ek="off" aria-pressed="${examKind==="off"}">Officiel</button><button data-ek="large" aria-pressed="${examKind==="large"}">Élargi</button></div>
+    <button class="btn" id="startEx">${label}</button></div>
+    <p class="note">${examKind==="off"?"Officiel : questions de connaissances tirées uniquement de la liste officielle des 258 questions (et de leurs variantes).":"Élargi : même répartition, mais 7 des 28 questions de connaissances viennent des compléments (livret du citoyen 2026, régions, pièges, retours de candidats, listes CSP/CR)."}</p></div>`;
+}
+function bindStarter(redraw){
+  document.querySelectorAll("[data-ek]").forEach(b=>b.onclick=()=>{examKind=b.dataset.ek; try{localStorage.setItem("civique.examkind",examKind)}catch(e){} const y=window.scrollY; redraw(); window.scrollTo(0,y)});
+  $("#startEx").onclick=()=>{exam=buildExam(examKind);lsSet(LS_EXAM,exam);window.scrollTo({top:0});vExam()};
 }
 function examTable(){
   return `<div class="tablebox"><table class="sum"><tr><th>Thème</th><th class="r" title="Questions de connaissances">Connais.</th><th class="r" title="Mises en situation">Situations</th><th class="r">Total</th></tr>
@@ -2079,6 +2085,7 @@ function vResult(){
   const rows=exam.ids.map((id,k)=>({id,k,ok:exam.ans[k]===0}));
   const shown=rows.filter(r=>resultFilter==="all"||!r.ok);
   $("#view").innerHTML=`<div class="stack" style="gap:24px">
+   ${examStarter("Nouvel examen blanc")}
    <div class="attest stack">
     <div class="seal ${ok?"ok":"ko"}">${ok?"RÉUSSI":"À<br>RETRAVAILLER"}</div>
     <span class="eyebrow">Résultat de l'examen blanc${exam.kind==="large"?" élargi":""} · ${fmtDate(Date.now())}</span>
@@ -2091,9 +2098,9 @@ function vResult(){
    <div class="row" style="justify-content:space-between"><h2>Correction</h2>
     <div class="seg"><button aria-pressed="${resultFilter==="bad"}" data-f="bad">Erreurs (${40-exam.score})</button><button aria-pressed="${resultFilter==="all"}" data-f="all">Toutes</button></div></div>
    <div class="stack">${shown.length? shown.map(r=>qCard(BANK[r.id],exam.order[r.k],exam.ans[r.k],true)).join("") : `<div class="empty">Aucune erreur. Bravo.</div>`}</div>
-   <div class="row"><button class="btn" id="again">Nouvel examen blanc</button><a class="btn ghost" href="#entrainement" id="toMist" style="text-decoration:none">Revoir mes erreurs</a></div></div>`;
-  document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{resultFilter=b.dataset.f;vResult()});
-  $("#again").onclick=()=>{exam=buildExam(exam.kind);lsSet(LS_EXAM,exam);window.scrollTo(0,0);vExam()};
+   <div class="row"><a class="btn ghost" href="#entrainement" id="toMist" style="text-decoration:none">Revoir mes erreurs</a><button class="btn ghost" id="toTop">Nouvel examen (haut de page)</button></div></div>`;
+  document.querySelectorAll(".seg button[data-f]").forEach(b=>b.onclick=()=>{resultFilter=b.dataset.f;vResult()});
+  bindStarter(vResult); $("#toTop").onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
   $("#toMist").onclick=()=>{trainCfg.mode="mistakes"};
 }
 
