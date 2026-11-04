@@ -243,6 +243,12 @@ button,a,.opt,summary{touch-action:manipulation;-webkit-tap-highlight-color:tran
 .muk{display:block;font-weight:400;font-size:.9rem;color:var(--muted)}
 .mnote{margin:2px 0 8px;padding:8px 10px;border-left:3px solid var(--rouge);background:var(--sunk);font-size:.92rem;border-radius:0 6px 6px 0}
 .blank{display:inline-block;min-width:4em;border-bottom:2px solid var(--bleu);color:transparent}
+
+.errbars{display:flex;flex-direction:column;gap:8px}
+.errbars .bar i.w{background:var(--rouge)}
+.errq summary{display:flex;justify-content:space-between;gap:10px}
+.errn{flex:none;font-size:.8rem;color:var(--rouge);font-weight:700}
+.errlink{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -1791,6 +1797,378 @@ const MARS = {
  ]
 };
 
+// Livret 2026 details (L149+) and questions from official CSP/CR lists and prep sites (X85+). IDs never change.
+X.push(
+["L149","P","Où la devise « Liberté, Égalité, Fraternité » est-elle inscrite ?",["Sur le fronton des bâtiments publics","Sur toutes les cartes Vitale","À l'entrée des lieux de culte","Sur les plaques d'immatriculation"],"Mairies, préfectures, écoles… On la trouve aussi sur les pièces et les documents officiels.","l"],
+["L150","P","Quel article de la Constitution de 1958 affirme l'égalité de tous devant la loi ?",["L'article 1er","L'article 16","L'article 49","L'article 89"],"« Elle assure l'égalité devant la loi de tous les citoyens sans distinction d'origine, de race ou de religion. »","l"],
+["L151","P","Depuis quand l'égalité entre les femmes et les hommes est-elle inscrite dans le préambule de la Constitution ?",["1946","1789","1905","1981"],"Le préambule de 1946 fait partie de la Constitution actuelle.","l"],
+["L152", "P", "Qu'est-ce qu'une discrimination ?", ["Traiter quelqu'un moins bien à cause de son origine ou de son sexe", "Refuser un candidat qui n'a pas le diplôme exigé pour le poste", "Appliquer exactement la même règle à tout le monde", "Donner une aide à une personne en difficulté financière"], "Dans une situation comparable (logement, travail, loisirs). Les discriminations sont punies par la loi.", "l"],
+["L153","P","Qu'est-ce que le sexisme ?",["Un traitement dénigrant en raison du sexe","Une religion pratiquée en France","Une règle d'égalité salariale","Une forme de laïcité à l'école"],"","l"],
+["L154", "P", "Qu'est-ce que l'antisémitisme ?", ["La haine et les discriminations visant les Juifs", "Le refus de pratiquer une religion, quelle qu'elle soit", "Une forme de prosélytisme autorisée dans la rue", "La critique de la politique d'un gouvernement étranger"], "C'est une forme spécifique de racisme, que l'État combat activement.", "l"],
+["L155","P","Sur quoi doit reposer une décision d'embauche ou de promotion ?",["Sur des raisons professionnelles","Sur la religion du candidat","Sur l'âge et la situation familiale","Sur le lieu de naissance du candidat"],"Toute autre raison peut constituer une discrimination.","l"],
+["L156", "P", "Sur quoi repose la fraternité républicaine ?", ["Sur la volonté de vivre ensemble", "Sur l'appartenance à une même religion", "Sur les liens de famille uniquement", "Sur la nationalité des grands-parents"], "Elle est civique, et non fondée sur l'origine ou la religion.", "l"],
+["L157","P","Lequel de ces gestes illustre la solidarité entre générations ?",["Cotiser pour financer les retraites","Hériter de la maison de ses parents","Voter aux élections municipales","Choisir l'école de ses enfants"],"En cotisant, chaque salarié contribue au paiement des retraites actuelles.","l"],
+["L158","P","Pourquoi payer ses impôts est-il un acte de solidarité ?",["Parce qu'ils financent les services publics pour tous","Parce qu'ils servent à payer les cultes","Parce qu'ils remplacent les cotisations sociales","Parce qu'ils sont reversés aux associations"],"","l"],
+["L159","P","Que symbolise le bonnet phrygien porté par Marianne ?",["La liberté","La royauté","La religion","La guerre"],"","l"],
+["L160","P","Où trouve-t-on une statue ou un buste de Marianne ?",["Dans les mairies","Dans les églises","Dans les gares","Dans les écoles privées"],"Elle rappelle la Révolution française.","l"],
+["L161","P","Depuis quelle année le drapeau tricolore est-il le drapeau officiel de la France (sauf sous la Restauration) ?",["1794","1789","1880","1958"],"Le drapeau blanc de la monarchie revient de 1814 à 1830.","l"],
+["L162", "P", "Que représente le coq, symbole national sans statut officiel ?", ["La fierté, le courage et la vigilance", "La liberté religieuse et la tolérance", "L'agriculture et la vie à la campagne", "La monarchie absolue et le roi"], "Il n'est pas cité par la Constitution mais il est très utilisé, notamment dans le sport.", "l"],
+["L163","P","Où les enfants apprennent-ils la Marseillaise ?",["À l'école primaire","Au lycée uniquement","Pendant la JDC","À l'université"],"","l"],
+["L164","P","Lequel de ces vers fait partie de la Marseillaise ?",["« Liberté, Liberté chérie »","« Ô douce France, terre bénie »","« Peuple uni sous le drapeau »","« Gloire à la paix et à l'honneur »"],"Sixième couplet : « Liberté, Liberté chérie, combats avec tes défenseurs ! »","l"],
+["L165","P","Où se place la Constitution dans la hiérarchie des normes ?",["Tout en haut, au-dessus des lois","Au même niveau que les décrets","En dessous des lois européennes","En dessous des arrêtés municipaux"],"","l"],
+["L166", "P", "Que signifie l'unité de la République ?", ["Les mêmes lois partout, en métropole et outre-mer", "Chaque région vote ses propres lois", "Toutes les religions doivent s'unir en une seule", "Il n'existe qu'un seul parti politique autorisé"], "", "l"],
+["L167","P","La laïcité garantit-elle le droit de changer de religion ?",["Oui, et aussi de ne plus en avoir","Non, on garde la religion de sa naissance","Oui, avec l'accord du maire","Seulement après l'âge de 21 ans"],"","l"],
+["L168", "P", "Peut-on afficher un emblème religieux ou politique au guichet d'une mairie ?", ["Non, les locaux publics restent neutres", "Oui, si l'agent d'accueil le souhaite", "Oui, pendant les grandes fêtes religieuses", "Oui, si le maire de la commune est d'accord"], "Aucun signe religieux, politique ou philosophique dans les bureaux et espaces communs.", "l"],
+["L169", "P", "Un agent public peut-il demander une autorisation d'absence pour une fête religieuse ?", ["Oui, mais l'employeur peut refuser", "Non, c'est interdit par la loi de 1905", "Oui, et l'employeur est obligé d'accepter", "Seulement pour les fêtes chrétiennes fériées"], "Le refus ne doit pas être discriminatoire. C'est la même règle pour un salarié du privé.", "l"],
+["L170", "P", "Dans une entreprise privée, qui peut limiter le port de signes religieux ?", ["L'employeur, par le règlement intérieur", "Le maire de la commune où se trouve l'entreprise", "Les autres salariés, par un vote à la majorité", "Personne, aucune limite n'est jamais possible"], "Les limites doivent être justifiées par la nature des tâches ou la sécurité.", "l"],
+["L171","P","Quelle loi interdit les signes religieux ostensibles à l'école publique ?",["La loi du 15 mars 2004","La loi du 9 décembre 1905","La loi du 11 octobre 2010","La loi du 1er juillet 1901"],"","l"],
+["L172","P","À l'école publique, un élève peut-il porter un signe religieux discret ?",["Oui, les signes discrets sont autorisés","Non, tout signe est interdit","Oui, seulement le vendredi","Non, sauf avec un mot des parents"],"Seuls les signes ostensibles (visibles immédiatement) sont interdits.","l"],
+["L173", "P", "À qui s'adresse la Charte de la laïcité à l'École ?", ["Aux personnels, aux élèves et aux parents", "Aux seuls enseignants de l'école publique", "Aux seuls élèves du collège et du lycée", "Aux ministres du culte qui visitent l'école"], "", "l"],
+["L174", "P", "Un élève peut-il refuser un cours du programme pour des raisons religieuses ?", ["Non, aucun cours ne peut être refusé", "Oui, avec un certificat d'un responsable religieux", "Oui, pour les cours de sciences et de sport", "Oui, à partir de l'entrée au collège"], "", "l"],
+["L175", "P", "Qu'est-ce que le suffrage universel indirect ?", ["Des élus désignent à leur tour d'autres élus", "Un vote organisé par internet depuis chez soi", "Un vote réservé aux propriétaires d'un logement", "Un vote où une personne vote à la place d'une autre"], "C'est le cas de l'élection des sénateurs.", "l"],
+["L176","P","De quel principe découle le caractère « social » de la République ?",["De l'égalité","De la laïcité","De l'indivisibilité","De la souveraineté"],"Pour rendre l'égalité réelle, l'État aide les plus fragiles.","l"],
+["L177", "P", "Lequel de ces dispositifs illustre la République sociale ?", ["Le revenu de solidarité active (RSA)", "Le droit de vote à partir de 18 ans", "La séparation des trois pouvoirs", "Le drapeau bleu, blanc, rouge"], "Aussi l'école gratuite, le logement social, la Sécurité sociale.", "l"],
+["L178", "P", "Selon l'article 1er de la DDHC, sur quoi peuvent être fondées les distinctions sociales ?", ["Sur l'utilité commune", "Sur la naissance", "Sur la fortune", "Sur la religion"], "« Les distinctions sociales ne peuvent être fondées que sur l'utilité commune. »", "l"],
+["L179","P","Selon l'article 3 de la DDHC, où réside le principe de toute souveraineté ?",["Dans la Nation","Dans le roi","Dans l'Église","Dans l'armée"],"","l"],
+["L180","P","Selon l'article 5 de la DDHC, ce qui n'est pas défendu par la loi :",["Ne peut pas être empêché","Est interdit par principe","Doit être autorisé par le préfet","Est soumis à une taxe"],"« Nul ne peut être contraint à faire ce qu'elle n'ordonne pas. »","l"],
+["L181", "P", "Selon l'article 6 de la DDHC, la loi est :", ["L'expression de la volonté générale", "La volonté du chef de l'État", "Le choix des juges de la Cour", "Une tradition religieuse ancienne"], "Elle doit être la même pour tous, qu'elle protège ou qu'elle punisse.", "l"],
+["L182", "P", "Selon l'article 6 de la DDHC, comment accède-t-on aux emplois publics ?", ["Selon leurs capacités et leurs talents", "Selon leur naissance et leur famille", "Selon leur fortune personnelle", "Selon leur religion ou leurs croyances"], "", "l"],
+["L183", "P", "Selon l'article 8 de la DDHC, une personne peut être punie :", ["Selon une loi existant avant les faits", "Selon une loi votée après les faits", "Selon la seule décision de la police", "Selon l'avis des victimes et de leurs proches"], "C'est la non-rétroactivité de la loi pénale.", "l"],
+["L184","P","Selon l'article 10 de la DDHC, on peut exprimer ses opinions, même religieuses, à condition de :",["Ne pas troubler l'ordre public","Les déclarer en mairie","Appartenir à un parti","Les faire valider par un juge"],"","l"],
+["L185", "P", "Selon l'article 11 de la DDHC, la libre communication des pensées et des opinions est :", ["Un des droits les plus précieux de l'homme", "Un droit réservé aux seuls journalistes", "Une liberté soumise à autorisation préalable", "Une liberté interdite en période électorale"], "Chacun en répond en cas d'abus prévu par la loi.", "l"],
+["L186","P","Selon l'article 12 de la DDHC, la force publique (police, armée) est instituée :",["Pour l'avantage de tous","Pour protéger le gouvernement","Pour servir ses chefs","Pour lever les impôts"],"","l"],
+["L187","P","Selon l'article 13 de la DDHC, comment la contribution commune (l'impôt) doit-elle être répartie ?",["Selon les moyens de chacun","À parts égales par habitant","Seulement entre les propriétaires","Selon la religion"],"« … également répartie entre tous les citoyens, en raison de leurs facultés. »","l"],
+["L188", "P", "Selon l'article 14 de la DDHC, les citoyens ont le droit :", ["De consentir à l'impôt et d'en suivre l'emploi", "De refuser de payer l'impôt s'ils le contestent", "De fixer eux-mêmes le montant de leur impôt", "De payer l'impôt en nature plutôt qu'en argent"], "Ils le font par eux-mêmes ou par leurs représentants.", "l"],
+["L189", "P", "Selon l'article 15 de la DDHC, la société a le droit :", ["De demander des comptes à tout agent public", "D'élire tous les fonctionnaires de l'État", "De renvoyer les juges qui leur déplaisent", "De fixer eux-mêmes les salaires des ministres"], "", "l"],
+["L190", "P", "Selon l'article 17 de la DDHC, on peut être privé de sa propriété :", ["Pour une nécessité publique, avec indemnité", "Sur simple décision du maire de la commune", "Si l'on ne vote pas aux élections", "Jamais, en aucun cas et pour aucune raison"], "La propriété est « un droit inviolable et sacré ».", "l"],
+["L191","P","Quel article de la DDHC garantit la présomption d'innocence ?",["L'article 9","L'article 1er","L'article 13","L'article 17"],"","l"],
+["L192","P","Quel article de la DDHC définit la liberté comme le fait de ne pas nuire à autrui ?",["L'article 4","L'article 2","L'article 16","L'article 17"],"","l"],
+["L193","P","À quelle date la Déclaration des droits de l'homme et du citoyen a-t-elle été adoptée ?",["Le 26 août 1789","Le 14 juillet 1789","Le 21 janvier 1793","Le 4 octobre 1958"],"","l"],
+["L194","P","Selon la Charte des droits et devoirs du citoyen, quel devoir est propre aux citoyens français ?",["Participer aux jurys d'assises","Respecter le Code de la route","Payer ses impôts","Scolariser ses enfants"],"Ainsi que concourir à la défense nationale. Les autres obligations s'imposent à tous les résidents.","l"],
+["L195","P","Selon la Charte du citoyen, chacun des époux peut :",["Exercer une profession et disposer de ses revenus","Interdire à l'autre de travailler","Gérer seul les revenus de l'autre","Décider seul de l'éducation des enfants"],"Après avoir contribué aux charges communes.","l"],
+["L196","P","Selon la Charte du citoyen, l'organisation d'un enseignement public gratuit et laïque est :",["Un devoir de l'État","Un choix des communes","Une mission des Églises","Réservée au primaire"],"","l"],
+["L197","P","Au nom de qui la justice est-elle rendue en France ?",["Au nom du peuple français","Au nom du Président","Au nom du gouvernement","Au nom de Dieu"],"La justice est indépendante.","l"],
+["L198","P","Selon la Charte du citoyen, une personne qui ne peut pas travailler à cause de son âge ou de sa santé :",["A droit à des moyens convenables d'existence","Doit être prise en charge par sa famille seule","Perd ses droits civiques","Doit quitter le territoire"],"Principe issu du préambule de 1946.","l"],
+["L199", "P", "Selon la Charte du citoyen, la République garantit le libre exercice des cultes, mais :", ["N'en reconnaît, n'en salarie ni n'en subventionne aucun", "Choisit une religion officielle pour tout le pays", "Paie les ministres de chaque culte reconnu", "Interdit les fêtes religieuses dans l'espace public"], "", "l"],
+["L200", "P", "Que doivent s'engager à faire les parents étrangers, selon la loi du 26 janvier 2024 ?", ["Éduquer leurs enfants dans les valeurs de la République", "Inscrire leurs enfants dans une école privée", "Faire apprendre une langue régionale à leurs enfants", "Donner un prénom français à leurs enfants"], "Et accompagner leur intégration, notamment par l'apprentissage du français.", "l"],
+["L201","I","Quel article de la Constitution énonce le principe « gouvernement du peuple, par le peuple et pour le peuple » ?",["L'article 2","L'article 1er","L'article 16","L'article 89"],"","l"],
+["L202", "I", "Comment la Constitution peut-elle être modifiée ?", ["Par référendum ou par le Congrès", "Par un décret du Premier ministre", "Par un vote du Conseil d'État", "Par une décision du Président seul"], "", "l"],
+["L203", "I", "Lequel de ces principes est un pilier de l'État de droit ?", ["L'indépendance de la justice", "L'existence d'une religion d'État", "L'existence d'un parti unique", "L'obligation de voter à chaque élection"], "Avec la protection des libertés et la séparation des pouvoirs.", "l"],
+["L204", "I", "Qui détient le pouvoir exécutif ?", ["Le Gouvernement, avec le Président", "Les députés et les sénateurs", "Les juges et les tribunaux", "Les maires et les conseillers"], "Il définit la politique de la Nation et met en œuvre les lois.", "l"],
+["L205","I","Qui exerce le pouvoir judiciaire ?",["Les juges","Les préfets","Les ministres","Les députés"],"","l"],
+["L206","I","En plus d'être chef de l'État, le Président de la République est :",["Le chef des armées","Le président du Sénat","Le chef de la police municipale","Le premier des juges"],"","l"],
+["L207","I","Comment les sénateurs sont-ils élus ?",["Au suffrage universel indirect","Au suffrage universel direct","Ils sont nommés par le Président","Ils sont tirés au sort"],"Par des grands électeurs, surtout des élus locaux.","l"],
+["L208", "I", "Le Conseil constitutionnel contrôle la conformité des lois à la Constitution et aussi :", ["La régularité des élections nationales", "Les comptes de toutes les communes", "Les décisions des conseils de prud'hommes", "Les sujets des examens du baccalauréat"], "", "l"],
+["L209","I","À quoi sert l'isoloir dans un bureau de vote ?",["À voter en secret","À recevoir sa carte électorale","À compter les bulletins","À parler aux candidats"],"Il est interdit d'y entrer à plusieurs.","l"],
+["L210","I","Les panneaux d'affichage électoral installés dans les communes :",["Ne doivent jamais être dégradés","Peuvent être recouverts par les électeurs","Sont réservés au parti au pouvoir","Sont payés par les candidats élus"],"","l"],
+["L211","I","Pour combien de temps les conseillers régionaux et départementaux sont-ils élus ?",["6 ans","5 ans","4 ans","9 ans"],"Comme les conseillers municipaux.","l"],
+["L212","I","Qui représente l'État dans les régions et les départements ?",["Les préfets","Les maires","Les sénateurs","Les juges"],"Dans certaines collectivités d'outre-mer : les hauts-commissaires.","l"],
+["L213", "I", "Que gèrent souvent les intercommunalités (communautés de communes, métropoles) ?", ["L'eau, les déchets et les transports urbains", "Les lycées, les universités et l'armée", "La justice et la police nationale", "Les ambassades et les consulats"], "", "l"],
+["L214","I","Quelle collectivité s'occupe de la protection de l'enfance et de l'aide aux personnes âgées ?",["Le département","La commune","La région","L'État uniquement"],"Ainsi que des collèges et des routes départementales.","l"],
+["L215","I","Combien de départements la France compte-t-elle en métropole ?",["96","101","13","5"],"Et 5 en outre-mer, soit 101.","l"],
+["L216","I","Qui construit et entretient les lycées publics ?",["La région","Le département","La commune","Le ministère seul"],"Commune : écoles ; département : collèges ; région : lycées.","l"],
+["L217", "I", "Laquelle de ces missions relève de la région ?", ["Les transports et le développement économique", "L'état civil et la célébration des mariages", "Les collèges et l'aide aux personnes âgées", "La défense nationale et la diplomatie"], "Ainsi que la formation professionnelle.", "l"],
+["L218","I","Lequel de ces territoires fait partie des Antilles françaises ?",["Saint-Barthélemy","La Nouvelle-Calédonie","Wallis-et-Futuna","Saint-Pierre-et-Miquelon"],"Martinique, Guadeloupe, Saint-Martin et Saint-Barthélemy.","l"],
+["L219","I","Dans quel océan se trouve la Nouvelle-Calédonie ?",["L'océan Pacifique","L'océan Indien","L'océan Atlantique","L'océan Arctique"],"Comme la Polynésie française et Wallis-et-Futuna.","l"],
+["L220","I","Près de quel pays se trouve Saint-Pierre-et-Miquelon ?",["Le Canada","Le Brésil","Madagascar","L'Australie"],"","l"],
+["L221","I","Tous les combien les citoyens élisent-ils les députés européens ?",["Tous les 5 ans","Tous les 4 ans","Tous les 6 ans","Tous les 7 ans"],"","l"],
+["L222","I","Qui a posé les bases de la construction européenne dans sa déclaration du 9 mai 1950 ?",["Robert Schuman","Charles de Gaulle","Jean Monnet","Jacques Delors"],"Il était alors ministre français des Affaires étrangères.","l"],
+["L223","I","Combien de pays de l'Union européenne utilisent l'euro, France comprise ?",["21","27","12","15"],"12 pays au départ en 2002.","l"],
+["L224","I","Quels pays ont rejoint la Communauté européenne en 1986 ?",["L'Espagne et le Portugal","La Pologne et la Hongrie","L'Autriche et la Suède","La Grèce et l'Irlande"],"","l"],
+["L225","I","Quels pays sont entrés dans l'Union européenne en 1995 ?",["L'Autriche, la Suède et la Finlande","L'Espagne, le Portugal et la Grèce","La Pologne, Malte et Chypre","La Croatie, la Roumanie et la Bulgarie"],"L'Union passe à 15 membres.","l"],
+["L226", "I", "Combien de pays sont entrés dans l'Union européenne en 2004 ?", ["10", "3", "6", "12"], "Dont la Pologne, la Hongrie, Malte et Chypre : l'Union passe à 25.", "l"],
+["L227","I","Lequel de ces pays fait partie des six fondateurs de la construction européenne ?",["La Belgique","L'Espagne","Le Royaume-Uni","La Suède"],"France, Allemagne, Italie, Belgique, Pays-Bas, Luxembourg.","l"],
+["L228", "I", "Qu'a créé le traité de Rome en 1957 ?", ["La Communauté économique européenne", "La monnaie unique, l'euro", "L'Union européenne et la citoyenneté", "Le Parlement européen élu au suffrage direct"], "Le marché commun entre les six pays fondateurs.", "l"],
+["L229","I","Un citoyen européen installé dans un autre pays de l'Union peut :",["Y voter aux élections locales","Y voter à l'élection présidentielle","Y être élu député national","Y voter aux référendums nationaux"],"Il peut aussi y circuler, travailler et étudier librement.","l"],
+["L230","D","Que définit le Code pénal ?",["Les infractions et leurs peines","Les règles du mariage","Le montant des impôts","Les programmes scolaires"],"Le Code civil, lui, règle les relations entre les personnes.","l"],
+["L231","D","Sur quel site peut-on consulter toutes les lois françaises ?",["Legifrance","Ameli","Parcoursup","France Travail"],"www.legifrance.gouv.fr","l"],
+["L232", "D", "Quel texte international ratifié par la France protège les droits fondamentaux ?", ["La Convention européenne des droits de l'homme", "Le traité de Versailles de 1919", "L'édit de Nantes signé par Henri IV", "Le Code civil de Napoléon (1804)"], "", "l"],
+["L233","D","Une personne en prison conserve-t-elle la liberté de culte ?",["Oui, elle la conserve","Non, elle est suspendue","Seulement le dimanche","Seulement avec l'accord du juge"],"","l"],
+["L234","D","La liberté de pensée en France est :",["Totale","Limitée aux majeurs","Soumise à autorisation","Réservée aux citoyens"],"Seule son expression peut être limitée par la loi.","l"],
+["L235","D","Un journaliste peut-il critiquer une personnalité ou une croyance religieuse ?",["Oui, la presse est libre","Non, c'est interdit","Seulement avec l'accord du ministère","Seulement à l'étranger"],"Sans diffamation, incitation à la haine ou contestation de crimes contre l'humanité.","l"],
+["L236","D","Que doit avoir un étranger non européen quand son visa expire ?",["Un titre de séjour","Une carte Vitale","Un permis de conduire","Une carte d'électeur"],"","l"],
+["L237","D","En cas d'état d'urgence, l'État peut :",["Restreindre la liberté d'aller et venir","Supprimer le droit de vote","Dissoudre le Conseil constitutionnel","Interdire toutes les religions"],"","l"],
+["L238", "D", "Qui veille au respect du droit à la vie privée ?", ["Le juge judiciaire", "Le maire de la commune", "Le préfet du département", "L'employeur de la victime"], "", "l"],
+["L239","D","Peut-on filmer quelqu'un sans son autorisation dans un lieu privé ?",["Non, c'est interdit","Oui, si on ne diffuse pas","Oui, pour un usage personnel","Oui, avec un téléphone"],"Le droit à l'image est protégé.","l"],
+["L240", "D", "Que faire si l'on est victime d'une atteinte à sa vie privée ?", ["Porter plainte (police ou gendarmerie)", "S'adresser à l'accueil de la mairie", "Écrire au député de sa circonscription", "Publier la preuve sur les réseaux sociaux"], "", "l"],
+["L241","D","Que signifie le droit à la dignité humaine ?",["Ne jamais être traité comme un objet","Avoir un emploi bien payé","Avoir un logement gratuit","Être toujours d'accord avec l'État"],"Principe inscrit dans le préambule de la Constitution de 1946.","l"],
+["L242","D","Pour qui la vaccination est-elle obligatoire ?",["Pour les enfants","Pour les retraités","Pour les touristes","Pour personne"],"Un adulte peut en revanche refuser un traitement ou un acte médical.","l"],
+["L243","D","Un mineur peut-il obtenir une contraception ?",["Oui, sans autorisation des parents","Non, jamais avant 18 ans","Oui, avec l'accord des deux parents","Oui, avec l'accord du juge"],"","l"],
+["L244","D","Depuis quelle date la liberté de recourir à l'IVG est-elle garantie par la Constitution ?",["Le 8 mars 2024","Le 17 janvier 1975","Le 4 octobre 1958","Le 2 août 2021"],"La loi Veil de 1975 avait dépénalisé l'avortement.","l"],
+["L245", "D", "Une jeune fille mineure enceinte peut-elle demander une IVG ?", ["Oui, dans les conditions fixées par la loi", "Non, il faut obligatoirement avoir 18 ans", "Seulement avec l'accord écrit de son père", "Seulement en se rendant à l'étranger"], "", "l"],
+["L246", "D", "Quelle loi a ouvert la PMA à toutes les femmes ?", ["La loi de bioéthique de 2021", "La loi Veil de 1975 sur l'IVG", "La loi Taubira de 2013", "La loi Neuwirth de 1967"], "", "l"],
+["L247","D","Qui contrôle toute privation de liberté (arrestation, détention) ?",["Un juge","Le maire","L'employeur","Le préfet seul"],"C'est une garantie du droit à la sûreté.","l"],
+["L248", "D", "Comment doivent être les peines prononcées par la justice ?", ["Prévues par la loi et proportionnées", "Fixées librement par la victime", "Identiques pour toutes les infractions", "Décidées directement par la police"], "", "l"],
+["L249","D","En quelle année a été créé le Défenseur des droits ?",["2011","1981","1958","2001"],"Autorité administrative indépendante.","l"],
+["L250", "D", "Qui peut restreindre la liberté de réunion en cas de risque de violences ?", ["Le maire ou le préfet, sous le contrôle du juge", "Les organisateurs du rassemblement eux-mêmes", "N'importe quel policier présent sur place", "Le président d'un parti politique local"], "", "l"],
+["L251","D","Que faut-il faire avant d'organiser une manifestation sur la voie publique ?",["La déclarer à l'administration","Obtenir l'accord du Président","Payer une taxe","Prévenir les journalistes"],"La déclaration précise le parcours et les organisateurs.","l"],
+["L252","D","Que peut faire l'État contre une association qui ne respecte pas les principes républicains ?",["La dissoudre","Lui donner une subvention","Rien, elle est libre","Lui retirer la parole"],"","l"],
+["L253", "D", "Selon l'article 2 de la Charte de l'environnement, toute personne :", ["Doit prendre part à la protection de l'environnement", "Peut polluer à condition de payer une taxe", "Doit obligatoirement avoir une voiture électrique", "Doit choisir de vivre à la campagne"], "", "l"],
+["L254","D","L'abus de biens sociaux (utiliser l'argent d'une entreprise à des fins personnelles) est :",["Un délit","Une contravention","Un crime","Autorisé pour le patron"],"Jugé par le tribunal correctionnel.","l"],
+["L255","D","Un homicide involontaire est :",["Un délit","Un crime","Une contravention","Un simple accident sans suite"],"","l"],
+["L256","D","Un braquage est :",["Un crime","Un délit","Une contravention","Une faute civile"],"Jugé par la cour d'assises ou la cour criminelle.","l"],
+["L257","D","Quel est le montant minimum de l'amende pour un délit ?",["3 750 euros","135 euros","68 euros","15 euros"],"Au-dessous, il s'agit de contraventions.","l"],
+["L258","D","Insulter un policier ou un magistrat :",["Est un outrage puni plus sévèrement","Est une simple impolitesse","Est autorisé en manifestation","Est puni seulement d'un avertissement"],"Article 433-5 du Code pénal.","l"],
+["L259","D","Refuser d'obéir à l'ordre d'un policier ou d'un gendarme est :",["Un délit","Un droit","Une simple contravention","Autorisé si on n'est pas d'accord"],"On conteste ensuite par les voies légales.","l"],
+["L260","D","Agresser un enseignant ou un agent public :",["Est puni plus sévèrement","Est puni comme une contravention","N'est pas puni s'il n'y a pas de blessure","Relève seulement du règlement de l'école"],"Ce sont des personnes chargées d'une mission de service public.","l"],
+["L261","D","Les résultats d'une élection :",["S'imposent à tous, quelles que soient ses opinions","Peuvent être ignorés par les perdants","Ne valent que pour ceux qui ont voté","Doivent être confirmés par un référendum"],"","l"],
+["L262", "D", "Qui doit déclarer ses revenus chaque année ?", ["Toute personne majeure qui a ses propres revenus", "Seulement les personnes de nationalité française", "Seulement les propriétaires d'un logement", "Seulement les salariés des entreprises privées"], "Les étrangers résidant en France aussi.", "l"],
+["L263", "D", "Les étrangers qui vivent en France doivent-ils payer des impôts ?", ["Oui, comme tous les résidents", "Non, jamais, ils en sont exemptés", "Seulement après 10 ans de résidence", "Seulement s'ils ont le droit de voter"], "", "l"],
+["L264","D","Une fausse déclaration à l'administration :",["Peut être sanctionnée","N'a aucune conséquence","Est autorisée une fois","Est corrigée sans sanction"],"","l"],
+["L265", "D", "Comment un volontaire peut-il servir l'intérêt général en matière de sécurité ?", ["En rejoignant une réserve (militaire, citoyenne…)", "En créant sa propre milice de quartier", "En surveillant ses voisins et en les signalant", "En achetant une arme pour se protéger"], "", "l"],
+["L266","D","Dans quel pays la France participe-t-elle à la Force intérimaire des Nations unies (FINUL) ?",["Au Liban","Au Canada","En Norvège","Au Brésil"],"","l"],
+["L267", "D", "À partir de quand les parents doivent-ils inscrire leur enfant à l'école ?", ["À la rentrée de l'année de ses 3 ans", "À la rentrée de l'année de ses 6 ans", "Dès ses 2 ans, en crèche obligatoire", "Quand l'enfant sait lire et écrire"], "", "l"],
+["L268","D","Qui sont les premiers acteurs de l'éducation d'un enfant ?",["Ses parents","Ses professeurs","Le maire","L'État"],"Ils transmettent aussi les valeurs de la République.","l"],
+["L269","H","Selon la frise du livret, quelle date marque le début du Moyen Âge ?",["476","1492","800","1789"],"Chute de l'Empire romain d'Occident.","l"],
+["L270","H","Selon la frise du livret, quelle date marque la fin du Moyen Âge et le début de l'Ancien Régime ?",["1492","1789","1598","1453"],"","l"],
+["L271","H","Pendant quelle période Louis XIV a-t-il régné ?",["De 1643 à 1715","De 1789 à 1792","De 1515 à 1547","De 1804 à 1815"],"Il a fait construire le château de Versailles.","l"],
+["L272","H","Laquelle de ces pièces a été écrite par Molière ?",["L'Avare","Les Misérables","Candide","Les Fleurs du mal"],"Aussi « Le Bourgeois gentilhomme ».","l"],
+["L273","H","Lequel de ces auteurs est un philosophe des Lumières ?",["Diderot","Victor Hugo","Molière","Baudelaire"],"Rousseau, Voltaire, Diderot, Montesquieu, Condorcet, d'Alembert…","l"],
+["L274", "H", "Pour quoi les philosophes des Lumières se sont-ils battus ?", ["La tolérance et la liberté de pensée", "Le retour de la monarchie absolue", "La création d'une religion d'État", "La conquête de nouvelles colonies"], "", "l"],
+["L275","H","Qu'était la Bastille, prise le 14 juillet 1789 ?",["Une prison royale","Un palais du roi","Une église","Une caserne de pompiers"],"Symbole du pouvoir arbitraire du roi.","l"],
+["L276","H","Quel personnage a contribué à l'écriture de la Déclaration des droits de l'homme et du citoyen ?",["Le marquis de La Fayette","Napoléon Bonaparte","Louis XIV","Victor Hugo"],"","l"],
+["L277", "H", "Quel régime est mis en place en 1791 ?", ["Une monarchie constitutionnelle", "Le Premier Empire de Napoléon", "La Première République", "Une monarchie absolue renforcée"], "Les pouvoirs du roi Louis XVI sont limités.", "l"],
+["L278","H","Quand Louis XVI est-il renversé ?",["Le 10 août 1792","Le 14 juillet 1789","Le 21 janvier 1793","Le 18 juin 1940"],"Il est guillotiné le 21 janvier 1793.","l"],
+["L279","H","Sur quelle place de Paris Louis XVI a-t-il été guillotiné ?",["La place de la Concorde","La place de la Bastille","La place Vendôme","La place des Vosges"],"","l"],
+["L280","H","Quel révolutionnaire défend l'égalité mais dirige aussi la Terreur ?",["Maximilien Robespierre","Le marquis de La Fayette","Jules Ferry","Léon Gambetta"],"","l"],
+["L281","H","En quelle année Napoléon Bonaparte prend-il le pouvoir ?",["1799","1789","1804","1815"],"Il devient empereur en 1804.","l"],
+["L282","H","Laquelle de ces institutions a été créée sous Napoléon Ier ?",["Les préfets","La Sécurité sociale","Le Conseil constitutionnel","Le Défenseur des droits"],"Aussi le Code civil et la Banque de France.","l"],
+["L283","H","En quelle année Napoléon rétablit-il l'esclavage ?",["1802","1794","1848","1815"],"Aboli en 1794, rétabli en 1802, aboli définitivement en 1848.","l"],
+["L284","H","Après quelle bataille Napoléon abdique-t-il définitivement en 1815 ?",["Waterloo","Austerlitz","Verdun","Valmy"],"","l"],
+["L285","H","Quel roi revient au pouvoir avec la Restauration en 1815 ?",["Louis XVIII","Louis XVI","Louis-Philippe","Henri IV"],"Charles X lui succède en 1824.","l"],
+["L286","H","Quel roi gouverne pendant la Monarchie de Juillet (1830-1848) ?",["Louis-Philippe","Charles X","Louis XVIII","Napoléon III"],"Le droit de vote reste réservé aux plus riches.","l"],
+["L287", "H", "Sous la Monarchie de Juillet, qui avait le droit de voter ?", ["Seulement les hommes les plus riches", "Tous les hommes majeurs sans distinction", "Tous les citoyens, hommes et femmes", "Seulement les nobles et le clergé"], "Le refus d'élargir le vote mène à la révolution de 1848.", "l"],
+["L288","H","Combien d'Africains environ ont été déportés vers les colonies françaises par la traite ?",["1,2 million","12 000","120 000","12 millions"],"Vers les Antilles, La Réunion et la Guyane.","l"],
+["L289", "H", "Dans quelles plantations travaillaient surtout les esclaves des colonies françaises ?", ["Canne à sucre et café", "Blé et betteraves sucrières", "Vigne, olivier et lavande", "Riz, thé et coton"], "", "l"],
+["L290", "H", "Contre quoi Victor Hugo s'est-il engagé ?", ["La peine de mort et la misère", "Le droit de vote des femmes", "La gratuité de l'école publique", "La séparation des Églises et de l'État"], "", "l"],
+["L291","H","Qui était Louis-Napoléon Bonaparte, devenu Napoléon III ?",["Le neveu de Napoléon Ier","Le fils de Louis XVI","Le frère de Louis-Philippe","Un général de la Commune"],"Élu président en 1848, il fait un coup d'État en 1851 et devient empereur en 1852.","l"],
+["L292", "H", "Comment se termine le Second Empire en 1870 ?", ["Par la défaite contre la Prusse", "Par la mort naturelle de l'empereur", "Par un référendum perdu par l'empereur", "Par la victoire française en Crimée"], "", "l"],
+["L293","H","De quand date la grande loi sur la liberté de la presse ?",["29 juillet 1881","1er juillet 1901","9 décembre 1905","26 août 1789"],"","l"],
+["L294", "H", "Quelle loi de 1884 a autorisé la création des syndicats ?", ["La loi du 21 mars 1884", "La loi Ferry de 1882", "La loi du 9 décembre 1905", "La loi Veil de 1975"], "", "l"],
+["L295","H","Quel homme dirigeait le gouvernement français à la fin de la Première Guerre mondiale ?",["Georges Clemenceau","Charles de Gaulle","Léon Blum","Philippe Pétain"],"Président du Conseil en 1918.","l"],
+["L296", "H", "Quels pays étaient les principaux alliés de la France en 1914-1918 ?", ["La Grande-Bretagne, l'Italie, les États-Unis", "L'Allemagne et l'Autriche-Hongrie", "L'Espagne, le Portugal et la Suisse", "Le Japon, la Chine et la Turquie"], "", "l"],
+["L297","H","Combien de Français sont morts pendant la Première Guerre mondiale ?",["Environ 1,45 million","Environ 50 000","Environ 10 millions","Environ 300 000"],"10 millions de morts au total dans le monde.","l"],
+["L298","H","Combien de morts a fait la Seconde Guerre mondiale, selon les historiens ?",["Plus de 50 millions","Environ 1 million","Environ 10 millions","Environ 500 000"],"Une majorité de civils.","l"],
+["L299","H","Dans quelle ville siégeait le gouvernement du maréchal Pétain ?",["Vichy","Paris","Lyon","Bordeaux"],"Le régime de Vichy collabore avec l'Allemagne nazie.","l"],
+["L300", "H", "Par quelle radio le général de Gaulle a-t-il lancé son appel du 18 juin 1940 ?", ["La BBC, radio britannique", "Radio France, depuis Paris", "Radio Vichy, depuis l'Auvergne", "Une radio américaine de New York"], "", "l"],
+["L301", "H", "Pourquoi la IVe République s'est-elle effondrée en 1958 ?", ["Instabilité gouvernementale et guerre d'Algérie", "Une nouvelle défaite contre l'Allemagne", "Une révolution populaire à Paris", "La mort soudaine du président en fonction"], "", "l"],
+["L302","H","Qui est le premier président de la Ve République ?",["Charles de Gaulle","Georges Pompidou","René Coty","Vincent Auriol"],"","l"],
+["L303","H","Lequel de ces pays a fait partie de l'empire colonial français ?",["Madagascar","Le Kenya","Le Mozambique","L'Afrique du Sud"],"Aussi le Maroc, la Tunisie, l'Algérie, l'Indochine…","l"],
+["L304","H","Sous quel président la majorité a-t-elle été abaissée à 18 ans ?",["Valéry Giscard d'Estaing","Charles de Gaulle","François Mitterrand","Jacques Chirac"],"En 1974.","l"],
+["L305","H","Quelle loi de 1967 a autorisé la pilule contraceptive ?",["La loi Neuwirth","La loi Veil","La loi Évin","La loi Ferry"],"","l"],
+["L306","H","Quelle fonction occupait Robert Badinter quand il a fait abolir la peine de mort ?",["Ministre de la Justice","Président de la République","Premier ministre","Président du Sénat"],"Sous la présidence de François Mitterrand.","l"],
+["L307","H","Quel président a été élu en 1969 ?",["Georges Pompidou","Valéry Giscard d'Estaing","François Mitterrand","Charles de Gaulle"],"","l"],
+["L308","H","Quel président a été élu en 1974 ?",["Valéry Giscard d'Estaing","Georges Pompidou","Jacques Chirac","François Mitterrand"],"","l"],
+["L309","H","En quelle année François Mitterrand a-t-il été réélu ?",["1988","1981","1995","1984"],"","l"],
+["L310","H","Quel président a succédé à François Mitterrand en 1995 ?",["Jacques Chirac","Nicolas Sarkozy","Lionel Jospin","Valéry Giscard d'Estaing"],"","l"],
+["L311","H","Quel président a été élu en 2007 ?",["Nicolas Sarkozy","François Hollande","Jacques Chirac","Emmanuel Macron"],"","l"],
+["L312","H","Quel président a été élu en 2012 ?",["François Hollande","Nicolas Sarkozy","Emmanuel Macron","Jacques Chirac"],"","l"],
+["L313","H","En quelle année Emmanuel Macron a-t-il été élu pour la première fois ?",["2017","2012","2022","2007"],"Réélu en 2022.","l"],
+["L314","H","Avec qui Marie Curie a-t-elle partagé le prix Nobel de physique en 1903 ?",["Pierre Curie et Henri Becquerel","Louis Pasteur et Albert Einstein","Georges Charpak","Haroun Tazieff"],"","l"],
+["L315","H","Pour quoi Marie Curie a-t-elle reçu le prix Nobel de chimie en 1911 ?",["L'isolement du radium","La découverte du vaccin contre la rage","L'invention de la radio","La découverte de l'électron"],"","l"],
+["L316","H","Dans quel pays Marie Curie est-elle née ?",["En Pologne","En Russie","En Allemagne","En Belgique"],"","l"],
+["L317","H","Quel roman a écrit Marguerite Yourcenar ?",["Mémoires d'Hadrien","L'Amant","La Vie devant soi","Les Racines du ciel"],"Née à Bruxelles, première femme élue à l'Académie française.","l"],
+["L318","H","De quelle origine était Joséphine Baker ?",["Américaine","Brésilienne","Égyptienne","Russe"],"Artiste et résistante, entrée au Panthéon.","l"],
+["L319","H","Où est née la poétesse Andrée Chedid ?",["Au Caire, en Égypte","À Beyrouth, au Liban","À Damas, en Syrie","À Alger, en Algérie"],"","l"],
+["L320","H","Dans quel film célèbre a joué l'actrice Maria Casarès ?",["Les Enfants du paradis","La Grande Vadrouille","Amélie Poulain","Les Visiteurs"],"Née en Espagne, à La Corogne.","l"],
+["L321","H","De quelle origine était le chanteur Georges Moustaki ?",["Italo-grecque","Russe","Égyptienne","Sud-africaine"],"","l"],
+["L322","H","Sous quel pseudonyme Romain Gary a-t-il reçu son second prix Goncourt ?",["Émile Ajar","Paul Éluard","Vercors","Saint-John Perse"],"Pour « La Vie devant soi », en 1975.","l"],
+["L323","H","Quelle est la longueur des côtes de la France métropolitaine ?",["Environ 5 500 km","Environ 550 km","Environ 15 000 km","Environ 1 200 km"],"","l"],
+["L324","H","Quel est le PIB de la France en 2024, environ ?",["2 830 milliards de dollars","283 milliards de dollars","28 000 milliards de dollars","830 milliards de dollars"],"7e puissance économique mondiale.","l"],
+["L325","H","Combien d'entreprises abrite le quartier d'affaires de La Défense ?",["Plus de 500","Une vingtaine","Plus de 50 000","Une seule"],"Dont les sièges de la plupart des grandes entreprises françaises.","l"],
+["L326","H","Lequel de ces secteurs est un point fort de l'économie française ?",["L'aéronautique et le spatial","L'extraction de pétrole","La pêche à la baleine","L'industrie du charbon"],"Aussi le luxe, l'agroalimentaire, l'énergie, la pharmacie, le numérique, l'automobile.","l"],
+["L327","H","Quelle part du commerce mondial de marchandises se fait par bateau ?",["Plus de 90 %","Environ 10 %","Environ 50 %","Environ 25 %"],"D'où l'importance des ports français.","l"],
+["L328","H","Quelle part des céréales de l'Union européenne la France produit-elle ?",["24 %","4 %","50 %","80 %"],"","l"],
+["L329","H","Quel pays possède le plus grand cheptel bovin (vaches, bœufs) d'Europe ?",["La France","L'Allemagne","L'Irlande","Les Pays-Bas"],"","l"],
+["L330", "H", "Que la France importe-t-elle surtout ?", ["Des fruits, des légumes et des produits transformés", "Du blé, des céréales et du vin de table", "Des produits laitiers et des fromages", "De la viande bovine et des animaux d'élevage"], "Elle exporte du blé, du vin, des produits laitiers et de la viande.", "l"],
+["L331","H","Quelle part du territoire français est utilisée par l'agriculture ?",["Environ la moitié","Environ 5 %","Environ 90 %","Environ un dixième"],"","l"],
+["L332","H","Quelle région est réputée pour l'élevage de vaches laitières et de porcs ?",["La Bretagne","La Provence","La Corse","L'Île-de-France"],"","l"],
+["L333","H","Quelle région agricole est connue pour l'élevage et le maïs ?",["Le Sud-Ouest","Le Nord","La Bretagne","L'Alsace"],"","l"],
+["L334","H","Laquelle de ces régions est célèbre pour son vignoble ?",["La Bourgogne","La Beauce","La Sologne","La Brie"],"Aussi la Champagne, le Languedoc et le Bordelais.","l"],
+["L335","H","Quelle est l'altitude du mont Blanc ?",["4 810 m","2 600 m","8 848 m","3 404 m"],"","l"],
+["L336","H","Pour quoi les Alpes sont-elles particulièrement réputées en hiver ?",["Leurs stations de ski","Leurs plages","Leurs volcans actifs","Leurs vignobles"],"","l"],
+["L337","H","Lequel de ces massifs montagneux se trouve en France ?",["Les Vosges","Les Carpates","Les Apennins","L'Atlas"],"Aussi le Jura et le Massif central.","l"],
+["L338", "H", "Où se trouvent les principaux volcans actifs français ?", ["Aux Antilles, à La Réunion et à Mayotte", "Dans le Massif central, en Auvergne", "Dans les Alpes, près du mont Blanc", "En Bretagne et en Normandie"], "Les volcans d'Auvergne sont éteints.", "l"],
+["L339","H","Quels pays entourent la Guyane ?",["Le Brésil et le Suriname","Le Canada et les États-Unis","Le Mexique et Cuba","Madagascar et Maurice"],"","l"],
+["L340", "H", "De quand datent les peintures de la grotte de Lascaux ?", ["De 18 000 à 15 000 ans av. J.-C.", "De l'époque des Gaulois et des Romains", "Du Moyen Âge, vers l'an 1000", "Du XVIIe siècle, sous Louis XIV"], "", "l"],
+["L341","H","Quel pays est la première destination touristique du monde ?",["La France","L'Italie","L'Espagne","Les États-Unis"],"","l"],
+["L342","H","Dans quel village du Gers a lieu un célèbre festival de jazz ?",["Marciac","Avignon","Cannes","Montreux"],"","l"],
+["L343","H","Quelle ville accueille un célèbre festival de théâtre ?",["Avignon","Cannes","Marciac","Deauville"],"","l"],
+["L344", "H", "Lequel de ces exemples fait partie du patrimoine immatériel ?", ["La gastronomie et les savoir-faire", "La tour Eiffel et ses visiteurs", "Le château de Versailles et ses jardins", "Le Mont-Saint-Michel et son abbaye"], "Le patrimoine matériel rassemble les monuments et les biens.", "l"],
+["L345","H","Combien de musées compte la France ?",["Plus de 1 200","Environ 50","Environ 100","Plus de 50 000"],"Dont une centaine de musées nationaux.","l"],
+["L346","H","Dans quel type de bâtiment est installé le musée du Louvre ?",["Un ancien palais royal","Une ancienne gare","Une ancienne prison","Une ancienne usine"],"","l"],
+["L347","H","Quel métier exerçait Rouget de Lisle, auteur de la Marseillaise ?",["Officier du génie","Professeur de musique","Prêtre","Avocat"],"","l"],
+["L348","H","Quelles œuvres a écrites George Sand ?",["« Indiana » et « Lélia »","« Les Misérables » et « Notre-Dame de Paris »","« L'Étranger » et « La Peste »","« L'Avare » et « Tartuffe »"],"","l"],
+["L349","H","Laquelle de ces sculptures est d'Auguste Rodin ?",["L'Âge d'airain","La Liberté éclairant le monde","La Vénus de Milo","Le David"],"Aussi « Le Penseur ».","l"],
+["L350", "H", "Qu'a peint surtout Auguste Renoir ?", ["Des figures humaines, femmes et enfants", "Des tableaux abstraits et géométriques", "Des batailles de l'époque napoléonienne", "Des icônes et des scènes religieuses"], "Peintre impressionniste.", "l"],
+["L351","H","Dans quel pays est né Albert Camus ?",["En Algérie","Au Maroc","En Tunisie","Au Sénégal"],"","l"],
+["L352","H","Près de quelle ville est née Marguerite Duras ?",["Saïgon","Alger","Dakar","Beyrouth"],"Dans l'actuel Viêt Nam.","l"],
+["L353","H","Quel était le vrai nom d'Édith Piaf ?",["Édith Gassion","Aurore Dupin","Marguerite Donnadieu","Iolanda Gigliotti"],"","l"],
+["L354","H","Combien de visiteurs la tour Eiffel accueille-t-elle chaque année ?",["Plus de 7 millions","Environ 70 000","Environ 700 000","Plus de 70 millions"],"","l"],
+["L355","H","Qu'est-ce qui a été construit au sommet du Mont-Saint-Michel ?",["Une abbaye","Un château royal","Un phare","Une forteresse romaine"],"Un grand lieu de pèlerinage pendant des siècles.","l"],
+["L356","H","Au bord de quel fleuve se trouve le Palais des Papes d'Avignon ?",["Le Rhône","La Seine","La Loire","La Garonne"],"","l"],
+["L357","H","Dans combien de pays le français est-il langue officielle ?",["Plus de 30","5","Plus de 100","12"],"En Europe, en Afrique, dans les Caraïbes et au Canada.","l"],
+["L358", "H", "D'où vient la fête du Travail du 1er mai ?", ["Des grèves américaines de 1886 (journée de 8 h)", "De la prise de la Bastille en 1789", "De la fin de la Seconde Guerre mondiale", "D'une ancienne fête religieuse du printemps"], "", "l"],
+["L359", "H", "Où arrive chaque année le Tour de France ?", ["Sur les Champs-Élysées, à Paris", "Sur le Vieux-Port de Marseille", "Au pied du Mont-Saint-Michel", "Place Bellecour, à Lyon"], "", "l"],
+["L360", "H", "Quel rang occupe le Tour de France parmi les événements sportifs mondiaux ?", ["3e, après les JO et la Coupe du monde", "1er, devant les JO et la Coupe du monde", "10e, derrière le Tour d'Italie", "2e, après les Jeux olympiques seulement"], "", "l"],
+["L361","H","Combien de médailles olympiques la France a-t-elle remportées aux JO de Paris 2024 ?",["64","12","24","110"],"Et 74 médailles paralympiques.","l"],
+["L362","H","Depuis quelle époque cultive-t-on la vigne en France ?",["L'époque romaine","Le XVIIe siècle","La Révolution","Le XIXe siècle"],"","l"],
+["L363", "H", "Lequel de ces plats est un plat traditionnel français ?", ["La blanquette de veau", "La moussaka grecque", "Le goulash hongrois", "La paella espagnole"], "Aussi le pot-au-feu et le bœuf bourguignon.", "l"],
+["L364", "H", "D'où vient le fromage maroilles ?", ["Du Nord de la France", "De l'île de Corse", "De Normandie", "D'Alsace"], "", "l"],
+["L365","V","À qui s'adresse l'accession sociale à la propriété ?",["Aux foyers à revenus modestes","Aux seuls fonctionnaires","Aux étudiants étrangers","Aux propriétaires de plusieurs logements"],"Pour acheter leur résidence principale.","l"],
+["L366", "V", "Avant de construire une extension ou de modifier l'extérieur de sa maison, il faut :", ["Se renseigner en mairie", "Prévenir seulement ses voisins", "Demander l'accord du préfet", "Rien, on est chez soi"], "", "l"],
+["L367","V","Que risque un locataire qui ne paie pas son loyer ?",["Une procédure d'expulsion","Rien, le loyer est facultatif","Une amende de 35 euros","La perte de sa nationalité"],"","l"],
+["L368", "V", "Quel logement le propriétaire doit-il fournir à son locataire ?", ["Un logement décent", "Un logement meublé", "Un logement neuf", "Un logement avec jardin"], "", "l"],
+["L369", "V", "Comment un locataire peut-il quitter son logement ?", ["En respectant le préavis prévu dans le bail", "Du jour au lendemain, sans prévenir personne", "Seulement à la fin de l'année civile", "Uniquement avec l'accord écrit du maire"], "", "l"],
+["L370","V","Que faut-il pour pouvoir demander un logement social (HLM) ?",["Des revenus sous certains plafonds","Être propriétaire d'un autre logement","Avoir la nationalité française","Avoir plus de 60 ans"],"Les loyers sont encadrés par l'État.","l"],
+["L371", "V", "Quelle sanction pour un excès de vitesse de plus de 50 km/h ?", ["Un délit : prison possible et 3 750 € d'amende", "Une simple amende de 68 € seulement", "Un simple retrait d'un point du permis", "Un rappel à la loi, sans aucune amende"], "Et 6 points retirés, voire une suspension du permis.", "l"],
+["L372", "V", "Que risque une personne qui conduit sans permis ?", ["Un an de prison et 15 000 € d'amende", "Une amende forfaitaire de 35 €", "Un simple avertissement de la police", "Rien du tout, la première fois"], "", "l"],
+["L373","V","Que risque-t-on en voyageant dans les transports en commun sans titre de transport ?",["Une amende","Rien du tout","La prison","La perte du permis"],"Certaines villes ont rendu leurs transports gratuits.","l"],
+["L374", "V", "Que couvre l'assurance habitation ?", ["L'incendie et les dégâts des eaux", "Les frais de santé et de pharmacie", "Les accidents de la route en voiture", "Les frais de scolarité des enfants"], "", "l"],
+["L375","V","Que protège l'assurance scolaire et extrascolaire ?",["Les enfants pendant leurs activités","Les enseignants contre les grèves","Les livres de l'école","Le bâtiment de l'école"],"","l"],
+["L376","V","Peut-on fumer dans les locaux de son lieu de travail ?",["Non, c'est interdit","Oui, dans son bureau","Oui, si le patron accepte","Oui, après 18 h"],"","l"],
+["L377", "V", "Faire des graffitis sur un bâtiment public ou privé est :", ["Un acte de vandalisme puni par la loi", "Autorisé la nuit si personne ne voit", "Une forme protégée de liberté d'expression", "Autorisé sur tous les murs publics"], "", "l"],
+["L378","V","Les nuisances sonores (musique forte, klaxons inutiles) :",["Peuvent être sanctionnées","Sont toujours autorisées le week-end","Ne sont jamais punies","Sont autorisées avant minuit"],"","l"],
+["L379","V","Où déposer un vieil appareil électroménager ou des encombrants ?",["À la déchèterie","Sur le trottoir","Dans la poubelle jaune","En forêt"],"Ou le faire reprendre par le magasin lors d'un achat neuf.","l"],
+["L380", "V", "Qu'est-ce qu'un dépôt sauvage de déchets ?", ["Jeter ses déchets dans la nature : c'est interdit", "Le tri des déchets alimentaires à la maison", "Le compostage des épluchures dans son jardin", "Le dépôt du verre dans le conteneur prévu"], "Une infraction punie d'une amende.", "l"],
+["L381","V","À quelle température est-il conseillé de régler son chauffe-eau ?",["55 °C","90 °C","30 °C","75 °C"],"","l"],
+["L382","V","Lequel de ces gestes réduit la pollution liée à la voiture ?",["Le covoiturage et une conduite souple","Rouler vite pour arriver plus tôt","Laisser le moteur tourner à l'arrêt","Sous-gonfler ses pneus"],"","l"],
+["L383", "V", "Comment la Sécurité sociale est-elle financée ?", ["Par les cotisations et des impôts", "Par les seuls dons des particuliers", "Par les compagnies d'assurance privées", "Par le budget de l'Union européenne"], "", "l"],
+["L384","V","Qui doit être inscrit à l'Assurance maladie ?",["Tous les résidents en France","Seulement les Français","Seulement les salariés","Seulement les retraités"],"","l"],
+["L385","V","Les appels aux numéros d'urgence sont :",["Gratuits et possibles 24 h/24","Payants la nuit","Réservés aux Français","Limités à un appel par jour"],"","l"],
+["L386","V","Quel numéro appeler pour signaler une alerte attentat ?",["197","191","196","114"],"191 : secours aéronautique ; 196 : secours en mer ; 114 : urgence par SMS.","l"],
+["L387","V","Quel numéro permet aux personnes sourdes ou malentendantes de joindre les secours par SMS ?",["114","115","119","3919"],"","l"],
+["L388","V","Quel numéro appeler en cas de violences conjugales ?",["3919","3018","119","115"],"","l"],
+["L389", "V", "Que fixent les conventions collectives ?", ["Des règles propres à un secteur d'activité", "Les programmes scolaires des lycées", "Le montant des impôts locaux", "Les règles du mariage civil"], "Négociées entre représentants des employeurs et des salariés.", "l"],
+["L390","V","Un employeur peut-il exiger un diplôme ?",["Oui, si le poste demande une qualification","Non, c'est une discrimination","Seulement dans la fonction publique","Seulement pour les étrangers"],"","l"],
+["L391", "V", "Que doit indiquer un contrat de travail ?", ["Le salaire et la durée du travail", "La religion du salarié", "Le nom et la profession du conjoint", "Les opinions politiques du salarié"], "Ainsi que le type de contrat et les compétences demandées.", "l"],
+["L392","V","Lequel de ces documents est un contrat de travail ?",["Un contrat d'intérim","Un bail de location","Un contrat de mariage","Un PACS"],"Les plus courants : CDI, CDD et intérim.","l"],
+["L393","V","Laquelle de ces démarches est nécessaire pour créer une entreprise ?",["L'immatriculer","Obtenir l'accord du maire","Être de nationalité française","Avoir un diplôme de commerce"],"Aussi : statuts, annonce légale, siège social.","l"],
+["L394", "V", "Qu'est-ce qu'un artisan ?", ["Un indépendant qui fabrique ou répare", "Un fonctionnaire de la mairie", "Un salarié d'une grande entreprise", "Un élu du conseil municipal"], "", "l"],
+["L395", "V", "Que fait un commerçant ?", ["Il achète des biens pour les revendre", "Il soigne des patients à l'hôpital", "Il juge des litiges entre voisins", "Il cultive des terres agricoles"], "", "l"],
+["L396","V","Quelles chambres aident à créer une entreprise ?",["La CMA et la CCI","La CAF et la CPAM","Le Sénat et l'Assemblée","La cour d'appel"],"Chambre des métiers et de l'artisanat, chambre de commerce et d'industrie.","l"],
+["L397", "V", "Laquelle de ces conditions est exigée pour passer un concours de la fonction publique ?", ["Jouir de ses droits civiques", "Être propriétaire de son logement", "Être marié ou pacsé", "Habiter à Paris ou en région parisienne"], "Aussi des conditions d'âge, de diplôme et de nationalité (française ou européenne).", "l"],
+["L398","V","Qu'est-ce qu'un fonctionnaire ?",["Un agent public titulaire","Un salarié d'entreprise privée","Un élu municipal","Un travailleur indépendant"],"","l"],
+["L399","V","Comment entre-t-on en général dans la fonction publique ?",["Par concours","Par tirage au sort","Par héritage","Par élection"],"","l"],
+["L400", "V", "Dans quelle commune peut-on se marier ?", ["Celle où vit l'un des époux ou un parent", "N'importe quelle commune de France", "Seulement la commune de naissance", "Seulement la mairie de Paris"], "", "l"],
+["L401", "V", "Qui célèbre un mariage civil ?", ["Le maire ou un adjoint", "Un ministre du culte", "Un notaire de la ville", "Un juge du tribunal"], "", "l"],
+["L402","V","En 2013, la France est devenue le combientième pays du monde à ouvrir le mariage aux couples de même sexe ?",["Le 14e","Le 1er","Le 50e","Le 3e"],"","l"],
+["L403","V","Une salariée peut-elle être licenciée parce qu'elle est enceinte ?",["Non, la loi protège son emploi","Oui, à tout moment","Oui, dans une petite entreprise","Oui, pendant la période d'essai"],"","l"],
+["L404", "V", "Qu'est-ce que le congé parental d'éducation ?", ["Arrêter ou réduire son travail pour élever son enfant", "Un congé de 3 jours accordé à la naissance", "Un congé pour accompagner un parent âgé malade", "Les vacances scolaires prises avec les enfants"], "Possible après la naissance ou l'adoption d'un enfant de moins de 16 ans.", "l"],
+["L405", "V", "Qui tient l'état civil des Français nés à l'étranger ?", ["Le ministère des Affaires étrangères", "La préfecture du département", "Le consulat du pays de naissance", "La Caisse d'allocations familiales"], "", "l"],
+["L406", "V", "Combien d'États ont signé la Convention internationale des droits de l'enfant ?", ["196", "27", "150", "12"], "", "l"],
+["L407", "V", "Lequel de ces droits est garanti par la Convention internationale des droits de l'enfant ?", ["Être entendu sur ce qui le concerne", "Travailler dès l'âge de 12 ans", "Voter à partir de 16 ans", "Choisir de ne pas aller à l'école"], "Aussi : avoir un nom, aller à l'école, être protégé de la violence…", "l"],
+["L408", "V", "Jusqu'à quand les parents exercent-ils l'autorité parentale ?", ["Jusqu'à sa majorité ou son émancipation", "Jusqu'à ses 16 ans seulement", "Jusqu'à la fin de ses études supérieures", "Toute la vie, même après son mariage"], "", "l"],
+["L409","V","L'excision est-elle autorisée en France ?",["Non, c'est une mutilation interdite et punie","Oui, avec l'accord des parents","Oui, si elle est faite à l'étranger","Oui, pour des raisons culturelles"],"","l"],
+["L410","V","Comment les parents doivent-ils associer leur enfant aux décisions qui le concernent ?",["Selon son âge et sa maturité","Jamais avant 18 ans","Toujours, l'enfant décide seul","Seulement pour les loisirs"],"","l"],
+["L411","V","Lequel de ces motifs d'absence est accepté par l'école ?",["L'enterrement d'un proche","Un départ en vacances anticipé","Une fête d'anniversaire","Des courses en famille"],"Seules les absences pour santé ou raisons familiales (mariage, enterrement) sont acceptées.","l"],
+["L412","V","Que risquent des parents qui ne scolarisent pas leur enfant ?",["Une amende et une peine de prison","Rien du tout","La perte des allocations seulement","Un simple courrier de l'école"],"","l"],
+["L413","V","Quel âge ont les élèves de l'école élémentaire ?",["De 6 à 11 ans","De 3 à 6 ans","De 11 à 15 ans","De 15 à 18 ans"],"Du CP au CM2.","l"],
+["L414", "V", "Que regroupe l'école primaire ?", ["L'école maternelle et l'école élémentaire", "Le collège et le lycée général", "L'école élémentaire et le collège", "Le lycée et la première année d'université"], "", "l"],
+["L415","V","Lequel de ces lycées existe en France ?",["Le lycée professionnel","Le lycée religieux d'État","Le lycée militaire obligatoire","Le lycée municipal"],"Lycées général, technologique et professionnel.","l"],
+["L416", "V", "Qu'apprend-on avec la citoyenneté numérique à l'école ?", ["À utiliser le numérique de façon responsable", "À programmer ses propres jeux vidéo", "À créer et gérer un réseau social", "À réparer et monter un ordinateur"], "", "l"],
+["X85", "P", "En tant que parent, peut-on refuser que son enfant aille en cours de sport parce qu'ils sont mixtes ?", ["Non, ces cours sont obligatoires", "Oui, pour des raisons religieuses", "Oui, avec un certificat de la mairie", "Oui, à partir de l'entrée au collège"], "La mixité est la règle à l'école publique.", "o"],
+["X86", "D", "Que signifie le droit de manifester ?", ["Se rassembler pacifiquement dans la rue pour s'exprimer", "Bloquer une route ou une voie ferrée sans prévenir", "Occuper un bâtiment public pendant plusieurs jours", "Obliger ses collègues de travail à faire grève"], "La manifestation doit être déclarée à l'administration.", "o"],
+["X87", "D", "Que doit-on faire face aux ordres d'un policier ou d'un gendarme ?", ["Obéir, puis contester par les voies légales", "Refuser si l'on n'est pas d'accord avec l'ordre", "Discuter jusqu'à obtenir gain de cause sur place", "Filmer la scène puis partir sans répondre"], "Refuser d'obtempérer est un délit.", "o"],
+["X88", "D", "Quelle est la bonne attitude quand on est témoin de violences ?", ["Appeler la police (17) sans se mettre en danger", "Intervenir physiquement, quel que soit le risque", "S'éloigner sans rien dire ni prévenir personne", "Filmer la scène pour la publier en ligne"], "", "o"],
+["X89", "H", "Pourquoi la Shoah est-elle étudiée à l'école ?", ["Pour le devoir de mémoire et contre le racisme", "Pour apprendre seulement l'histoire de l'Allemagne", "Pour préparer les élèves au service militaire", "Parce que les familles le demandent chaque année"], "", "o"],
+["X90","H","Où vit la majorité des Français ?",["En ville","À la campagne","À l'étranger","En outre-mer"],"Les grandes villes (métropoles) concentrent aussi les principales activités économiques.","o"],
+["X91","V","À partir de quel âge peut-on passer l'examen du permis de conduire (voiture) ?",["17 ans","16 ans","18 ans","21 ans"],"La conduite accompagnée est possible dès 15 ans.","o"],
+["X92","V","Qui peut manger à la cantine scolaire ?",["Tous les enfants qui le souhaitent","Seulement les enfants dont les deux parents travaillent","Seulement les enfants de nationalité française","Seulement les enfants en maternelle"],"Les tarifs dépendent souvent des revenus.","o"],
+["X93","V","À l'école, il est interdit aux parents :",["D'insulter ou menacer un enseignant","De parler aux enseignants","De se présenter aux élections de parents","D'assister aux réunions"],"Ainsi que d'entrer dans l'école sans autorisation.","o"],
+["X94", "V", "Quand ont lieu les vacances scolaires de Noël ?", ["Fin décembre, pendant deux semaines", "En novembre, pendant une seule semaine", "En janvier, pendant tout le mois", "Il n'y a pas de vacances à Noël"], "", "o"],
+["X95", "V", "À l'école, un enfant en situation de handicap :", ["Va à l'école, avec des aménagements", "Ne peut pas être scolarisé en France", "Doit obligatoirement rester à la maison", "Doit aller dans une école privée payante"], "", "o"],
+["X96","V","À quoi sert un titre de séjour ?",["À prouver qu'un étranger peut résider en France","À voter aux élections nationales","À remplacer le passeport pour voyager partout","À obtenir automatiquement la nationalité"],"Il est délivré par la préfecture.","o"],
+["X97","I","Une personne peut-elle voter à la place d'une autre ?",["Oui, si elle a reçu une procuration","Non, jamais","Oui, si c'est un membre de sa famille","Oui, sans aucune démarche"],"La procuration se fait en ligne ou au commissariat, à la gendarmerie, au tribunal.","o"],
+["X98","I","Pourquoi sépare-t-on les trois pouvoirs dans une démocratie ?",["Pour qu'aucune personne n'ait tous les pouvoirs","Pour aller plus vite dans les décisions","Pour réduire le nombre d'élus","Pour que le Président décide seul"],"Idée défendue par Montesquieu.","o"],
+["X99","P","Complétez la Marseillaise : « Aux armes, … ! Formez vos bataillons »",["citoyens","enfants","soldats","Français"],"","o"],
+["X100","D","À quelle liberté la PMA fait-elle référence ?",["La liberté d'avoir des enfants","La liberté d'expression","La liberté de circulation","La liberté de la presse"],"","o"],
+["X101", "D", "Concernant le mariage, quelle proposition est correcte ?", ["Chacun choisit librement son conjoint", "Les parents choisissent le conjoint", "Le mariage religieux suffit en France", "On peut être marié sans son accord"], "Le consentement libre des deux époux est obligatoire.", "o"],
+["X102", "D", "Qu'est-ce qu'une infraction ?", ["Un acte interdit et puni par la loi", "Une dispute entre deux voisins", "Un désaccord politique entre partis", "Une faute d'orthographe dans un document"], "Contravention, délit ou crime.", "o"],
+["X103", "D", "En quoi consiste la traite des êtres humains ?", ["Recruter ou héberger quelqu'un pour l'exploiter", "Aider une personne à trouver un emploi déclaré", "Faire venir sa famille par le regroupement familial", "Employer un salarié avec un contrat de travail"], "C'est un crime ou un délit très grave.", "o"],
+["X104","V","Après avoir obtenu son permis, que faut-il pour conduire sa voiture ?",["Une assurance automobile","Une carte Vitale","Un titre de séjour de 10 ans","Une autorisation de la mairie"],"","o"],
+["X105","V","Le travail non déclaré (« au noir ») est :",["Interdit par la loi","Autorisé pour les petits travaux","Autorisé le week-end","Autorisé entre amis"],"","o"],
+["X106","V","En cas de problème de santé non urgent, à qui s'adresser en premier ?",["À son médecin traitant","Aux urgences de l'hôpital","Au pharmacien de garde la nuit","Au SAMU (15)"],"","o"],
+["X107","V","Quel diplôme obtient-on à la fin du lycée ?",["Le baccalauréat","Le brevet des collèges","Le CAP","La licence"],"","o"],
+["X108","I","Quel pouvoir détient un juge ?",["Le pouvoir judiciaire","Le pouvoir législatif","Le pouvoir exécutif","Le pouvoir constituant"],"","o"],
+["X109","I","Que se passe-t-il si un ministre ne respecte pas la loi ?",["Il peut être sanctionné par la justice","Rien, il est protégé","Il est seulement changé de ministère","Il doit s'excuser à la télévision"],"Personne n'est au-dessus des lois.","o"],
+["X110", "P", "Certains métiers peuvent-ils être réservés aux hommes ?", ["Non, tous les métiers sont ouverts à toutes et tous", "Oui, les métiers qui demandent de la force", "Oui, certains postes dans l'armée", "Oui, si l'employeur le décide"], "", "o"],
+["X111","I","Qui réside au palais de l'Élysée ?",["Le Président de la République","Le Premier ministre","Le président du Sénat","Le maire de Paris"],"Le Premier ministre réside à l'hôtel Matignon.","o"],
+["X112","I","De quand date la Constitution de la Ve République ?",["Du 4 octobre 1958","Du 14 juillet 1789","Du 27 octobre 1946","Du 9 décembre 1905"],"","o"],
+["X113", "D", "Quel droit permet à une personne de se défendre devant la justice ?", ["Les droits de la défense (avocat…)", "Le droit de grève des salariés", "Le droit de pétition auprès des élus", "Le droit d'asile pour les réfugiés"], "", "o"],
+["X114","V","Est-il toujours possible de divorcer ?",["Oui, chaque époux peut le demander","Non, seulement en cas de faute","Seulement avec l'accord des familles","Seulement après 10 ans de mariage"],"","o"],
+["X115", "D", "Que fait l'État pour lutter contre les discriminations ?", ["Il les interdit et punit leurs auteurs", "Il les tolère dans le secteur privé", "Il laisse chaque entreprise décider", "Il les autorise pour l'accès au logement"], "", "o"],
+["X116", "I", "Quel est le rôle de la gendarmerie ?", ["Assurer la sécurité, surtout à la campagne", "Juger les auteurs de délits au tribunal", "Voter les lois avec le Parlement", "Gérer les écoles et les collèges"], "La police intervient surtout en ville.", "o"],
+["X117","P","Quelle loi de 1990 punit la négation des crimes contre l'humanité ?",["La loi Gayssot","La loi Veil","La loi Évin","La loi Badinter"],"Le négationnisme est un délit.","p"],
+["X118","I","Combien de mandats présidentiels consécutifs peut-on faire au maximum ?",["2","1","3","Sans limite"],"Depuis la révision constitutionnelle de 2008.","p"],
+["X119","I","Où siège le Sénat ?",["Au palais du Luxembourg","Au palais Bourbon","Au palais de l'Élysée","À l'hôtel Matignon"],"L'Assemblée nationale siège au palais Bourbon.","p"],
+["X120","I","Qui est le garde des Sceaux ?",["Le ministre de la Justice","Le ministre de l'Intérieur","Le président du Conseil constitutionnel","Le gardien du Panthéon"],"","p"],
+["X121","I","Combien de membres nommés siègent au Conseil constitutionnel ?",["9","12","577","27"],"Nommés pour 9 ans par le Président et les présidents des deux assemblées.","p"],
+["X122","I","Qui peut renverser le Gouvernement en votant une motion de censure ?",["L'Assemblée nationale","Le Sénat","Le Conseil constitutionnel","Le Président de la République"],"","p"],
+["X123","I","Qui détient le droit de grâce ?",["Le Président de la République","Le ministre de la Justice","Le Premier ministre","La Cour de cassation"],"","p"],
+["X124", "I", "Qu'appelle-t-on la « cohabitation » ?", ["Un Président et un Premier ministre opposés", "La vie commune de deux personnes non mariées", "Deux maires qui dirigent une même commune", "Un gouvernement d'union nationale en guerre"], "", "p"],
+["X125","I","Quel est l'âge minimum pour être élu sénateur ?",["24 ans","18 ans","30 ans","35 ans"],"18 ans pour être député ou Président.","p"],
+["X126","I","Où se réunit le Parlement en Congrès pour réviser la Constitution ?",["À Versailles","Au palais Bourbon","À l'Élysée","À Strasbourg"],"Une majorité des trois cinquièmes est nécessaire.","p"],
+["X127", "I", "Qui nomme les préfets ?", ["Le Président, en Conseil des ministres", "Les maires du département, par un vote", "Les électeurs du département", "Le président du conseil régional"], "", "p"],
+["X128","I","Où siège la Cour européenne des droits de l'homme ?",["À Strasbourg","À Bruxelles","À La Haye","À Genève"],"Elle dépend du Conseil de l'Europe (46 États), distinct de l'Union européenne.","p"],
+["X129", "D", "Qu'est-ce que la trêve hivernale ?", ["La suspension des expulsions de locataires en hiver", "Les deux semaines de vacances scolaires d'hiver", "L'arrêt obligatoire des chantiers pendant l'hiver", "La baisse automatique des loyers en hiver"], "Du 1er novembre au 31 mars.", "p"],
+["X130","D","Quel organisme accorde le statut de réfugié en France ?",["L'OFPRA","L'OFII","La CAF","La CNIL"],"Office français de protection des réfugiés et apatrides.","p"],
+["X131","D","Quel organisme protège les données personnelles en France ?",["La CNIL","L'URSSAF","L'INSEE","La CPAM"],"Commission nationale de l'informatique et des libertés.","p"],
+["X132", "D", "Quelle est la durée habituelle du congé maternité pour un premier enfant ?", ["16 semaines", "4 semaines", "1 an", "8 semaines"], "6 semaines avant et 10 semaines après la naissance.", "p"],
+["X133", "D", "Qu'est-ce que le PACS ?", ["Un contrat pour organiser la vie commune", "Un mariage célébré à l'église", "Une aide de la CAF pour le logement", "Un contrat de travail à durée déterminée"], "Créé en 1999.", "p"],
+["X134","D","Les crimes contre l'humanité peuvent-ils être prescrits ?",["Non, ils sont imprescriptibles","Oui, après 20 ans","Oui, après 30 ans","Oui, à la mort des victimes"],"","p"],
+["X135", "D", "Qu'est-ce que la légitime défense ?", ["Riposter de façon proportionnée à une agression", "Se venger quelques jours après une agression", "Avoir le droit de porter une arme en permanence", "Punir soi-même un voleur pris sur le fait"], "", "p"],
+["X136","D","Que permet le double degré de juridiction ?",["De faire appel d'une décision de justice","D'être jugé deux fois pour les mêmes faits","D'avoir deux avocats","De choisir son juge"],"","p"],
+["X137","D","Un témoin appelé devant la justice doit :",["Dire la vérité","Défendre l'accusé","Rester silencieux","Donner son avis sur la peine"],"Le faux témoignage est un délit.","p"],
+["X138","D","À partir de quel âge le travail des enfants est-il en principe autorisé ?",["16 ans","12 ans","14 ans","18 ans"],"Avec des exceptions encadrées (apprentissage, petits travaux pendant les vacances).","p"],
+["X139","H","Qui a révoqué l'édit de Nantes en 1685 ?",["Louis XIV","Henri IV","Louis XVI","Napoléon Ier"],"","p"],
+["X140","H","Qui a écrit « J'accuse » pour défendre le capitaine Dreyfus ?",["Émile Zola","Victor Hugo","Jean Jaurès","Albert Camus"],"","p"],
+["X141","H","Quelle bataille de 1916 est le symbole de la Première Guerre mondiale en France ?",["Verdun","Waterloo","Austerlitz","Alésia"],"","p"],
+["X142", "H", "Qu'est-ce que la rafle du Vél d'Hiv de juillet 1942 ?", ["Une arrestation massive de Juifs à Paris", "La libération de Paris par la Résistance", "Une grande grève dans les usines Renault", "Une victoire militaire de la France libre"], "", "p"],
+["X143","H","Quel traité de 1963 a scellé la réconciliation franco-allemande ?",["Le traité de l'Élysée","Le traité de Versailles","Le traité de Rome","Le traité de Maastricht"],"Signé par de Gaulle et Adenauer.","p"],
+["X144","H","Comment appelle-t-on la période de forte croissance de 1945 à 1975 ?",["Les Trente Glorieuses","La Belle Époque","Les Années folles","La Grande Dépression"],"","p"],
+["X145","H","Dans quelle ville a été signé l'armistice du 11 novembre 1918 ?",["Compiègne","Versailles","Paris","Verdun"],"Dans un wagon, en forêt de Compiègne.","p"],
+["X146","H","En quelle année Simone Veil est-elle entrée au Panthéon ?",["2018","1975","2004","1999"],"","p"],
+["X147","H","Quelle institution veille sur la langue française depuis 1635 ?",["L'Académie française","Le Conseil d'État","La Sorbonne","Le Collège de France"],"Elle compte 40 membres.","p"],
+["X148","H","Quel château de la Loire est célèbre pour son escalier à double révolution ?",["Chambord","Versailles","Fontainebleau","Chantilly"],"","p"],
+["X149","H","Quelle reine de France a été guillotinée en 1793 ?",["Marie-Antoinette","Catherine de Médicis","Anne d'Autriche","Joséphine de Beauharnais"],"","p"],
+["X150","H","Quel chef gaulois a été vaincu par Jules César à Alésia en 52 av. J.-C. ?",["Vercingétorix","Clovis","Charlemagne","Astérix"],"","p"],
+["X151","H","En quelle année Charlemagne a-t-il été couronné empereur ?",["800","476","1066","1515"],"","p"],
+["X152","H","Quel roi est surnommé « Saint Louis » ?",["Louis IX","Louis XIV","Louis XVI","Louis XI"],"","p"],
+["X153","H","Qui a écrit « Du contrat social » ?",["Rousseau","Voltaire","Montesquieu","Diderot"],"","p"],
+["X154","H","Quel philosophe des Lumières a écrit « Candide » ?",["Voltaire","Rousseau","Montesquieu","Condorcet"],"","p"],
+["X155","H","Quel philosophe a écrit « De l'esprit des lois », sur la séparation des pouvoirs ?",["Montesquieu","Rousseau","Voltaire","Diderot"],"","p"],
+["X156","H","Quel ouvrage romain antique du sud de la France est classé à l'UNESCO ?",["Le pont du Gard","La tour Eiffel","Le Mont-Saint-Michel","Le château de Chambord"],"","p"],
+["X157","H","Quelle cité médiévale fortifiée du sud de la France est inscrite à l'UNESCO ?",["Carcassonne","Le Havre","Lille","Clermont-Ferrand"],"","p"],
+["X158","H","Quel écrivain a écrit « Vingt mille lieues sous les mers » ?",["Jules Verne","Alexandre Dumas","Victor Hugo","Émile Zola"],"","p"],
+["X159","H","Quelle ville est réputée pour son industrie du parfum ?",["Grasse","Brest","Lille","Metz"],"","p"],
+["X160","V","Quel est le délai de rétractation après un achat en ligne ?",["14 jours","48 heures","1 mois","1 an"],"","p"],
+["X161","V","Quelle est la vitesse maximale en agglomération, sauf indication contraire ?",["50 km/h","30 km/h","70 km/h","90 km/h"],"","p"],
+["X162","V","Quelle est la vitesse maximale sur autoroute par temps sec ?",["130 km/h","110 km/h","150 km/h","90 km/h"],"110 km/h par temps de pluie.","p"],
+["X163","V","Combien de points compte un permis probatoire la première année ?",["6","12","3","0"],"","p"],
+["X164","V","À partir de quel taux d'alcool dans le sang la conduite est-elle interdite pour un conducteur expérimenté ?",["0,5 g/l","0,2 g/l","0,8 g/l","1 g/l"],"0,2 g/l pour un permis probatoire ; au-delà de 0,8 g/l c'est un délit.","p"],
+["X165", "V", "En voiture, qui doit attacher sa ceinture de sécurité ?", ["Tous les passagers, avant et arrière", "Seulement le conducteur du véhicule", "Seulement les passagers assis à l'avant", "Seulement les enfants de moins de 10 ans"], "", "p"],
+["X166","V","Quel document décrit l'état d'un logement à l'entrée et à la sortie du locataire ?",["L'état des lieux","La quittance de loyer","Le bail","L'avis d'imposition"],"","p"],
+["X167","V","Quel document prouve que le locataire a payé son loyer ?",["La quittance de loyer","L'état des lieux","Le dépôt de garantie","La taxe foncière"],"","p"],
+["X168","V","Quelle somme le locataire verse-t-il au propriétaire en garantie d'éventuels dégâts ?",["Le dépôt de garantie","La taxe d'habitation","Les charges","L'APL"],"Restitué au départ, sauf dégâts.","p"],
+["X169","V","Quel document récapitule chaque mois le salaire et les cotisations ?",["La fiche de paie","Le contrat de travail","L'avis d'imposition","Le relevé bancaire"],"","p"],
+["X170","V","Quel est le taux normal de TVA en France métropolitaine ?",["20 %","5,5 %","10 %","33 %"],"","p"],
+["X171","V","Laquelle de ces taxes est un impôt local ?",["La taxe foncière","La TVA","L'impôt sur le revenu","La CSG"],"","p"],
+["X172", "V", "Qu'est-ce que le prélèvement à la source ?", ["Le paiement de l'impôt directement sur le salaire", "Une taxe prélevée sur l'eau du robinet", "Une cotisation versée pour la retraite", "Une amende pour retard de déclaration"], "", "p"],
+["X173","V","Quel est le principe du don d'organes après le décès en France ?",["Chacun est donneur sauf s'il a exprimé son refus","Seuls les volontaires inscrits sont donneurs","La famille décide toujours seule","Le don d'organes est interdit"],"Consentement présumé ; on peut s'inscrire sur le registre national des refus.","p"],
+["X174","V","Quelle est la durée de validité d'une carte de résident ?",["10 ans","1 an","5 ans","À vie"],"","p"],
+["X175","V","Quel organisme accompagne les étrangers dans le contrat d'intégration républicaine ?",["L'OFII","L'OFPRA","La CAF","France Travail"],"Office français de l'immigration et de l'intégration.","p"],
+["X176","V","En règle générale, combien d'années de résidence en France faut-il pour demander la naturalisation ?",["5 ans","1 an","10 ans","20 ans"],"Ce délai peut être réduit (études supérieures en France, par exemple).","p"],
+["X177","V","Quel niveau de français est exigé pour la naturalisation depuis le 1er janvier 2026 ?",["B2","A1","A2","C2"],"A2 pour la carte de séjour pluriannuelle, B1 pour la carte de résident.","p"],
+["X178","V","Où demande-t-on une carte nationale d'identité ?",["En mairie","À la préfecture uniquement","Au commissariat","À La Poste"],"Dans une mairie équipée d'un dispositif de recueil, souvent sur rendez-vous.","p"],
+["X179","V","Quel document faut-il en général pour voyager hors de l'espace Schengen ?",["Un passeport","Une carte Vitale","Un permis de conduire","Une carte électorale"],"","p"],
+["X180", "V", "Que reçoit un jeune Français après s'être fait recenser à 16 ans ?", ["Une attestation de recensement", "Sa carte d'électeur définitive", "Un permis de conduire provisoire", "Sa première carte d'identité"], "Elle est demandée pour certains examens (bac, permis).", "p"],
+["X181","V","Qui peut délivrer des médicaments sur ordonnance ?",["Le pharmacien","L'infirmier scolaire","Le supermarché","Le kinésithérapeute"],"","p"],
+["X182", "V", "Que met-on dans la poubelle jaune ?", ["Les emballages recyclables", "Les restes de repas et épluchures", "Les bouteilles et bocaux en verre", "Les piles et les ampoules usagées"], "Le verre va dans un conteneur à part.", "p"],
+["X183","V","Quel organisme verse les allocations familiales et les aides au logement ?",["La CAF","La CPAM","L'URSSAF","France Travail"],"Caisse d'allocations familiales.","p"],
+["X184", "V", "Qu'est-ce que le service civique ?", ["Un engagement volontaire indemnisé (16-25 ans)", "Le service militaire obligatoire pour tous", "Un emploi de fonctionnaire à vie", "Un stage non payé à la mairie"], "Jusqu'à 30 ans pour les personnes handicapées.", "p"]
+);
+
 </script>
 <script>
 const THEMES = {
@@ -1902,11 +2280,11 @@ const fmtDate = t=> new Date(t).toLocaleDateString("fr-FR",{day:"numeric",month:
 const L="ABCD";
 
 /* ---------- routing ---------- */
-const VIEWS = {accueil:vHome, examen:vExam, entrainement:vTrain, fiches:vFiches, entretien:vEntretien, progres:vProgress, frise:vFrise, carte:vCarte, marseillaise:vMars};
+const VIEWS = {accueil:vHome, examen:vExam, entrainement:vTrain, fiches:vFiches, entretien:vEntretien, progres:vProgress, frise:vFrise, carte:vCarte, marseillaise:vMars, erreurs:vErrors};
 function route(){ return (location.hash||"#accueil").slice(1) in VIEWS ? (location.hash||"#accueil").slice(1) : "accueil"; }
 function render(){
   const r=route();
-  const nr=["frise","carte","marseillaise"].includes(r)?"fiches":r;
+  const nr=["frise","carte","marseillaise"].includes(r)?"fiches":r==="erreurs"?"progres":r;
   document.querySelectorAll("nav.tabs a, nav.tabbar a").forEach(a=>{ if(a.getAttribute("href")==="#"+nr) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   VIEWS[r]();
 }
@@ -1935,7 +2313,7 @@ function vHome(){
       <span class="eyebrow">Niveau de préparation</span>
       <div class="ready"><div class="gauge num">${rd}<span style="font-size:1.4rem">%</span></div>
       <p class="note" style="max-width:26ch">${seen? `${seen} questions déjà travaillées sur ${Object.keys(BANK).length}.` : "Commencez par un examen blanc pour mesurer votre niveau de départ."}</p></div>
-      <div class="row"><a class="btn" href="#examen" style="text-decoration:none">Lancer un examen blanc</a></div>
+      <div class="row"><a class="btn" href="#examen" style="text-decoration:none">Lancer un examen blanc</a>${errorList().length?`<a class="btn ghost" href="#erreurs" style="text-decoration:none">Mes erreurs (${errorList().length})</a>`:""}</div>
     </div>
     <div class="panel stack">
       <span class="eyebrow">Dernier examen blanc</span>
@@ -2098,10 +2476,9 @@ function vResult(){
    <div class="row" style="justify-content:space-between"><h2>Correction</h2>
     <div class="seg"><button aria-pressed="${resultFilter==="bad"}" data-f="bad">Erreurs (${40-exam.score})</button><button aria-pressed="${resultFilter==="all"}" data-f="all">Toutes</button></div></div>
    <div class="stack">${shown.length? shown.map(r=>qCard(BANK[r.id],exam.order[r.k],exam.ans[r.k],true)).join("") : `<div class="empty">Aucune erreur. Bravo.</div>`}</div>
-   <div class="row"><a class="btn ghost" href="#entrainement" id="toMist" style="text-decoration:none">Revoir mes erreurs</a><button class="btn ghost" id="toTop">Nouvel examen (haut de page)</button></div></div>`;
+   <div class="row"><a class="btn ghost" href="#erreurs" style="text-decoration:none">Revoir mes erreurs</a><button class="btn ghost" id="toTop">Nouvel examen (haut de page)</button></div></div>`;
   document.querySelectorAll(".seg button[data-f]").forEach(b=>b.onclick=()=>{resultFilter=b.dataset.f;vResult()});
   bindStarter(vResult); $("#toTop").onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
-  $("#toMist").onclick=()=>{trainCfg.mode="mistakes"};
 }
 
 /* ---------- TRAINING ---------- */
@@ -2437,6 +2814,40 @@ function importProgress(txt){
   return `Progression restaurée : ${Object.keys(state.stats).length} questions, ${state.exams.length} examens (${n} questions mises à jour).`;
 }
 
+
+/* ---------- MES ERREURS ---------- */
+let errOpen=null;
+function errorList(){ return Object.values(BANK).filter(q=>status(q.id)==="w"); }
+function startMistakes(themes){
+  trainCfg={themes:new Set(themes),mode:"mistakes",n:999,kind:"all"};
+  const p=pool(); if(!p.length) return;
+  const ids=shuffle(p).map(q=>q.id);
+  train={ids, order:ids.map(()=>shuffle([0,1,2,3])), i:0, chosen:null, good:0, finished:false};
+  location.hash="#entrainement";
+}
+function vErrors(){
+  const errs=errorList(), fixed=Object.values(BANK).filter(q=>{const s=state.stats[q.id];return s&&s.w>0&&status(q.id)!=="w"}).length;
+  const by=TK.map(t=>({t,qs:errs.filter(q=>q.t===t).sort((a,b)=>(state.stats[b.id].w-state.stats[a.id].w)||(state.stats[b.id].t-state.stats[a.id].t))}));
+  $("#view").innerHTML=`<div class="stack" style="gap:24px">
+   <div class="stack"><span class="eyebrow">Réviser mes erreurs</span><h1>Mes erreurs par thème</h1>
+   <p class="lead">Les questions dont votre dernière réponse était fausse, regroupées par thème. Une question sort de la liste dès que vous y répondez juste.</p></div>
+   ${errs.length?`<div class="panel stack"><div class="row" style="justify-content:space-between;align-items:center;gap:12px">
+     <div><div class="score num" style="font-size:2.2rem">${errs.length}</div><span class="note">question${errs.length>1?"s":""} à revoir${fixed?` · ${fixed} déjà corrigée${fixed>1?"s":""}`:""}</span></div>
+     <button class="btn" data-replay="all">Rejouer toutes mes erreurs</button></div>
+     <div class="errbars">${by.map(({t,qs})=>`<div class="tb"><span>${THEMES[t].name}</span><span class="bar"><i class="w" style="width:${errs.length?100*qs.length/errs.length:0}%"></i></span><span class="num" style="text-align:right">${qs.length}</span></div>`).join("")}</div></div>
+   ${by.filter(x=>x.qs.length).map(({t,qs})=>`<section class="panel stack errtheme">
+     <div class="row" style="justify-content:space-between;align-items:center;gap:10px"><h2 style="margin:0">${THEMES[t].name} <span class="note num">(${qs.length})</span></h2>
+     <button class="btn small" data-replay="${t}">Rejouer ce thème</button></div>
+     <div class="fichelist">${qs.map(q=>{const s=state.stats[q.id];return `<details class="fiche errq" data-id="${esc(q.id)}" ${errOpen===q.id?"open":""}><summary><span>${esc(q.q)}</span><span class="errn num" title="erreurs">${s.w}×</span></summary>
+       <div class="fbody stack"><p class="okline">✓ ${esc(q.a[0])}</p>${q.e?`<p class="note">${esc(q.e)}</p>`:""}
+       <p class="note">${label(q)} · ${s.c} bonne${s.c>1?"s":""}, ${s.w} erreur${s.w>1?"s":""} · dernière réponse le ${fmtDate(s.t)}</p></div></details>`}).join("")}</div></section>`).join("")}`
+   :`<div class="panel empty stack"><h3>Aucune erreur à revoir</h3><p class="note">${fixed?`Vous avez corrigé vos ${fixed} erreur${fixed>1?"s":""}. `:""}Les questions ratées en entraînement ou en examen blanc apparaîtront ici.</p>
+     <div class="row"><a class="btn" href="#examen" style="text-decoration:none">Passer un examen blanc</a><a class="btn ghost" href="#entrainement" style="text-decoration:none">S'entraîner</a></div></div>`}
+  </div>`;
+  document.querySelectorAll("[data-replay]").forEach(b=>b.onclick=()=>startMistakes(b.dataset.replay==="all"?TK:[b.dataset.replay]));
+  document.querySelectorAll("details.errq").forEach(d=>d.addEventListener("toggle",()=>{ if(d.open) errOpen=d.dataset.id; }));
+}
+
 /* ---------- PROGRESS ---------- */
 let heatTheme="all", heatSel=null;
 function vProgress(){
@@ -2446,6 +2857,7 @@ function vProgress(){
   const passRate = state.exams.length? Math.round(100*state.exams.filter(e=>e.score>=32).length/state.exams.length):0;
   $("#view").innerHTML=`<div class="stack" style="gap:24px">
    <div class="stack"><span class="eyebrow">Progrès</span><h1>Où vous en êtes</h1></div>
+   ${(()=>{const n=errorList().length;return `<div class="panel errlink"><div><h3 style="margin:0">Réviser mes erreurs</h3><p class="note" style="margin:4px 0 0">${n? `${n} question${n>1?"s":""} ratée${n>1?"s":""} la dernière fois, classée${n>1?"s":""} par thème.` : "Aucune erreur à revoir pour l'instant."}</p></div><a class="btn ${n?"":"ghost"}" href="#erreurs" style="text-decoration:none">Mes erreurs${n?` (${n})`:""}</a></div>`})()}
    <div class="panel stack"><div class="row" style="justify-content:space-between"><h3>Examens blancs</h3>
      <span class="note">${state.exams.length} passé${state.exams.length>1?"s":""}${state.exams.length?` · ${passRate} % réussis`:""}</span></div>
      ${ex.length? `<div class="chartbox">${chart(ex)}</div>` : `<div class="empty">Vos scores apparaîtront ici après votre premier examen blanc. <a href="#examen">Lancer un examen</a></div>`}
