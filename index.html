@@ -2270,7 +2270,9 @@ X.push(
 ["X247","H","Quel port français a été le premier port de la traite négrière au XVIIIe siècle ?",["Nantes","Nice","Lyon","Strasbourg"],"Nantes a organisé environ 40 % des expéditions négrières françaises. Nice n'était pas française avant 1860 ; Lyon et Strasbourg ne sont pas des ports maritimes.","p"],
 ["X248","H","Qui était Rouget de Lisle ? (version piège)",["L'homme qui a composé le « Chant de guerre pour l'armée du Rhin »","Le sculpteur du bas-relief « Le Départ des volontaires » sur l'Arc de Triomphe","Un philosophe des Lumières contemporain de Voltaire","Le chef des sans-culottes parisiens"],"Officier du génie, il compose ce chant à Strasbourg en avril 1792 ; il devient « la Marseillaise ». Piège : le bas-relief de l'Arc de Triomphe, surnommé lui aussi « La Marseillaise », est l'œuvre du sculpteur François Rude.","t"],
 ["X249","V","À quoi sert la carte Vitale ? (version piège)",["Elle permet la télétransmission des feuilles de soins, évitant l'envoi de formulaires papier","Elle est obligatoire pour ouvrir un compte bancaire en France","Elle contient tout le dossier médical confidentiel du patient (maladies, opérations)","Elle sert à payer le ticket modérateur chez le médecin"],"Elle atteste les droits à l'Assurance maladie. Ce n'est ni un moyen de paiement (le ticket modérateur est la part restant à la charge du patient) ni un dossier médical (c'est le rôle de « Mon espace santé »).","t"],
-["X250","V","Qui a le droit de se syndiquer ? (version piège)",["Les travailleurs étrangers en situation régulière, au même titre que les Français","Seuls les cadres et les agents de maîtrise","Les personnes ayant plus de 10 ans d'ancienneté","Uniquement les salariés du secteur industriel"],"La liberté syndicale (préambule de 1946) appartient à tout travailleur, sans condition de nationalité : un étranger peut adhérer à un syndicat et être élu représentant du personnel.","t"]
+["X250","V","Qui a le droit de se syndiquer ? (version piège)",["Les travailleurs étrangers en situation régulière, au même titre que les Français","Seuls les cadres et les agents de maîtrise","Les personnes ayant plus de 10 ans d'ancienneté","Uniquement les salariés du secteur industriel"],"La liberté syndicale (préambule de 1946) appartient à tout travailleur, sans condition de nationalité : un étranger peut adhérer à un syndicat et être élu représentant du personnel.","t"],
+["X251","H","Qu'est-ce que la France d'outre-mer ? (version piège)",["Les territoires qui donnent à la France la deuxième plus vaste zone économique exclusive (ZEE) au monde","Des zones franches fiscales indépendantes politiquement mais utilisant l'euro","L'ensemble des bases militaires françaises situées en Afrique et au Moyen-Orient","Les régions françaises situées exclusivement en Amérique du Sud et en Antarctique"],"Les territoires d'outre-mer (Antilles, Guyane, Réunion, Mayotte, Polynésie, Nouvelle-Calédonie…) font partie de la France, dans tous les océans : environ 10,2 millions de km² de ZEE, la 2e au monde après les États-Unis. Ils ne sont pas indépendants ; seule la Guyane est en Amérique du Sud.","t"],
+["X252","H","Qui était Jean de La Fontaine ? (version piège)",["Un auteur célèbre pour avoir utilisé des animaux à traits humains afin d'illustrer des leçons morales","Un philosophe politique ayant théorisé la séparation des pouvoirs","Le créateur du théâtre de l'absurde au XXe siècle","Un explorateur ayant cartographié la Nouvelle-France"],"Fabuliste du XVIIe siècle (Fables, 1668-1694), dédiées en partie au Dauphin. Pièges : la séparation des pouvoirs, c'est Montesquieu ; le théâtre de l'absurde, Ionesco et Beckett ; la Nouvelle-France, Champlain.","t"]
 );
 
 </script>
@@ -2468,6 +2470,7 @@ function themeBars(){
 /* ---------- EXAM ---------- */
 let exam = lsGet(LS_EXAM);
 let examKind=(()=>{try{return localStorage.getItem("civique.examkind")||"off"}catch(e){return "off"}})();
+let skipM=(()=>{try{return localStorage.getItem("civique.skipm")==="1"}catch(e){return false}})();
 const extraShare=k=>Math.round(k/4); // élargi: about a quarter of knowledge questions from extras
 function buildExam(kind){
   kind=kind||examKind; const items=[];
@@ -2476,7 +2479,7 @@ function buildExam(kind){
     const kn=Object.values(BANK).filter(q=>q.t===t&&!q.sit&&!q.extra&&!(q.vk>1));
     const si=Object.values(BANK).filter(q=>q.t===t&&q.sit);
     // favour questions not yet mastered
-    const w=q=>({u:3,w:4,l:2,m:1})[status(q.id)];
+    const w=q=>({u:3,w:4,l:2,m:skipM?0:1})[status(q.id)]; // weight 0 = only used if nothing else is left
     const gw=q=>q.group? Math.max(...variantsOf(q.group).map(w)) : w(q);
     const nx= kind==="large"? extraShare(cfg.k) : 0;
     if(nx){ const ex=Object.values(BANK).filter(q=>q.t===t&&q.extra); pick(ex,nx,w).forEach(q=>items.push(q.id)); }
@@ -2507,10 +2510,12 @@ function examStarter(label){
   return `<div class="panel stack starter"><div class="row" style="justify-content:space-between;align-items:center;gap:12px">
     <div class="seg"><button data-ek="off" aria-pressed="${examKind==="off"}">Officiel</button><button data-ek="large" aria-pressed="${examKind==="large"}">Élargi</button></div>
     <button class="btn" id="startEx">${label}</button></div>
-    <p class="note">${examKind==="off"?"Officiel : questions de connaissances tirées uniquement de la liste officielle des 258 questions (et de leurs variantes).":"Élargi : même répartition, mais 7 des 28 questions de connaissances viennent des compléments (livret du citoyen 2026, régions, pièges, retours de candidats, listes CSP/CR)."}</p></div>`;
+    <label class="row" style="gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="skipM" ${skipM?"checked":""}> <span>Sauter les questions maîtrisées (vertes)</span></label>
+    <p class="note">${examKind==="off"?"Officiel : questions de connaissances tirées uniquement de la liste officielle des 258 questions (et de leurs variantes).":"Élargi : même répartition, mais 7 des 28 questions de connaissances viennent des compléments (livret du citoyen 2026, régions, pièges, retours de candidats, listes CSP/CR)."}${skipM?" Questions maîtrisées exclues ; elles ne reviennent que s'il n'en reste pas assez dans un thème.":""}</p></div>`;
 }
 function bindStarter(redraw){
   document.querySelectorAll("[data-ek]").forEach(b=>b.onclick=()=>{examKind=b.dataset.ek; try{localStorage.setItem("civique.examkind",examKind)}catch(e){} const y=window.scrollY; redraw(); window.scrollTo(0,y)});
+  const sk=$("#skipM"); if(sk) sk.onchange=()=>{skipM=sk.checked; try{localStorage.setItem("civique.skipm",skipM?"1":"0")}catch(e){} const y=window.scrollY; redraw(); window.scrollTo(0,y)};
   $("#startEx").onclick=()=>{exam=buildExam(examKind);lsSet(LS_EXAM,exam);window.scrollTo({top:0});vExam()};
 }
 function examTable(){
